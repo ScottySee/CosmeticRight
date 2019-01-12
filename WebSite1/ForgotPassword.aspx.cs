@@ -40,7 +40,7 @@ public partial class ForgotPassword : System.Web.UI.Page
                             using (SqlCommand cmd2 = new SqlCommand(SQL, com))
                             {
                                 cmd2.Parameters.AddWithValue("@Email", email.Text);
-                                
+
                                 cmd2.ExecuteNonQuery();
 
 
