@@ -50,10 +50,10 @@ public partial class ForgotPassword : System.Web.UI.Page
 
                         using (MailMessage mm = new MailMessage("scottysee98@gmail.com", email.Text))
                         {
-                            mm.Subject = "Forgot Password";
-                            mm.Body = "Test mail";
+                            mm.Subject = "Password Reset";
+                            mm.Body = "Hello!";
 
-                            mm.IsBodyHtml = false;
+                            mm.IsBodyHtml = true;
                             SmtpClient smtp = new SmtpClient();
                             smtp.Host = "smtp.gmail.com";
                             smtp.EnableSsl = true;
