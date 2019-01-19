@@ -12,6 +12,7 @@ using System.Net;
 
 public partial class ForgotPassword : System.Web.UI.Page
 {
+    string ID;
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -33,6 +34,10 @@ public partial class ForgotPassword : System.Web.UI.Page
                 {
                     if (data.HasRows) //credentials are correct
                     {
+                        while(data.Read())
+                        {
+                            ID = data["UserID"].ToString();
+                        }
                         using (SqlConnection com = new SqlConnection(Util.GetConnection()))
                         {
                             com.Open();
@@ -51,7 +56,7 @@ public partial class ForgotPassword : System.Web.UI.Page
                         using (MailMessage mm = new MailMessage("scottysee98@gmail.com", email.Text))
                         {
                             mm.Subject = "Password Reset";
-                            mm.Body = "Hello!";
+                            mm.Body = "Hello! Click here. <a href='http://localhost:58759/ChangePassword.aspx?UserID="+ ID + "'>Click here</a> ";
 
                             mm.IsBodyHtml = true;
                             SmtpClient smtp = new SmtpClient();

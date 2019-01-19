@@ -33,6 +33,22 @@ public partial class Login : System.Web.UI.Page
                         while (data.Read())
                         {
                             Session["UserID"] = data["UserID"].ToString();
+                            Session["UserType"] = data["UserID"].ToString();
+
+                            // eto yung para madistinguish kung anong type ang user
+                            if (data["UserType"].ToString() == "1") //OFFICE ADMIN
+                            {
+                                Response.Redirect("Member.aspx");
+                            }
+                            else if (data["UserType"].ToString() == "2") //WAREHOUSE ADMIN
+                            {
+                                Response.Redirect("Member.aspx");
+                            }
+                            else if(data["UserType"].ToString() == "3") // USER/MEMBER
+                            {
+                                Response.Redirect("Member.aspx");
+                            }
+                            
 
                         }
 

@@ -27,7 +27,7 @@
                                     <asp:TextBox runat="server" ID="cpassword" type="password" Placeholder="Confirm Password" CssClass="form-control"></asp:TextBox>
                                 </div>
                                 <div class="text-center">
-                                    <asp:Button ID="btnLogin" runat="server" Text="Login" class="btn btn-default submit btn-block" OnClick="BtnLogin_Click" />
+                                    <asp:Button ID="btnSubmit" runat="server" Text="Submit" class="btn btn-default submit btn-block" OnClick="btnSubmit_Click" />
                                 </div>
                             </div>
                         </div>
