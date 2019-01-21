@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-using System.Data;
-using System.Data.SqlClient;
-using System.Net.Mail;
-using System.Net;
-
 public partial class ForgotPassword : System.Web.UI.Page
 {
-    string ID;
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -20,13 +17,10 @@ public partial class ForgotPassword : System.Web.UI.Page
 
     protected void btnSubmit_Click(object sender, EventArgs e)
     {
-
-
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"SELECT * FROM Users
-                                WHERE Email=@Email";
+            string query = @"SELECT * FROM Users WHERE Email=@Email";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@Email", email.Text);
@@ -34,7 +28,7 @@ public partial class ForgotPassword : System.Web.UI.Page
                 {
                     if (data.HasRows) //credentials are correct
                     {
-                        while(data.Read())
+                        while (data.Read())
                         {
                             ID = data["UserID"].ToString();
                         }
@@ -45,24 +39,21 @@ public partial class ForgotPassword : System.Web.UI.Page
                             using (SqlCommand cmd2 = new SqlCommand(SQL, com))
                             {
                                 cmd2.Parameters.AddWithValue("@Email", email.Text);
-
                                 cmd2.ExecuteNonQuery();
-
-
-                               
                             }
                         }
 
+                        //send email
                         using (MailMessage mm = new MailMessage("scottysee98@gmail.com", email.Text))
                         {
                             mm.Subject = "Password Reset";
-                            mm.Body = "Hello! Click here. <a href='http://localhost:58759/ChangePassword.aspx?UserID="+ ID + "'>Click here</a> ";
+                            mm.Body = "Hello! <a href='http://localhost:58759/ChangePassword.aspx?UserID=" + ID + "'>Click here</a> ";
 
                             mm.IsBodyHtml = true;
                             SmtpClient smtp = new SmtpClient();
                             smtp.Host = "smtp.gmail.com";
                             smtp.EnableSsl = true;
-                            NetworkCredential NetworkCred = new NetworkCredential("scottysee98@gmail.com", "POOHPOOH98");
+                            NetworkCredential NetworkCred = new NetworkCredential("scottysee98@gmail.com", "POOHPOOH98"); //email and password of the sender.
                             smtp.UseDefaultCredentials = true;
                             smtp.Credentials = NetworkCred;
                             smtp.Port = 587;
@@ -70,7 +61,7 @@ public partial class ForgotPassword : System.Web.UI.Page
                             ClientScript.RegisterStartupScript(GetType(), "alert", "alert('Email sent.');", true);
                         }
                     }
-                    else //did not match </3
+                    else //did not match
                     {
 
                     }
