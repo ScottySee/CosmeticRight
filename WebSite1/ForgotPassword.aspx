@@ -16,6 +16,9 @@
                                 <div class="container">
                                     <asp:Label ID="MessageBox" CssClass="alert alert-success" Visible="false" runat="server" Text="Label"></asp:Label>
                                 </div>
+                                <div class="form-group pull-left">
+                                    <asp:Label runat="server" ID="label1"><h5>Please enter your email to search for your account.</h5></asp:Label>
+                                </div>
                                 <div class="form-group">
                                     <asp:TextBox runat="server" ID="email" Placeholder="Email" CssClass="form-control"></asp:TextBox>
                                 </div>

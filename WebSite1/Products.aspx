@@ -1,6 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin.master" AutoEventWireup="true" CodeFile="Announcement.aspx.cs" Inherits="Announcement" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin.master" AutoEventWireup="true" CodeFile="Products.aspx.cs" Inherits="Products" %>
 
-<asp:Content ContentPlaceHolderID="header" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="header" Runat="Server">
     <div class="header bg-gradient-gray-dark pb-5 pt-5 pt-md-8">
         <div class="container-fluid">
             <div class="header-body">
@@ -8,12 +8,12 @@
         </div>
     </div>
 </asp:Content>
-<asp:Content runat="server" ContentPlaceHolderID="body">
+<asp:Content ID="Content2" ContentPlaceHolderID="body" Runat="Server">
     <div class="container mt--7">
         <!-- page content -->
         <form runat="server" classa="form-horizontal">
             <asp:scriptmanager runat="server" />
-            <asp:updatepanel id="Announcements" runat="server">
+            <asp:updatepanel id="Products" runat="server">
                 <ContentTemplate>
                     <div class="card shadow-lg">
                         <div class="card-body">
@@ -22,13 +22,13 @@
                                 <div class="col-lg-2">
                                     <div class="form-group">
                                         <label class="control-label">ID</label>
-                                        <asp:TextBox ID="announcementID" runat="server" class="form-control" MaxLength="50" Disabled="true" />
+                                        <asp:TextBox ID="productID" runat="server" class="form-control" MaxLength="50" Disabled="true" />
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="control-label">Title</label>
-                                        <asp:TextBox ID="txtannouncement" runat="server" class="form-control" MaxLength="50" placeholder="Enter Announcement" required />
+                                        <asp:TextBox ID="txtproduct" runat="server" class="form-control" MaxLength="50" placeholder="Enter Product" required />
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -68,11 +68,18 @@
                         <table id="datatable" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Announcement ID</th>
-                                    <th>Announcement Name</th>
-                                    <th>Announcement Detail</th>
+                                    <th>Product ID</th>
+                                    <th>Product Name</th>
+                                    <th>CatID</th>
+                                    <th>Code</th>
+                                    <th>Description</th>
                                     <th>Image</th>
+                                    <th>Price</th>
+                                    <th>Available</th>
+                                    <th>Critical Level</th>
                                     <th>Status</th>
+                                    <th>Date Added</th>
+                                    <th>Date Modified</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -120,108 +127,6 @@
     </div>
     <br />
 </asp:Content>
-
-<asp:Content runat="server" ContentPlaceHolderID="scripts">
-    <%--    <script type="text/javascript">
-        function Confirm() {
-            var confirm_value = document.createElement("INPUT");
-            confirm_value.type = "hidden";
-            confirm_value.name = "confirm_value";
-            if (confirm("Do you want to save data?")) {
-                confirm_value.value = "Yes";
-            } else {
-                confirm_value.value = "No";
-            }
-            document.forms[0].appendChild(confirm_value);
-        }
-    </script>
-
-    <script type="text/javascript">
-        //On UpdatePanel Refresh
-        var prm = Sys.WebForms.PageRequestManager.getInstance();
-        if (prm != null) {
-            prm.add_endRequest(function (sender, e) {
-                if (sender._postBackSettings.panelsToUpdate != null) {
-                    $('table').DataTable({
-                        pagingType: 'numbers',
-
-                        responsive: {
-                            details: {
-                                type: 'column',
-
-                            }
-                        },
-
-
-                        columnDefs: [{
-                            className: 'control',
-                            orderable: false,
-                            targets: 0
-                        }],
-                        order: [1, 'asc']
-                    });
-                }
-            });
-        };
-
-    </script>
-    <script>
-        $(document).ready(function () {
-            $('table').DataTable({
-                pagingType: 'numbers',
-
-                responsive: {
-                    details: {
-                        type: 'column'
-                    }
-                },
-
-
-
-                columnDefs: [{
-                    className: 'control',
-                    orderable: false,
-                    targets: 0
-                }],
-                order: [1, 'asc'],
-
-                dom: 'flrtiBp',
-                buttons: [
-                    {
-                        extend: 'excel',
-                        title: 'Saving Logistics',
-                        messageTop: 'Route Report',
-                        messageBottom: null,
-                        //className: 'btn btn-success',
-
-
-                    },
-                    {
-                        extend: 'colvis',
-                        columns: ':not(:first-child)',
-                        text: 'Show / Hide Columns'
-
-
-
-
-                    }
-
-                    //{
-                    //    extend: 'print',
-                    //    title: 'Saving Logistics',
-                    //    messageTop: 'Booking Report',
-                    //    messageBottom: null
-                    //}
-                    //{
-                    //    extend: 'pdf',
-                    //    title: 'Saving Logistics',
-                    //    messageTop: 'Booking Report',
-                    //    messageBottom: null
-                    //}
-                ],
-            });
-
-        });
-    </script>--%>
+<asp:Content ID="Content3" ContentPlaceHolderID="scripts" Runat="Server">
 </asp:Content>
 
