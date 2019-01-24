@@ -1,6 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin.master" AutoEventWireup="true" CodeFile="Products.aspx.cs" Inherits="Products" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin1.master" AutoEventWireup="true" CodeFile="Products.aspx.cs" Inherits="Products" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="header" Runat="Server">
+<asp:Content ContentPlaceHolderID="header" runat="server">
     <div class="header bg-gradient-gray-dark pb-5 pt-5 pt-md-8">
         <div class="container-fluid">
             <div class="header-body">
@@ -8,12 +8,12 @@
         </div>
     </div>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="body" Runat="Server">
+<asp:Content ContentPlaceHolderID="body" runat="server">
     <div class="container mt--7">
         <!-- page content -->
         <form runat="server" classa="form-horizontal">
             <asp:scriptmanager runat="server" />
-            <asp:updatepanel id="Products" runat="server">
+            <asp:updatepanel id="Product" runat="server">
                 <ContentTemplate>
                     <div class="card shadow-lg">
                         <div class="card-body">
@@ -27,23 +27,58 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label class="control-label">Title</label>
-                                        <asp:TextBox ID="txtproduct" runat="server" class="form-control" MaxLength="50" placeholder="Enter Product" required />
+                                        <label class="control-label">Product Name</label>
+                                        <asp:TextBox ID="txtProductName" runat="server" class="form-control" MaxLength="50" required />
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Category</label>
+                                        <asp:DropDownList ID="ddlCategories" runat="server" class="form-control" required />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Code</label>
+                                        <asp:TextBox ID="txtCode" runat="server" class="form-control" MaxLength="10" required />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Description</label>
+                                        <asp:TextBox ID="txtDescription" TextMode="MultiLine" Rows="5" runat="server" class="form-control" MaxLength="50" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
                                     <label class="control-label">Images</label><br />
                                     <div class="input-group">
                                         <label class="btn btn-success">
                                             Upload Here
-                                            <input type="file" id="imageupload" hidden runat="server" />
+                                            <input type="file" id="ImageUpload" hidden runat="server" />
                                         </label>
                                     </div>
+
+                                    <%--<div>
+                            <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span><asp:FileUpload ID="fuImage" runat="server" required /></span>
+                            <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                        </div>--%>
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label class="control-label">Details</label>
-                                        <asp:TextBox ID="txtdetails" TextMode="MultiLine" Rows="5" runat="server" class="form-control" MaxLength="50" placeholder="Enter Announcement" />
+                                        <label class="control-label">Price</label>
+                                        <asp:TextBox ID="txtPrice" runat="server" class="form-control" type="number" min="0.01" max="500000.00" step="0.01" required />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Critical Level</label>
+                                        <asp:TextBox ID="txtCritical" runat="server" class="form-control" type="number" min="1" max="100" required />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Maximum</label>
+                                        <asp:TextBox ID="txtMax" runat="server" class="form-control" type="number" min="1" max="100" required />
                                     </div>
                                 </div>
                             </div>
@@ -51,9 +86,9 @@
                         <div class="container">
                             <div class="col-lg-4">
                                 <div class="input-group">
-                                    <asp:Button ID="btnAdd" runat="server" class="btn btn-lg btn-success" Text="Add Announcement" OnClick="AddAnnouncement" />
-                                    <asp:Button ID="btnEdit" runat="server" class="btn btn-lg btn-success" Text="Update Announcement"  OnClick="SaveAnnouncement" />
-                                    <asp:Button ID="btnCancel" runat="server" hidden class="btn btn-lg btn-danger" Text="Cancel" OnClick="btnCancel_Click" />
+                                    <asp:Button ID="btnAdd" runat="server" class="btn btn-lg btn-success" Text="Add Product" OnClick="AddProduct"/>
+                                    <asp:Button ID="btnEdit" runat="server" class="btn btn-lg btn-success" Text="Update Product" OnClick="SaveProduct"/>
+                                    <asp:Button ID="btnCancel" runat="server" hidden class="btn btn-lg btn-danger" Text="Cancel" OnClick="btnCancel_Click"/>
                                 </div>
                             </div>
                         </div>
@@ -70,13 +105,10 @@
                                 <tr>
                                     <th>Product ID</th>
                                     <th>Product Name</th>
-                                    <th>CatID</th>
+                                    <th>Category</th>
                                     <th>Code</th>
-                                    <th>Description</th>
-                                    <th>Image</th>
                                     <th>Price</th>
-                                    <th>Available</th>
-                                    <th>Critical Level</th>
+                                    <th>Image</th>
                                     <th>Status</th>
                                     <th>Date Added</th>
                                     <th>Date Modified</th>
@@ -88,14 +120,18 @@
                                 <asp:listview id="lvAnnouncements" runat="server">
                                     <ItemTemplate>
                                         <tr>
-                                            <td><%# Eval("AnnouncementID") %></td>
-                                            <td><%# Eval("AnnouncementName") %></td>
-                                            <td><%# Eval("AnnouncementDetail") %></td>
+                                            <td><%# Eval("ProductID") %></td>
+                                            <td><%# Eval("ProductName") %></td>
+                                            <td><%# Eval("Categories") %></td>
+                                            <td><%# Eval("Code") %></td>
+                                            <td><%# Eval("Price") %></td>
                                             <td><%# Eval("Image") %></td>
                                             <td><%# Eval("Status") %></td>
+                                            <td><%# Eval("DateAdded", "{0: MMMM dd, yyyy}") %></td>
+                                            <td><%# Eval("DateModified", "{0: MMMM dd, yyyy}") %></td>
                                             <td>
-                                                <a href='Announcement.aspx?EditID=<%# Eval("AnnouncementID") %>'><i class="fa fa-edit"></i></a>&nbsp;
-                                                <a href='Announcement.aspx?DeleteID=<%# Eval("AnnouncementID") %>' onclick="return confirm('Do you want to delete this item?')"><i class="fa fa-trash"></i></a>&nbsp;
+                                                <a href='Announcement.aspx?EditID=<%# Eval("ProductID") %>'><i class="fa fa-edit"></i></a>&nbsp;
+                                                <a href='Announcement.aspx?DeleteID=<%# Eval("ProductID") %>' onclick="return confirm('Do you want to delete this item?')"><i class="fa fa-trash"></i></a>&nbsp;
                                             </td>
                                         </tr>
                                     </ItemTemplate>

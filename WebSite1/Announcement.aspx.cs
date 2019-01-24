@@ -21,9 +21,9 @@ public partial class Announcement : System.Web.UI.Page
             if (Request.QueryString["EditID"] != null)
             {
                
-                bool validBooking = int.TryParse(Request.QueryString["EditID"].ToString(), out editID);
+                bool validAnnouncement = int.TryParse(Request.QueryString["EditID"].ToString(), out editID);
 
-                if (validBooking)
+                if (validAnnouncement)
                 {
                     btnAdd.Visible = false;
                     btnEdit.Visible = true;

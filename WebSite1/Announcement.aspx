@@ -8,7 +8,7 @@
         </div>
     </div>
 </asp:Content>
-<asp:Content runat="server" ContentPlaceHolderID="body">
+<asp:Content ContentPlaceHolderID="body" runat="server">
     <div class="container mt--7">
         <!-- page content -->
         <form runat="server" classa="form-horizontal">
@@ -86,6 +86,8 @@
                                             <td><%# Eval("AnnouncementDetail") %></td>
                                             <td><%# Eval("Image") %></td>
                                             <td><%# Eval("Status") %></td>
+                                            <td><%# Eval("DateAdded", "{0: MMMM dd, yyyy}") %></td>
+                                            <td><%# Eval("DateModified", "{0: MMMM dd, yyyy}") %></td>
                                             <td>
                                                 <a href='Announcement.aspx?EditID=<%# Eval("AnnouncementID") %>'><i class="fa fa-edit"></i></a>&nbsp;
                                                 <a href='Announcement.aspx?DeleteID=<%# Eval("AnnouncementID") %>' onclick="return confirm('Do you want to delete this item?')"><i class="fa fa-trash"></i></a>&nbsp;

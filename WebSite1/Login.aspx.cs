@@ -38,7 +38,7 @@ public partial class Login : System.Web.UI.Page
                             // eto yung para madistinguish kung anong type ang user
                             if (data["UserType"].ToString() == "1") //OFFICE ADMIN
                             {
-                                Response.Redirect("Member.aspx");
+                                Response.Redirect("Home2.aspx");
                             }
                             else if (data["UserType"].ToString() == "2") //WAREHOUSE ADMIN
                             {
