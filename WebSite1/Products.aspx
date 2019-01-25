@@ -34,7 +34,11 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="control-label">Category</label>
-                                        <asp:DropDownList ID="ddlCategories" runat="server" class="form-control" required />
+                                        <asp:DropDownList ID="ddlCategories" runat="server" class="form-control" required>
+                                            <asp:ListItem Value="" style="color: black">---------------Select Category---------------</asp:ListItem>
+                                            <asp:ListItem Value="1" style="color: black">Lotion</asp:ListItem>
+                                            <asp:ListItem Value="2" style="color: black">Soap</asp:ListItem>
+                                        </asp:DropDownList>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
@@ -110,14 +114,12 @@
                                     <th>Price</th>
                                     <th>Image</th>
                                     <th>Status</th>
-                                    <th>Date Added</th>
-                                    <th>Date Modified</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <%--OnPagePropertiesChanging="lvRates_PagePropertiesChanging"--%>
-                                <asp:listview id="lvAnnouncements" runat="server">
+                                <asp:listview id="lvProducts" runat="server">
                                     <ItemTemplate>
                                         <tr>
                                             <td><%# Eval("ProductID") %></td>
@@ -127,8 +129,6 @@
                                             <td><%# Eval("Price") %></td>
                                             <td><%# Eval("Image") %></td>
                                             <td><%# Eval("Status") %></td>
-                                            <td><%# Eval("DateAdded", "{0: MMMM dd, yyyy}") %></td>
-                                            <td><%# Eval("DateModified", "{0: MMMM dd, yyyy}") %></td>
                                             <td>
                                                 <a href='Announcement.aspx?EditID=<%# Eval("ProductID") %>'><i class="fa fa-edit"></i></a>&nbsp;
                                                 <a href='Announcement.aspx?DeleteID=<%# Eval("ProductID") %>' onclick="return confirm('Do you want to delete this item?')"><i class="fa fa-trash"></i></a>&nbsp;

@@ -9,7 +9,6 @@ using System.Web.UI.WebControls;
 
 public partial class Announcement : System.Web.UI.Page
 {
-
     int editID = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -37,9 +36,9 @@ public partial class Announcement : System.Web.UI.Page
             else if (Request.QueryString["DeleteID"] != null)
             {
                 int DeleteID = 0;
-                bool validBooking = int.TryParse(Request.QueryString["DeleteID"].ToString(), out DeleteID);
+                bool validAnnouncement = int.TryParse(Request.QueryString["DeleteID"].ToString(), out DeleteID);
 
-                if (validBooking)
+                if (validAnnouncement)
                 {
                     DeleteRecord(DeleteID);
                 }
@@ -47,8 +46,6 @@ public partial class Announcement : System.Web.UI.Page
                     Response.Redirect("Announcement.aspx");
             }
             //DELETE ID CHECKING END
-
-            
             GetAnnouncement();
         }
         //FOR VIEWING
@@ -75,12 +72,13 @@ public partial class Announcement : System.Web.UI.Page
             }
         }
     }
+
     protected void AddAnnouncement(object sender, EventArgs e)
     {
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"INSERT INTO Announcements VALUES (@AnnouncementName, @AnnouncementDetail, @Image, @AdminID, @Status)";
+            string query = @"INSERT INTO Announcements VALUES (@AnnouncementName, @AnnouncementDetail, @Image, @AdminID, @Status, @DateAdded, @DateModified)";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -89,12 +87,15 @@ public partial class Announcement : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@Image", "Sample.jpg");
                 cmd.Parameters.AddWithValue("@AdminID", "1");
                 cmd.Parameters.AddWithValue("@Status", "Active");
+                cmd.Parameters.AddWithValue("@DateAdded", DateTime.Now);
+                cmd.Parameters.AddWithValue("@DateModified", DBNull.Value);
                 cmd.ExecuteNonQuery();
 
                 Response.Redirect("Announcement.aspx");
             }
         }
     }
+
     protected void EditAnnouncement(int ID)
     {
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
@@ -143,6 +144,7 @@ public partial class Announcement : System.Web.UI.Page
             }
         }
     }
+
     void DeleteRecord(int ID)
     {
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))

@@ -73,6 +73,8 @@
                                     <th>Announcement Detail</th>
                                     <th>Image</th>
                                     <th>Status</th>
+                                    <%--<th>Date Added</th>
+                                    <th>Date Modified</th>--%>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -86,8 +88,8 @@
                                             <td><%# Eval("AnnouncementDetail") %></td>
                                             <td><%# Eval("Image") %></td>
                                             <td><%# Eval("Status") %></td>
-                                            <td><%# Eval("DateAdded", "{0: MMMM dd, yyyy}") %></td>
-                                            <td><%# Eval("DateModified", "{0: MMMM dd, yyyy}") %></td>
+                                            <%--<td><%# Eval("DateAdded", "{0: MMMM dd, yyyy}") %></td>
+                                            <td><%# Eval("DateModified", "{0: MMMM dd, yyyy}") %></td>--%>
                                             <td>
                                                 <a href='Announcement.aspx?EditID=<%# Eval("AnnouncementID") %>'><i class="fa fa-edit"></i></a>&nbsp;
                                                 <a href='Announcement.aspx?DeleteID=<%# Eval("AnnouncementID") %>' onclick="return confirm('Do you want to delete this item?')"><i class="fa fa-trash"></i></a>&nbsp;

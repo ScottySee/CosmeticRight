@@ -20,9 +20,9 @@ public partial class Products : System.Web.UI.Page
             if (Request.QueryString["EditID"] != null)
             {
 
-                bool validBooking = int.TryParse(Request.QueryString["EditID"].ToString(), out editID);
+                bool validProduct = int.TryParse(Request.QueryString["EditID"].ToString(), out editID);
 
-                if (validBooking)
+                if (validProduct)
                 {
                     btnAdd.Visible = false;
                     btnEdit.Visible = true;
@@ -46,15 +46,14 @@ public partial class Products : System.Web.UI.Page
                     Response.Redirect("Products.aspx");
             }
             //DELETE ID CHECKING END
-            GetProduct();
+            GetProducts();
         }
         //FOR VIEWING
-        GetProduct();
-        GetCategories();
+        GetProducts();
+        //GetCategories();
     }
 
-
-    void GetProduct()
+    void GetProducts()
     {
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
@@ -67,41 +66,42 @@ public partial class Products : System.Web.UI.Page
                 {
                     DataSet ds = new DataSet();
                     da.Fill(ds, "Products");
-                    lvAnnouncements.DataSource = ds;
-                    lvAnnouncements.DataBind();
+                    lvProducts.DataSource = ds;
+                    lvProducts.DataBind();
                 }
             }
         }
     }
 
-    void GetCategories()
-    {
-        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
-        {
-            con.Open();
-            string query = @"SELECT * FROM Categories";
+    // di ako sure
+    //void GetCategories()
+    //{
+    //    using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+    //    {
+    //        con.Open();
+    //        string query = @"SELECT * FROM Categories";
 
-            using (SqlCommand cmd = new SqlCommand(query, con))
-            {
-                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-                {
-                    DataSet ds = new DataSet();
-                    da.Fill(ds, "Categories");
-                    lvAnnouncements.DataSource = ds;
-                    lvAnnouncements.DataBind();
-                }
-            }
-        }
-    }
+    //        using (SqlCommand cmd = new SqlCommand(query, con))
+    //        {
+    //            using (SqlDataAdapter data = new SqlDataAdapter())
+    //            {
+    //                ddlCategories.DataSource = data;
+    //                ddlCategories.DataTextField = "Categories";
+    //                ddlCategories.DataValueField = "CatID";
+    //                ddlCategories.DataBind();
+
+    //                ddlCategories.Items.Insert(0, new ListItem("Select a Category...", ""));
+    //            }
+    //        }
+    //    }
+    //}
 
     protected void AddProduct(object sender, EventArgs e)
     {
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"INSERT INTO Products VALUES (@Name, @CatID, @Code, @Description,
-                @Image, @Price, @Available, @CriticalLevel, @Maximum, @Status,
-                @DateAdded, @DateModified)";
+            string query = @"INSERT INTO Products VALUES (@Name, @CatID, @Code, @Description, @Price, @Available, @Criticallevel, @Maximum, @Status, @DateAdded, @DateModified)";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -117,7 +117,7 @@ public partial class Products : System.Web.UI.Page
 
                 cmd.Parameters.AddWithValue("@Price", txtPrice.Text);
                 cmd.Parameters.AddWithValue("@Available", 0);
-                cmd.Parameters.AddWithValue("@CriticalLevel", txtCritical.Text);
+                cmd.Parameters.AddWithValue("@Criticallevel", txtCritical.Text);
                 cmd.Parameters.AddWithValue("@Maximum", txtMax.Text);
                 cmd.Parameters.AddWithValue("@Status", "Active");
                 cmd.Parameters.AddWithValue("@DateAdded", DateTime.Now);
@@ -128,6 +128,7 @@ public partial class Products : System.Web.UI.Page
             }
         }
     }
+    
     protected void EditProduct(int ID)
     {
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
@@ -150,9 +151,8 @@ public partial class Products : System.Web.UI.Page
                             txtCode.Text = data["Code"].ToString();
                             txtDescription.Text = data["Description"].ToString();
                             txtPrice.Text = data["Price"].ToString();
-                            txtCritical.Text = data["CriticalLevel"].ToString();
+                            txtCritical.Text = data["Criticallevel"].ToString();
                             txtMax.Text = data["Maximum"].ToString();
-                            
                         }
                     }
                     else
@@ -163,14 +163,15 @@ public partial class Products : System.Web.UI.Page
             }
         }
     }
+
     protected void SaveProduct(object sender, EventArgs e)
     {
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
             string query = @"UPDATE Products SET Name=@Name, CatID=@CatID, Code=@Code,
-                Description=@Description, Image=@Image, Price=@Price, IsFeatured=@IsFeatured,
-                CriticalLevel=@CriticalLevel, Maximum=@Maximum,
+                Description=@Description, Price=@Price,
+                Criticallevel=@Criticallevel, Maximum=@Maximum,
                 DateModified=@DateModified WHERE ProductID=@ProductID";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -191,7 +192,7 @@ public partial class Products : System.Web.UI.Page
                 //    Session.Remove("image");
                 //}
                 cmd.Parameters.AddWithValue("@Price", txtPrice.Text);
-                cmd.Parameters.AddWithValue("@CriticalLevel", txtCritical.Text);
+                cmd.Parameters.AddWithValue("@Criticallevel", txtCritical.Text);
                 cmd.Parameters.AddWithValue("@Maximum", txtMax.Text);
                 cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
                 cmd.Parameters.AddWithValue("@ProductID", Request.QueryString["ID"].ToString());
@@ -203,6 +204,7 @@ public partial class Products : System.Web.UI.Page
             }
         }
     }
+
     void DeleteRecord(int ID)
     {
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
