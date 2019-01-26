@@ -20,14 +20,13 @@
     <link href="bootstrap/assets/demo/demo.css" rel="stylesheet" />
 </head>
 <body>
-    <form id="form1" runat="server">
+    
         <%--Navbar--%>
         <nav class="navbar navbar-expand-lg fixed-top navbar-transparent " color-on-scroll="100">
             <div class="container">
                 <div class="navbar-translate">
                     <!-- Brand -->
-                    <a class="navbar-brand" href="home.aspx" rel="tooltip" target="_blank">
-                        Cosmetic Right
+                    <a class="navbar-brand" href="home.aspx" rel="tooltip" target="_blank">Cosmetic Right
                     </a>
                     <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-bar bar1"></span>
@@ -58,8 +57,8 @@
                             </a>
                         </li>
                         <li class="nav-item p-0">
-                            <a class="nav-link" href="Register.aspx"> <!-- Change URL -->
-                                <i class="fa fa-user-circle"></i>Announcement
+                            <a class="nav-link" href="ProductDisplay.aspx">
+                                <i class="fa fa-user-circle"></i>Products
                             </a>
                         </li>
                         <li class="nav-item p-0">
@@ -67,16 +66,34 @@
                                 <i class="fa fa-user-circle"></i>FAQ
                             </a>
                         </li>
+                        
+
+                        <%--ASK SIR JAKE ABOUT THIS--%>
+                        <%--NAKA LOGIN ANG USER THIS CODE BELOW WILL WORK--%>
+                        <%if (Session["UserID"] != null){  %>
+
                         <li class="nav-item p-0">
-                            <a class="nav-link" href="Register.aspx">
-                                <i class="fa fa-user-circle"></i>Register
+                            <a class="nav-link" href="Logout.aspx">
+                                <i class="fa fa-key"></i>Logout
                             </a>
                         </li>
+                        <%--HINDI NAKA LOGIN ANG USER THIS CODE BELOW WILL WORK--%>
+                        <% }
+                        else
+                        { %>
                         <li class="nav-item p-0">
                             <a class="nav-link" href="Login.aspx">
                                 <i class="fa fa-key"></i>Login
                             </a>
                         </li>
+                        <li id="" class="nav-item p-0">
+                            <a class="nav-link" href="Register.aspx">
+                                <i class="fa fa-user-circle"></i>Register
+                            </a>
+                        </li>
+                        <%} %>
+
+                       <%-- END OF LOGIC--%>
                     </ul>
                 </div>
             </div>
@@ -84,76 +101,76 @@
 
         <div class="wrapper bg-default">
             <asp:ContentPlaceHolder ID="header" runat="server"></asp:ContentPlaceHolder>
-            
-                <asp:ContentPlaceHolder ID="body" runat="server">
-                </asp:ContentPlaceHolder>
-            
+
+            <asp:ContentPlaceHolder ID="body" runat="server">
+            </asp:ContentPlaceHolder>
+
             <footer class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3">
-                        <h1 class="title">BLK•</h1>
-                    </div>
-                    <div class="col-md-3">
-                        <ul class="nav">
-                            <li class="nav-item">
-                                <a href="../index.html" class="nav-link">Home
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h1 class="title">BLK•</h1>
+                        </div>
+                        <div class="col-md-3">
+                            <ul class="nav">
+                                <li class="nav-item">
+                                    <a href="../index.html" class="nav-link">Home
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../examples/landing-page.html" class="nav-link">Landing
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../examples/register-page.html" class="nav-link">Register
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../examples/profile-page.html" class="nav-link">Profile
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3">
+                            <ul class="nav">
+                                <li class="nav-item">
+                                    <a href="https://creative-tim.com/contact-us" class="nav-link">Contact Us
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="https://creative-tim.com/about-us" class="nav-link">About Us
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="https://creative-tim.com/blog" class="nav-link">Blog
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="https://opensource.org/licenses/MIT" class="nav-link">License
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3">
+                            <h3 class="title">Follow us:</h3>
+                            <div class="btn-wrapper profile">
+                                <a target="_blank" href="https://twitter.com/creativetim" class="btn btn-icon btn-neutral btn-round btn-simple" data-toggle="tooltip" data-original-title="Follow us">
+                                    <i class="fab fa-twitter"></i>
                                 </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../examples/landing-page.html" class="nav-link">Landing
+                                <a target="_blank" href="https://www.facebook.com/creativetim" class="btn btn-icon btn-neutral btn-round btn-simple" data-toggle="tooltip" data-original-title="Like us">
+                                    <i class="fab fa-facebook-square"></i>
                                 </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../examples/register-page.html" class="nav-link">Register
+                                <a target="_blank" href="https://dribbble.com/creativetim" class="btn btn-icon btn-neutral  btn-round btn-simple" data-toggle="tooltip" data-original-title="Follow us">
+                                    <i class="fab fa-dribbble"></i>
                                 </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../examples/profile-page.html" class="nav-link">Profile
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-3">
-                        <ul class="nav">
-                            <li class="nav-item">
-                                <a href="https://creative-tim.com/contact-us" class="nav-link">Contact Us
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="https://creative-tim.com/about-us" class="nav-link">About Us
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="https://creative-tim.com/blog" class="nav-link">Blog
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="https://opensource.org/licenses/MIT" class="nav-link">License
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-3">
-                        <h3 class="title">Follow us:</h3>
-                        <div class="btn-wrapper profile">
-                            <a target="_blank" href="https://twitter.com/creativetim" class="btn btn-icon btn-neutral btn-round btn-simple" data-toggle="tooltip" data-original-title="Follow us">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                            <a target="_blank" href="https://www.facebook.com/creativetim" class="btn btn-icon btn-neutral btn-round btn-simple" data-toggle="tooltip" data-original-title="Like us">
-                                <i class="fab fa-facebook-square"></i>
-                            </a>
-                            <a target="_blank" href="https://dribbble.com/creativetim" class="btn btn-icon btn-neutral  btn-round btn-simple" data-toggle="tooltip" data-original-title="Follow us">
-                                <i class="fab fa-dribbble"></i>
-                            </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </footer>
+            </footer>
         </div>
-     
-        
+
+
 
         <asp:ContentPlaceHolder ID="scripts" runat="server">
         </asp:ContentPlaceHolder>
@@ -191,6 +208,6 @@
                 }
             }
         </script>
-    </form>
+    
 </body>
 </html>

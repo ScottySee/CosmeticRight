@@ -27,7 +27,7 @@ public partial class Register : System.Web.UI.Page
                          @Email, @Password, @EmailCode, @DateAdded, @DateModified)";
                 using (SqlCommand cmd = new SqlCommand(SQL, con))
                 {
-                    cmd.Parameters.AddWithValue("@UserType", UserType.SelectedValue);
+                    cmd.Parameters.AddWithValue("@UserType", "3");
                     cmd.Parameters.AddWithValue("@Firstname", firstname.Text);
                     cmd.Parameters.AddWithValue("@Lastname", lastname.Text);
                     cmd.Parameters.AddWithValue("@Gender", gender.SelectedValue);

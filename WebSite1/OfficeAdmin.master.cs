@@ -9,6 +9,16 @@ public partial class Admin : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (Session["UserID"] != null)
+        {
+            if (Session["UserType"].ToString() != "1")
+            {
+                Response.Redirect("Login.aspx");
+            } 
+        }
+        else
+        {
+            Response.Redirect("Login.aspx");
+        }
     }
 }
