@@ -21,7 +21,7 @@
                         </a>
                         <asp:ListView ID="lvCategories" runat="server">
                             <ItemTemplate>
-                                <a href='Products.aspx?c=<%# Eval("CatID") %>'
+                                <a href='ProductsDisplay.aspx?c=<%# Eval("CatID") %>'
                                     class="list-group-item">
                                     <span class="badge"><%# Eval("TotalCount") %></span>
                                     <%# Eval("Category") %>

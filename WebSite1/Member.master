@@ -66,8 +66,31 @@
                                 <i class="fa fa-user-circle"></i>FAQ
                             </a>
                         </li>
-                        
-
+                        <li class="nav-item p-0">
+                            <a class="nav-link" href="Register.aspx"> <!-- Change URL -->
+                                <i class="fa fa-user-circle"></i>Announcement
+                            </a>
+                        </li>
+                        <li class="nav-item p-0">
+                            <a class="nav-link" href="Register.aspx"> <!-- Change URL -->
+                                <i class="fa fa-user-circle"></i>Order History
+                            </a>
+                        </li>
+                        <li class="nav-item p-0">
+                            <a class="nav-link" href="Register.aspx"> <!-- Change URL -->
+                                <i class="fa fa-user-circle"></i>Feedback
+                            </a>
+                        </li>
+                        <li class="nav-item p-0">
+                            <a class="nav-link" href="Register.aspx"> <!-- Change URL -->
+                                <i class="fa fa-user-circle"></i>Cart
+                            </a>
+                        </li>
+                        <li class="nav-item p-0">
+                            <a class="nav-link" href="Register.aspx"> <!-- Change URL -->
+                                <i class="fa fa-user-circle"></i>Profile
+                            </a>
+                        </li>
                         <%--ASK SIR JAKE ABOUT THIS--%>
                         <%--NAKA LOGIN ANG USER THIS CODE BELOW WILL WORK--%>
                         <%if (Session["UserID"] != null){  %>
