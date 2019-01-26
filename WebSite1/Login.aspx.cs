@@ -38,11 +38,11 @@ public partial class Login : System.Web.UI.Page
                             // eto yung para madistinguish kung anong type ang user
                             if (data["UserType"].ToString() == "1") //OFFICE ADMIN
                             {
-                                Response.Redirect("Home2.aspx");
+                                Response.Redirect("OfficeAdminHome.aspx");
                             }
                             else if (data["UserType"].ToString() == "2") //WAREHOUSE ADMIN
                             {
-                                Response.Redirect("Member.aspx");
+                                Response.Redirect("WarehouseAdminHome.aspx");
                             }
                             else if(data["UserType"].ToString() == "3") // USER/MEMBER
                             {

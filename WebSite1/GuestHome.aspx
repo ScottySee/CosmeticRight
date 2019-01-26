@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Member.master" AutoEventWireup="true" CodeFile="Member.aspx.cs" Inherits="Member" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Guest.master" AutoEventWireup="true" CodeFile="GuestHome.aspx.cs" Inherits="Home" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="header" Runat="Server">
     <div class="header bg-gradient-gray-dark pb-5 pt-5 pt-md-8">
@@ -12,7 +12,7 @@
     <div class="page-header header-filter">
         <div class="content">
             <div class="container">
-                <h1>Welcome Member</h1>
+                <h1>Welcome to Cosmetic Right</h1>
                 <div class="row justify-content-center">
                 </div>
             </div>

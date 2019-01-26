@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.IO;
 
 public partial class Products : System.Web.UI.Page
 {
@@ -98,10 +99,13 @@ public partial class Products : System.Web.UI.Page
 
     protected void AddProduct(object sender, EventArgs e)
     {
+        string fileName = Path.GetFileName(fileUpload.FileName);
+        fileUpload.PostedFile.SaveAs(Server.MapPath("~/Images/Products/") + fileName);
+
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"INSERT INTO Products VALUES (@Name, @CatID, @Code, @Description, @Price, @Available, @Criticallevel, @Maximum, @Status, @DateAdded, @DateModified)";
+            string query = @"INSERT INTO Products VALUES (@Name, @CatID, @Code, @Description, @Image, @Price, @Available, @Criticallevel, @Maximum, @Status, @DateAdded, @DateModified)";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -109,12 +113,7 @@ public partial class Products : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@CatID", ddlCategories.SelectedValue);
                 cmd.Parameters.AddWithValue("@Code", txtCode.Text);
                 cmd.Parameters.AddWithValue("@Description", Server.HtmlEncode(txtDescription.Text));
-
-                //string fileExt = Path.GetExtension(ImageUpload.FileName);
-                //string id = Guid.NewGuid().ToString();
-                //cmd.Parameters.AddWithValue("@Image", id + fileExt);
-                //fuImage.SaveAs(Server.MapPath("~/Images/Products/" + id + fileExt));
-
+                cmd.Parameters.AddWithValue("@Image", fileUpload.FileName);
                 cmd.Parameters.AddWithValue("@Price", txtPrice.Text);
                 cmd.Parameters.AddWithValue("@Available", 0);
                 cmd.Parameters.AddWithValue("@Criticallevel", txtCritical.Text);
@@ -122,6 +121,7 @@ public partial class Products : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@Status", "Active");
                 cmd.Parameters.AddWithValue("@DateAdded", DateTime.Now);
                 cmd.Parameters.AddWithValue("@DateModified", DBNull.Value);
+               
                 cmd.ExecuteNonQuery();
 
                 Response.Redirect("Products.aspx");
@@ -179,23 +179,23 @@ public partial class Products : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@CatID", ddlCategories.SelectedValue);
                 cmd.Parameters.AddWithValue("@Code", txtCode.Text);
                 cmd.Parameters.AddWithValue("@Description", Server.HtmlEncode(txtDescription.Text));
-                //if (fuImage.HasFile)
-                //{
-                //    string fileExt = Path.GetExtension(fuImage.FileName);
-                //    string id = Guid.NewGuid().ToString();
-                //    cmd.Parameters.AddWithValue("@Image", id + fileExt);
-                //    fuImage.SaveAs(Server.MapPath("~/Images/Products/" + id + fileExt));
-                //}
-                //else
-                //{
-                //    cmd.Parameters.AddWithValue("@Image", Session["image"].ToString());
-                //    Session.Remove("image");
-                //}
+                if (fileUpload.HasFile)
+                {
+                    string fileExt = Path.GetExtension(fileUpload.FileName);
+                    //string id = Guid.NewGuid().ToString();
+                    cmd.Parameters.AddWithValue("@Image", fileExt);
+                    fileUpload.SaveAs("~/Images/Products/" + fileExt);
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@Image", Session["image"].ToString());
+                    Session.Remove("image");
+                }
                 cmd.Parameters.AddWithValue("@Price", txtPrice.Text);
                 cmd.Parameters.AddWithValue("@Criticallevel", txtCritical.Text);
                 cmd.Parameters.AddWithValue("@Maximum", txtMax.Text);
                 cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
-                cmd.Parameters.AddWithValue("@ProductID", Request.QueryString["ID"].ToString());
+                cmd.Parameters.AddWithValue("@ProductID", productID.Text);
                 //cmd.Parameters.AddWithValue("@Image", "Sample.jpg");
 
                 cmd.ExecuteNonQuery();
@@ -225,4 +225,8 @@ public partial class Products : System.Web.UI.Page
     {
         Response.Redirect("Products.aspx");
     }
+
+
+
+
 }

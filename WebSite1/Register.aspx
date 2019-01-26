@@ -20,7 +20,17 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-4">
-
+                                    <div class="card-title pull-left">
+                                        User Type
+                                    </div>
+                                    <div class="form-group">
+                                        <asp:DropDownList ID="UserType" runat="server" CssClass="form-control" required>
+                                            <asp:ListItem Value="" style="color: black">---------------Select User Type---------------</asp:ListItem>
+                                            <asp:ListItem Value="1" style="color: black">Member</asp:ListItem>
+                                            <asp:ListItem Value="2" style="color: black">Office Admin</asp:ListItem>
+                                            <asp:ListItem Value="3" style="color: black">Warehouse Admin</asp:ListItem>
+                                        </asp:DropDownList>
+                                    </div>
                                     <div class="card-title pull-left">
                                         First Name
                                     </div>
@@ -80,19 +90,15 @@
                                     <div class="form-group">
                                         <asp:TextBox runat="server" ID="landline" Placeholder="Phone" CssClass="form-control"></asp:TextBox>
                                     </div>
-
-
-                                </div>
-                                <!--Third Column-->
-                                <div class="col-md-4">
-
-
                                     <div class="card-title pull-left">
                                         Mobile Number
                                     </div>
                                     <div class="form-group">
                                         <asp:TextBox runat="server" ID="mobile" Placeholder="Mobile" CssClass="form-control" required></asp:TextBox>
                                     </div>
+                                </div>
+                                <!--Third Column-->
+                                <div class="col-md-4">
                                     <div class="card-title pull-left">
                                         Email
                                     </div>
@@ -111,18 +117,20 @@
                                     <div class="form-group">
                                         <asp:TextBox runat="server" ID="cpassword" Placeholder="Password" CssClass="form-control" required></asp:TextBox>
                                     </div>
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        <asp:Button ID="btnRegister" runat="server" Text="Register" class="btn btn-success submit btn-block" OnClick="btnRegister_Click" />
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="text-center">
-                                <asp:Button ID="btnRegister" runat="server" Text="Register" class="btn btn-success submit btn-block" OnClick="btnRegister_Click" />
                             </div>
                         </div>
                     </div>
-
                     <%--<a href="javascript:void(0)" class="btn btn-danger btn-round btn-lg">Register</a>--%>
                 </div>
-                
-
             </div>
         </div>
     </div>

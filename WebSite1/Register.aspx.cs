@@ -22,11 +22,12 @@ public partial class Register : System.Web.UI.Page
             using (SqlConnection con = new SqlConnection(Util.GetConnection()))
             {
                 con.Open();
-                string SQL = @"INSERT INTO Users VALUES ( @Firstname, @Lastname, @Gender,
+                string SQL = @"INSERT INTO Users VALUES (@UserType, @Firstname, @Lastname, @Gender,
                          @BuildingNo, @Street, @Municipality, @City, @Landline, @Mobile,
-                         @Email, @Password, @DateAdded, @DateModified)";
+                         @Email, @Password, @EmailCode, @DateAdded, @DateModified)";
                 using (SqlCommand cmd = new SqlCommand(SQL, con))
                 {
+                    cmd.Parameters.AddWithValue("@UserType", UserType.SelectedValue);
                     cmd.Parameters.AddWithValue("@Firstname", firstname.Text);
                     cmd.Parameters.AddWithValue("@Lastname", lastname.Text);
                     cmd.Parameters.AddWithValue("@Gender", gender.SelectedValue);
@@ -38,11 +39,11 @@ public partial class Register : System.Web.UI.Page
                     cmd.Parameters.AddWithValue("@Mobile", mobile.Text);
                     cmd.Parameters.AddWithValue("@Email", email.Text);
                     cmd.Parameters.AddWithValue("@Password", Util.CreateSHAHash(password.Text));
+                    cmd.Parameters.AddWithValue("@EmailCode", "dgxdhtrse33434");
                     cmd.Parameters.AddWithValue("@DateAdded", DateTime.Now);
                     cmd.Parameters.AddWithValue("@DateModified", DBNull.Value);
                     cmd.ExecuteNonQuery();
 
-                   
                     Response.Redirect("Login.aspx");
                 }
             }
@@ -53,6 +54,5 @@ public partial class Register : System.Web.UI.Page
             Label2.Visible = true;
             Label2.Text = "Password must be the same.";
         }
-       
     }
 }

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin.master" AutoEventWireup="true" CodeFile="Announcement.aspx.cs" Inherits="Announcement" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OfficeAdmin.master" AutoEventWireup="true" CodeFile="Announcement.aspx.cs" Inherits="Announcement" %>
 
 <asp:Content ContentPlaceHolderID="header" runat="server">
     <div class="header bg-gradient-gray-dark pb-5 pt-5 pt-md-8">
@@ -12,8 +12,8 @@
     <div class="container mt--7">
         <!-- page content -->
         <form runat="server" classa="form-horizontal">
-            <asp:scriptmanager runat="server" />
-            <asp:updatepanel id="Announcements" runat="server">
+            <asp:ScriptManager runat="server" />
+            <asp:UpdatePanel ID="Announcements" runat="server">
                 <ContentTemplate>
                     <div class="card shadow-lg">
                         <div class="card-body">
@@ -52,72 +52,72 @@
                             <div class="col-lg-4">
                                 <div class="input-group">
                                     <asp:Button ID="btnAdd" runat="server" class="btn btn-lg btn-success" Text="Add Announcement" OnClick="AddAnnouncement" />
-                                    <asp:Button ID="btnEdit" runat="server" class="btn btn-lg btn-success" Text="Update Announcement"  OnClick="SaveAnnouncement" />
+                                    <asp:Button ID="btnEdit" runat="server" class="btn btn-lg btn-success" Text="Update Announcement" OnClick="SaveAnnouncement" />
                                     <asp:Button ID="btnCancel" runat="server" hidden class="btn btn-lg btn-danger" Text="Cancel" OnClick="btnCancel_Click" />
                                 </div>
                             </div>
                         </div>
                     </div>
-    </div>
-    <!-- Table row -->
-    <div class="card mt-5">
-        <div class="card-body">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12 table">
-                        <table id="datatable" class="table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Announcement ID</th>
-                                    <th>Announcement Name</th>
-                                    <th>Announcement Detail</th>
-                                    <th>Image</th>
-                                    <th>Status</th>
-                                    <%--<th>Date Added</th>
-                                    <th>Date Modified</th>--%>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <%--OnPagePropertiesChanging="lvRates_PagePropertiesChanging"--%>
-                                <asp:listview id="lvAnnouncements" runat="server">
-                                    <ItemTemplate>
-                                        <tr>
-                                            <td><%# Eval("AnnouncementID") %></td>
-                                            <td><%# Eval("AnnouncementName") %></td>
-                                            <td><%# Eval("AnnouncementDetail") %></td>
-                                            <td><%# Eval("Image") %></td>
-                                            <td><%# Eval("Status") %></td>
-                                            <%--<td><%# Eval("DateAdded", "{0: MMMM dd, yyyy}") %></td>
-                                            <td><%# Eval("DateModified", "{0: MMMM dd, yyyy}") %></td>--%>
-                                            <td>
-                                                <a href='Announcement.aspx?EditID=<%# Eval("AnnouncementID") %>'><i class="fa fa-edit"></i></a>&nbsp;
-                                                <a href='Announcement.aspx?DeleteID=<%# Eval("AnnouncementID") %>' onclick="return confirm('Do you want to delete this item?')"><i class="fa fa-trash"></i></a>&nbsp;
-                                            </td>
-                                        </tr>
-                                    </ItemTemplate>
-                                    <EmptyDataTemplate>
-                                        <tr>
-                                            <td colspan="10">
-                                                <h2 class="text-center">No records found.</h2>
-                                            </td>
-                                        </tr>
-                                    </EmptyDataTemplate>
-                                </asp:listview>
-                            </tbody>
-                        </table>
                     </div>
-                </div>
-            </div>
-            <br />
-            <%--<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                    <!-- Table row -->
+                    <div class="card mt-5">
+                        <div class="card-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-xs-12 table">
+                                        <table id="datatable" class="table table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Announcement ID</th>
+                                                    <th>Announcement Name</th>
+                                                    <th>Announcement Detail</th>
+                                                    <th>Image</th>
+                                                    <th>Status</th>
+                                                    <%--<th>Date Added</th>
+                                                    <th>Date Modified</th>--%>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <%--OnPagePropertiesChanging="lvRates_PagePropertiesChanging"--%>
+                                                <asp:ListView ID="lvAnnouncements" runat="server">
+                                                    <ItemTemplate>
+                                                        <tr>
+                                                            <td><%# Eval("AnnouncementID") %></td>
+                                                            <td><%# Eval("AnnouncementName") %></td>
+                                                            <td><%# Eval("AnnouncementDetail") %></td>
+                                                            <td><%# Eval("Image") %></td>
+                                                            <td><%# Eval("Status") %></td>
+                                                            <%--<td><%# Eval("DateAdded", "{0: MMMM dd, yyyy}") %></td>
+                                                            <td><%# Eval("DateModified", "{0: MMMM dd, yyyy}") %></td>--%>
+                                                            <td>
+                                                                <a href='Announcement.aspx?EditID=<%# Eval("AnnouncementID") %>'><i class="fa fa-edit"></i></a>&nbsp;
+                                                                <a href='Announcement.aspx?DeleteID=<%# Eval("AnnouncementID") %>' onclick="return confirm('Do you want to delete this item?')"><i class="fa fa-trash"></i></a>&nbsp;
+                                                            </td>
+                                                        </tr>
+                                                    </ItemTemplate>
+                                                    <EmptyDataTemplate>
+                                                        <tr>
+                                                            <td colspan="10">
+                                                                <h2 class="text-center">No records found.</h2>
+                                                            </td>
+                                                        </tr>
+                                                    </EmptyDataTemplate>
+                                                </asp:ListView>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <%--<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                                 <span class="pull-right">
                                     <button class="btn btn-default" onclick="window.print();"><i class="fa fa-print"></i>Print</button>
                                 </span>
                             </div>--%>
-        </div>
-    </div>
-    </ContentTemplate>
+                        </div>
+                    </div>
+                </ContentTemplate>
             </asp:UpdatePanel>
         </form>
         <!-- /.col -->

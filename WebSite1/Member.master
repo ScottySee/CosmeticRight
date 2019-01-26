@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Guest.master.cs" Inherits="Guest" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Member.master.cs" Inherits="Member" %>
 
 <!DOCTYPE html>
 

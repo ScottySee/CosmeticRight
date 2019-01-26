@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin1.master" AutoEventWireup="true" CodeFile="Products.aspx.cs" Inherits="Products" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WarehouseAdmin.master" AutoEventWireup="true" CodeFile="Products.aspx.cs" Inherits="Products" %>
 
 <asp:Content ContentPlaceHolderID="header" runat="server">
     <div class="header bg-gradient-gray-dark pb-5 pt-5 pt-md-8">
@@ -12,8 +12,8 @@
     <div class="container mt--7">
         <!-- page content -->
         <form runat="server" classa="form-horizontal">
-            <asp:scriptmanager runat="server" />
-            <asp:updatepanel id="Product" runat="server">
+            <asp:ScriptManager runat="server" />
+            <asp:UpdatePanel ID="Product" runat="server">
                 <ContentTemplate>
                     <div class="card shadow-lg">
                         <div class="card-body">
@@ -54,18 +54,25 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
+
                                     <label class="control-label">Images</label><br />
-                                    <div class="input-group">
+                                    <%--    <div class="input-group">
                                         <label class="btn btn-success">
                                             Upload Here
                                             <input type="file" id="ImageUpload" hidden runat="server" />
                                         </label>
-                                    </div>
+                                    </div>--%>
+                                    <label for="fileUpload" class="btn btn-success">
+                                        Upload Image Here
+                                        <asp:FileUpload CssClass="btn btn alert-info" hidden="true" ID="fileUpload" runat="server" />
+                                    </label>
 
+                                    <%--<asp:FileUpload id="fupload" runat="server" Height="21px" Width="220px" />
+                                    <asp:Button id="ButtonUpload" OnClick="ButtonUpload_Click" CssClass="btn btn-lg btn-success" runat="server" />--%>
                                     <%--<div>
-                            <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span><asp:FileUpload ID="fuImage" runat="server" required /></span>
-                            <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
-                        </div>--%>
+                                        <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span><asp:FileUpload ID="fuImage" runat="server" required /></span>
+                                        <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                    </div>--%>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
@@ -90,79 +97,86 @@
                         <div class="container">
                             <div class="col-lg-4">
                                 <div class="input-group">
-                                    <asp:Button ID="btnAdd" runat="server" class="btn btn-lg btn-success" Text="Add Product" OnClick="AddProduct"/>
-                                    <asp:Button ID="btnEdit" runat="server" class="btn btn-lg btn-success" Text="Update Product" OnClick="SaveProduct"/>
-                                    <asp:Button ID="btnCancel" runat="server" hidden class="btn btn-lg btn-danger" Text="Cancel" OnClick="btnCancel_Click"/>
+                                    <asp:Button ID="btnAdd" runat="server" class="btn btn-lg btn-success" Text="Add Product" OnClick="AddProduct" />
+                                    <asp:Button ID="btnEdit" runat="server" class="btn btn-lg btn-success" Text="Update Product" OnClick="SaveProduct" />
+                                    <asp:Button ID="btnCancel" runat="server" hidden class="btn btn-lg btn-danger" Text="Cancel" OnClick="btnCancel_Click" />
                                 </div>
                             </div>
                         </div>
                     </div>
-    </div>
-    <!-- Table row -->
-    <div class="card mt-5">
-        <div class="card-body">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12 table">
-                        <table id="datatable" class="table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Product ID</th>
-                                    <th>Product Name</th>
-                                    <th>Category</th>
-                                    <th>Code</th>
-                                    <th>Price</th>
-                                    <th>Image</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <%--OnPagePropertiesChanging="lvRates_PagePropertiesChanging"--%>
-                                <asp:listview id="lvProducts" runat="server">
-                                    <ItemTemplate>
-                                        <tr>
-                                            <td><%# Eval("ProductID") %></td>
-                                            <td><%# Eval("ProductName") %></td>
-                                            <td><%# Eval("Categories") %></td>
-                                            <td><%# Eval("Code") %></td>
-                                            <td><%# Eval("Price") %></td>
-                                            <td><%# Eval("Image") %></td>
-                                            <td><%# Eval("Status") %></td>
-                                            <td>
-                                                <a href='Announcement.aspx?EditID=<%# Eval("ProductID") %>'><i class="fa fa-edit"></i></a>&nbsp;
-                                                <a href='Announcement.aspx?DeleteID=<%# Eval("ProductID") %>' onclick="return confirm('Do you want to delete this item?')"><i class="fa fa-trash"></i></a>&nbsp;
-                                            </td>
-                                        </tr>
-                                    </ItemTemplate>
-                                    <EmptyDataTemplate>
-                                        <tr>
-                                            <td colspan="10">
-                                                <h2 class="text-center">No records found.</h2>
-                                            </td>
-                                        </tr>
-                                    </EmptyDataTemplate>
-                                </asp:listview>
-                            </tbody>
-                        </table>
                     </div>
-                </div>
-            </div>
-            <br />
-            <%--<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+    <!-- Table row -->
+                    <div class="card mt-5">
+                        <div class="card-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-xs-12 table">
+                                        <table id="datatable" class="table table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Product ID</th>
+                                                    <th>Product Name</th>
+                                                    <th>Category</th>
+                                                    <th>Code</th>
+                                                    <th>Price</th>
+                                                    <th>Image</th>
+                                                    <th>Status</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <%--OnPagePropertiesChanging="lvRates_PagePropertiesChanging"--%>
+                                                <asp:ListView ID="lvProducts" runat="server">
+                                                    <ItemTemplate>
+                                                        <tr>
+                                                            <td><%# Eval("ProductID") %></td>
+                                                            <td><%# Eval("Name") %></td>
+                                                            <td><%# Eval("CatID") %></td>
+                                                            <td><%# Eval("Code") %></td>
+                                                            <td><%# Eval("Price") %></td>
+
+                                                            <td>
+                                                                <img src='/Images/Products/<%# Eval("Image") %>' class="img-fluid" width="100" /></td>
+                                                            <td><%# Eval("Status") %></td>
+                                                            <td>
+                                                                <a href='Products.aspx?EditID=<%# Eval("ProductID") %>'><i class="fa fa-edit"></i></a>&nbsp;
+                                               
+                                                                <a href='products.aspx?DeleteID=<%# Eval("ProductID") %>' onclick="return confirm('Do you want to delete this item?')"><i class="fa fa-trash"></i></a>&nbsp;
+                                            </td>
+                                                        </tr>
+                                                    </ItemTemplate>
+                                                    <EmptyDataTemplate>
+                                                        <tr>
+                                                            <td colspan="10">
+                                                                <h2 class="text-center">No records found.</h2>
+                                                            </td>
+                                                        </tr>
+                                                    </EmptyDataTemplate>
+                                                </asp:ListView>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <%--<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                                 <span class="pull-right">
                                     <button class="btn btn-default" onclick="window.print();"><i class="fa fa-print"></i>Print</button>
                                 </span>
                             </div>--%>
-        </div>
-    </div>
-    </ContentTemplate>
+                        </div>
+                    </div>
+                </ContentTemplate>
+                <Triggers>
+                    <asp:PostBackTrigger ControlID="btnAdd" />
+                    <%--<asp:AsyncPostBackTrigger ControlID="btnAdd" />--%>
+                </Triggers>
             </asp:UpdatePanel>
         </form>
         <!-- /.col -->
     </div>
     <br />
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="scripts" Runat="Server">
+<asp:Content ID="Content3" ContentPlaceHolderID="scripts" runat="Server">
 </asp:Content>
 
