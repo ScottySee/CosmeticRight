@@ -13,8 +13,8 @@
         <!-- page content -->
         <form runat="server" classa="form-horizontal">
             <asp:ScriptManager runat="server" />
-            <asp:UpdatePanel ID="Announcements" runat="server">
-                <ContentTemplate>
+<%--            <asp:UpdatePanel ID="Announcements" runat="server">
+                <ContentTemplate>--%>
                     <div class="card shadow-lg">
                         <div class="card-body">
                             <!-- Main Content -->
@@ -33,12 +33,10 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <label class="control-label">Images</label><br />
-                                    <div class="input-group">
-                                        <label class="btn btn-success">
-                                            Upload Here
-                                            <input type="file" id="imageupload" hidden runat="server" />
-                                        </label>
-                                    </div>
+                                    <label for="body_fileUpload1" class="btn btn-success">
+                                        Upload Image Here
+                                        <asp:FileUpload CssClass="btn btn alert-info" hidden ID="fileUpload1" runat="server" />
+                                    </label>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
@@ -58,14 +56,14 @@
                             </div>
                         </div>
                     </div>
-                    </div>
+                   
                     <!-- Table row -->
                     <div class="card mt-5">
                         <div class="card-body">
                             <div class="container">
                                 <div class="row">
                                     <div class="col-xs-12 table">
-                                        <table id="datatable" class="table table-striped table-bordered">
+                                        <table id="datatable" class="table table-striped">
                                             <thead>
                                                 <tr>
                                                     <th>Announcement ID</th>
@@ -117,8 +115,8 @@
                             </div>--%>
                         </div>
                     </div>
-                </ContentTemplate>
-            </asp:UpdatePanel>
+<%--                </ContentTemplate>
+            </asp:UpdatePanel>--%>
         </form>
         <!-- /.col -->
     </div>

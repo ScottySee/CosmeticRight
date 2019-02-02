@@ -10,6 +10,8 @@ using System.IO;
 
 public partial class Products : System.Web.UI.Page
 {
+    SqlConnection con = new SqlConnection(Util.GetConnection());
+    SqlCommand cmd;
     int editID = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -56,22 +58,18 @@ public partial class Products : System.Web.UI.Page
 
     void GetProducts()
     {
-        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
-        {
-            con.Open();
-            string query = @"SELECT * FROM Products";
+        string query = @"SELECT * FROM Products";
 
-            using (SqlCommand cmd = new SqlCommand(query, con))
-            {
-                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-                {
-                    DataSet ds = new DataSet();
-                    da.Fill(ds, "Products");
-                    lvProducts.DataSource = ds;
-                    lvProducts.DataBind();
-                }
-            }
+        cmd = new SqlCommand(query, con);
+        con.Open();
+        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+        {
+            DataSet ds = new DataSet();
+            da.Fill(ds, "Products");
+            lvProducts.DataSource = ds;
+            lvProducts.DataBind();
         }
+        con.Close();
     }
 
     // di ako sure
@@ -102,123 +100,109 @@ public partial class Products : System.Web.UI.Page
         string fileName = Path.GetFileName(fileUpload.FileName);
         fileUpload.PostedFile.SaveAs(Server.MapPath("~/Images/Products/") + fileName);
 
-        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
-        {
-            con.Open();
-            string query = @"INSERT INTO Products VALUES (@Name, @CatID, @Code, @Description, @Image, @Price, @Available, @Criticallevel, @Maximum, @Status, @DateAdded, @DateModified)";
+        con.Open();
+        string query = @"INSERT INTO Products VALUES (@Name, @CatID, @Code, @Description, @Image, @Price, @Available, @Criticallevel, @Maximum, @Status, @DateAdded, @DateModified)";
 
-            using (SqlCommand cmd = new SqlCommand(query, con))
-            {
-                cmd.Parameters.AddWithValue("@Name", txtProductName.Text);
-                cmd.Parameters.AddWithValue("@CatID", ddlCategories.SelectedValue);
-                cmd.Parameters.AddWithValue("@Code", txtCode.Text);
-                cmd.Parameters.AddWithValue("@Description", Server.HtmlEncode(txtDescription.Text));
-                cmd.Parameters.AddWithValue("@Image", fileUpload.FileName);
-                cmd.Parameters.AddWithValue("@Price", txtPrice.Text);
-                cmd.Parameters.AddWithValue("@Available", 0);
-                cmd.Parameters.AddWithValue("@Criticallevel", txtCritical.Text);
-                cmd.Parameters.AddWithValue("@Maximum", txtMax.Text);
-                cmd.Parameters.AddWithValue("@Status", "Active");
-                cmd.Parameters.AddWithValue("@DateAdded", DateTime.Now);
-                cmd.Parameters.AddWithValue("@DateModified", DBNull.Value);
-               
-                cmd.ExecuteNonQuery();
+        cmd = new SqlCommand(query, con);
+        cmd.Parameters.AddWithValue("@Name", txtProductName.Text);
+        cmd.Parameters.AddWithValue("@CatID", ddlCategories.SelectedValue);
+        cmd.Parameters.AddWithValue("@Code", txtCode.Text);
+        cmd.Parameters.AddWithValue("@Description", Server.HtmlEncode(txtDescription.Text));
+        cmd.Parameters.AddWithValue("@Image", fileUpload.FileName);
+        cmd.Parameters.AddWithValue("@Price", txtPrice.Text);
+        cmd.Parameters.AddWithValue("@Available", 0);
+        cmd.Parameters.AddWithValue("@Criticallevel", txtCritical.Text);
+        cmd.Parameters.AddWithValue("@Maximum", txtMax.Text);
+        cmd.Parameters.AddWithValue("@Status", "Active");
+        cmd.Parameters.AddWithValue("@DateAdded", DateTime.Now);
+        cmd.Parameters.AddWithValue("@DateModified", DBNull.Value);
+        cmd.ExecuteNonQuery();
+        con.Close();
 
-                Response.Redirect("Products.aspx");
-            }
-        }
+        Response.Redirect("Products.aspx");
+
     }
-    
+
     protected void EditProduct(int ID)
     {
-        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
-        {
-            con.Open();
-            string query = @"SELECT * FROM Products WHERE ProductID=@ProductID";
+        con.Open();
+        string query = @"SELECT * FROM Products WHERE ProductID=@ProductID";
 
-            using (SqlCommand cmd = new SqlCommand(query, con))
+        cmd = new SqlCommand(query, con);
+        cmd.Parameters.AddWithValue("@ProductID", ID);
+        using (SqlDataReader data = cmd.ExecuteReader())
+        {
+            if (data.HasRows)
             {
-                cmd.Parameters.AddWithValue("@ProductID", ID);
-                using (SqlDataReader data = cmd.ExecuteReader())
+                while (data.Read())
                 {
-                    if (data.HasRows)
-                    {
-                        while (data.Read())
-                        {
-                            productID.Text = data["ProductID"].ToString();
-                            txtProductName.Text = data["Name"].ToString();
-                            ddlCategories.SelectedValue = data["CatID"].ToString();
-                            txtCode.Text = data["Code"].ToString();
-                            txtDescription.Text = data["Description"].ToString();
-                            txtPrice.Text = data["Price"].ToString();
-                            txtCritical.Text = data["Criticallevel"].ToString();
-                            txtMax.Text = data["Maximum"].ToString();
-                        }
-                    }
-                    else
-                    {
-                        Response.Redirect("Products.aspx");
-                    }
+                    productID.Text = data["ProductID"].ToString();
+                    txtProductName.Text = data["Name"].ToString();
+                    ddlCategories.SelectedValue = data["CatID"].ToString();
+                    txtCode.Text = data["Code"].ToString();
+                    Session["image"] = data["Image"].ToString();
+                    txtDescription.Text = data["Description"].ToString();
+                    txtPrice.Text = data["Price"].ToString();
+                    txtCritical.Text = data["Criticallevel"].ToString();
+                    txtMax.Text = data["Maximum"].ToString();
+                    
                 }
             }
+            else
+            {
+                Response.Redirect("Products.aspx");
+            }
+
         }
+        con.Close();
     }
 
     protected void SaveProduct(object sender, EventArgs e)
     {
-        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
-        {
-            con.Open();
-            string query = @"UPDATE Products SET Name=@Name, CatID=@CatID, Code=@Code,
-                Description=@Description, Price=@Price,
+        con.Open();
+        string query = @"UPDATE Products SET Name=@Name, CatID=@CatID, Code=@Code,
+                Description=@Description, Price=@Price, Image=@Image,
                 Criticallevel=@Criticallevel, Maximum=@Maximum,
                 DateModified=@DateModified WHERE ProductID=@ProductID";
-            using (SqlCommand cmd = new SqlCommand(query, con))
-            {
-                cmd.Parameters.AddWithValue("@Name", txtProductName.Text);
-                cmd.Parameters.AddWithValue("@CatID", ddlCategories.SelectedValue);
-                cmd.Parameters.AddWithValue("@Code", txtCode.Text);
-                cmd.Parameters.AddWithValue("@Description", Server.HtmlEncode(txtDescription.Text));
-                if (fileUpload.HasFile)
-                {
-                    string fileExt = Path.GetExtension(fileUpload.FileName);
-                    //string id = Guid.NewGuid().ToString();
-                    cmd.Parameters.AddWithValue("@Image", fileExt);
-                    fileUpload.SaveAs("~/Images/Products/" + fileExt);
-                }
-                else
-                {
-                    cmd.Parameters.AddWithValue("@Image", Session["image"].ToString());
-                    Session.Remove("image");
-                }
-                cmd.Parameters.AddWithValue("@Price", txtPrice.Text);
-                cmd.Parameters.AddWithValue("@Criticallevel", txtCritical.Text);
-                cmd.Parameters.AddWithValue("@Maximum", txtMax.Text);
-                cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
-                cmd.Parameters.AddWithValue("@ProductID", productID.Text);
-                //cmd.Parameters.AddWithValue("@Image", "Sample.jpg");
-
-                cmd.ExecuteNonQuery();
-
-                Response.Redirect("Products.aspx");
-            }
+        cmd = new SqlCommand(query, con);
+        cmd.Parameters.AddWithValue("@Name", txtProductName.Text);
+        cmd.Parameters.AddWithValue("@CatID", ddlCategories.SelectedValue);
+        cmd.Parameters.AddWithValue("@Code", txtCode.Text);
+        cmd.Parameters.AddWithValue("@Description", Server.HtmlEncode(txtDescription.Text));
+        if (fileUpload.HasFile)
+        {
+            string fileExt = Path.GetExtension(fileUpload.FileName);
+            //string id = Guid.NewGuid().ToString();
+            cmd.Parameters.AddWithValue("@Image", fileExt);
+            fileUpload.SaveAs("~/Images/Products/" + fileExt);
         }
+        else
+        {
+            cmd.Parameters.AddWithValue("@Image", Session["image"].ToString());
+            Session.Remove("image");
+        }
+        cmd.Parameters.AddWithValue("@Price", txtPrice.Text);
+        cmd.Parameters.AddWithValue("@Criticallevel", txtCritical.Text);
+        cmd.Parameters.AddWithValue("@Maximum", txtMax.Text);
+        cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
+        cmd.Parameters.AddWithValue("@ProductID", productID.Text);
+        //cmd.Parameters.AddWithValue("@Image", "Sample.jpg");
+
+        cmd.ExecuteNonQuery();
+        con.Close();
+        Response.Redirect("Products.aspx");
     }
 
     void DeleteRecord(int ID)
     {
-        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
-        {
-            con.Open();
-            string query = @"DELETE FROM Products WHERE ProductID=@ProductID";
+        con.Open();
+        string query = @"DELETE FROM Products WHERE ProductID=@ProductID";
 
-            using (SqlCommand cmd = new SqlCommand(query, con))
-            {
-                cmd.Parameters.AddWithValue("@ProductID", ID);
-                cmd.ExecuteNonQuery();
-                Response.Redirect("Products.aspx");
-            }
-        }
+        cmd = new SqlCommand(query, con);
+        cmd.Parameters.AddWithValue("@ProductID", ID);
+        cmd.ExecuteNonQuery();
+        con.Close();
+        Response.Redirect("Products.aspx");
     }
 
     protected void btnCancel_Click(object sender, EventArgs e)
@@ -226,7 +210,8 @@ public partial class Products : System.Web.UI.Page
         Response.Redirect("Products.aspx");
     }
 
+    protected void ddlCategories_SelectedIndexChanged(object sender, EventArgs e)
+    {
 
-
-
+    }
 }

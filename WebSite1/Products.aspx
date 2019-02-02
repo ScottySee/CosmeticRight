@@ -34,10 +34,11 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="control-label">Category</label>
-                                        <asp:DropDownList ID="ddlCategories" runat="server" class="form-control" required>
+                                        <asp:DropDownList ID="ddlCategories" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlCategories_SelectedIndexChanged" class="form-control" required>
                                             <asp:ListItem Value="" style="color: black">---------------Select Category---------------</asp:ListItem>
                                             <asp:ListItem Value="1" style="color: black">Lotion</asp:ListItem>
-                                            <asp:ListItem Value="2" style="color: black">Soap</asp:ListItem>
+                                            <asp:ListItem Value="2" style="color: black">Toners</asp:ListItem>
+                                            <asp:ListItem Value="3" style="color: black">Soap</asp:ListItem>
                                         </asp:DropDownList>
                                     </div>
                                 </div>
@@ -54,14 +55,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
-
                                     <label class="control-label">Images</label><br />
-                                    <%--    <div class="input-group">
-                                        <label class="btn btn-success">
-                                            Upload Here
-                                            <input type="file" id="ImageUpload" hidden runat="server" />
-                                        </label>
-                                    </div>--%>
                                     <label for="body_fileUpload" class="btn btn-success">
                                         Upload Image Here
                                         <asp:FileUpload CssClass="btn btn alert-info" hidden ID="fileUpload" runat="server" />
@@ -82,6 +76,12 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
+                                        <label class="control-label">Unit Weight</label>
+                                        <asp:Label ID="lblunit" runat="server" class="form-control" required />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
                                         <label class="control-label">Critical Level</label>
                                         <asp:TextBox ID="txtCritical" runat="server" class="form-control" type="number" min="1" max="100" required />
                                     </div>
@@ -89,7 +89,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="control-label">Maximum</label>
-                                        <asp:TextBox ID="txtMax" runat="server" class="form-control" type="number" min="1" max="100" required />
+                                        <asp:TextBox ID="txtMax" runat="server" class="form-control" type="number" min="100" max="1000" required />
                                     </div>
                                 </div>
                             </div>
@@ -98,7 +98,7 @@
                             <div class="col-lg-4">
                                 <div class="input-group">
                                     <asp:Button ID="btnAdd" runat="server" class="btn btn-lg btn-success" Text="Add Product" OnClick="AddProduct" />
-                                    <asp:Button ID="btnEdit" runat="server" class="btn btn-lg btn-success" Text="Update Product" OnClick="SaveProduct" />
+                                    <asp:Button ID="btnEdit" runat="server" OnClientClick="return confirm('Save changes?')" class="btn btn-lg btn-success" Text="Update Product" OnClick="SaveProduct" />
                                     <asp:Button ID="btnCancel" runat="server" hidden class="btn btn-lg btn-danger" Text="Cancel" OnClick="btnCancel_Click" />
                                 </div>
                             </div>
@@ -111,7 +111,7 @@
                             <div class="container">
                                 <div class="row">
                                     <div class="col-xs-12 table">
-                                        <table id="datatable" class="table table-striped table-bordered">
+                                        <table id="datatable" class="table table-striped">
                                             <thead>
                                                 <tr>
                                                     <th>Product ID</th>

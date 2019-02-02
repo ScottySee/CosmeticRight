@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.IO;
 
 public partial class Announcement : System.Web.UI.Page
 {
@@ -75,6 +76,8 @@ public partial class Announcement : System.Web.UI.Page
 
     protected void AddAnnouncement(object sender, EventArgs e)
     {
+        string fileName = Path.GetFileName(fileUpload1.FileName);
+        fileUpload1.PostedFile.SaveAs(Server.MapPath("~/Images/Announcement/") + fileName);
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
@@ -84,7 +87,7 @@ public partial class Announcement : System.Web.UI.Page
             {
                 cmd.Parameters.AddWithValue("@AnnouncementName", txtannouncement.Text);
                 cmd.Parameters.AddWithValue("@AnnouncementDetail", txtdetails.Text);
-                cmd.Parameters.AddWithValue("@Image", "Sample.jpg");
+                cmd.Parameters.AddWithValue("@Image", fileUpload1.FileName);
                 cmd.Parameters.AddWithValue("@AdminID", "1");
                 cmd.Parameters.AddWithValue("@Status", "Active");
                 cmd.Parameters.AddWithValue("@DateAdded", DateTime.Now);
@@ -115,6 +118,7 @@ public partial class Announcement : System.Web.UI.Page
                             announcementID.Text = data["AnnouncementID"].ToString();
                             txtannouncement.Text = data["AnnouncementName"].ToString();
                             txtdetails.Text = data["AnnouncementDetail"].ToString();
+                            Session["image"] = data["Image"].ToString();
                         }
                     }
                     else
@@ -130,11 +134,23 @@ public partial class Announcement : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"UPDATE Announcements SET AnnouncementName=@AnnouncementName, AnnouncementDetail=@AnnouncementDetail WHERE AnnouncementID=@AnnouncementID";
+            string query = @"UPDATE Announcements SET AnnouncementName=@AnnouncementName, Image=@Image, AnnouncementDetail=@AnnouncementDetail WHERE AnnouncementID=@AnnouncementID";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@AnnouncementName", txtannouncement.Text);
                 cmd.Parameters.AddWithValue("@AnnouncementDetail", txtdetails.Text);
+                if (fileUpload1.HasFile)
+                {
+                    string filename = Path.GetFileName(fileUpload1.FileName);
+                    cmd.Parameters.AddWithValue("@Image", filename);
+                    //fileUpload1.SaveAs("~/Images/Announcement/" + fileExt);
+                    fileUpload1.PostedFile.SaveAs(Server.MapPath("~/Images/Announcement/") + filename);
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@Image", Session["image"].ToString());
+                    Session.Remove("image");
+                }
                 cmd.Parameters.AddWithValue("@AnnouncementID", announcementID.Text);
                 //cmd.Parameters.AddWithValue("@Image", "Sample.jpg");
 
