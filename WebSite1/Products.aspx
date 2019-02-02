@@ -62,9 +62,9 @@
                                             <input type="file" id="ImageUpload" hidden runat="server" />
                                         </label>
                                     </div>--%>
-                                    <label for="fileUpload" class="btn btn-success">
+                                    <label for="body_fileUpload" class="btn btn-success">
                                         Upload Image Here
-                                        <asp:FileUpload CssClass="btn btn alert-info" hidden="true" ID="fileUpload" runat="server" />
+                                        <asp:FileUpload CssClass="btn btn alert-info" hidden ID="fileUpload" runat="server" />
                                     </label>
 
                                     <%--<asp:FileUpload id="fupload" runat="server" Height="21px" Width="220px" />
@@ -139,9 +139,9 @@
                                                                 <img src='/Images/Products/<%# Eval("Image") %>' class="img-fluid" width="100" /></td>
                                                             <td><%# Eval("Status") %></td>
                                                             <td>
-                                                                <a href='Products.aspx?EditID=<%# Eval("ProductID") %>'><i class="fa fa-edit"></i></a>&nbsp;
+                                                                <a href='Products.aspx?EditID=<%# Eval("ProductID") %>' class="btn btn-info btn-sm"><i class="fa fa-edit"></i> Edit</a>&nbsp;
                                                
-                                                                <a href='products.aspx?DeleteID=<%# Eval("ProductID") %>' onclick="return confirm('Do you want to delete this item?')"><i class="fa fa-trash"></i></a>&nbsp;
+                                                                <a href='products.aspx?DeleteID=<%# Eval("ProductID") %>' class="btn btn-danger btn-sm" onclick="return confirm('Do you want to delete this item?')"><i class="fa fa-trash"></i> Delete</a>&nbsp;
                                             </td>
                                                         </tr>
                                                     </ItemTemplate>

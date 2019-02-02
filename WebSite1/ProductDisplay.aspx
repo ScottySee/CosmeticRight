@@ -10,18 +10,18 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
     <form runat="server" class="form-horizontal">
-        <div class="row">
-            <div class="container">
+        <div class="container">
+            <div class="row">
                 <div class="col-lg-3">
                     <div class="list-group">
-                        <a href="Products.aspx" class="list-group-item">
+                        <a href="ProductDisplay.aspx" class="list-group-item">
                             <span class="badge">
                                 <asp:Literal ID="ltTotal" runat="server" /></span>
                             All Products
                         </a>
                         <asp:ListView ID="lvCategories" runat="server">
                             <ItemTemplate>
-                                <a href='ProductsDisplay.aspx?c=<%# Eval("CatID") %>'
+                                <a href='ProductDisplay.aspx?c=<%# Eval("CatID") %>'
                                     class="list-group-item">
                                     <span class="badge"><%# Eval("TotalCount") %></span>
                                     <%# Eval("Category") %>
@@ -31,22 +31,24 @@
                     </div>
                 </div>
                 <div class="col-lg-9">
-                    <div class="row">
-                        <div class="card-columns">
+                    <div class="">
+                        <div class="card-deck">
                             <asp:ListView ID="lvProducts" runat="server" OnItemCommand="lvProducts_ItemCommand">
-                                <ItemTemplate>
-                                    <div class="col">
+
+                            <ItemTemplate>
+                          
+                                 
                                         <div class="card">
-                                            <div class="card-image">
-                                                <img src='Images/Products/<%# Eval("Image") %>' alt='<%# Eval("Name") %>' />
-                                            </div>
+                                          
+                                                <img src='Images/Products/<%# Eval("Image") %>' class="card-img-top" width="239" height="180" style="object-fit:cover" alt='<%# Eval("Name") %>' />
+                                            
                                             <div class="card-header">
                                                 <a href='Details.aspx?ID=<%# Eval("ProductID") %>' style="text-decoration: none;">
                                             </div>
                                             <div class="card-body">
                                                 <asp:Literal ID="ltID" runat="server" Text='<%# Eval("ProductID") %>' Visible="false" />
                                                 <h3><%# Eval("Name") %></h3>
-                                                <small><%# Eval("Code") %></small><br />
+                                                <small>Code: <%# Eval("Code") %></small><br />
                                                 <small><em>Category: <%# Eval("Category") %></em></small><br />
                                                 <p>
                                                     Php <%# Eval("Price", "{0: #,##0.00}") %>
@@ -56,18 +58,24 @@
                                                 </asp:LinkButton>
                                                 </a>
                                             </div>
-                                        </div>
-                                    </div>
-                                </ItemTemplate>
-                                <EmptyDataTemplate>
-                                    There are no Products.
-                                </EmptyDataTemplate>
-                            </asp:ListView>
+
+                                       
+                                  
+                                </div>
+
+                            </ItemTemplate>
+                            <EmptyDataTemplate>
+                                <p class="text-white">There are no Products.</p>
+
+                            </EmptyDataTemplate>
+                        </asp:ListView>
                         </div>
+                        
                     </div>
                 </div>
             </div>
         </div>
+       
     </form>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scripts" runat="Server">

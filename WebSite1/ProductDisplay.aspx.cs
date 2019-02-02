@@ -15,7 +15,15 @@ public partial class ProductDisplay : System.Web.UI.Page
         if (!IsPostBack)
         {
             GetCategories();
-            GetProducts();
+
+            if (Request.QueryString["c"] != null)
+            {
+                GetSpecificProduct(Request.QueryString["c"].ToString());
+            }
+            else
+            {
+                GetProducts();
+            }
         }
     }
 
@@ -49,6 +57,29 @@ public partial class ProductDisplay : System.Web.UI.Page
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
+                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                {
+                    DataSet ds = new DataSet();
+                    da.Fill(ds, "Products");
+                    lvProducts.DataSource = ds;
+                    lvProducts.DataBind();
+                }
+            }
+        }
+    }
+    void GetSpecificProduct(string code)
+    {
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        {
+            con.Open();
+            string query = @"SELECT p.ProductID, p.Image, p.Name,
+                                p.Code, p.Price, c.Category FROM Products p
+                                INNER JOIN Categories c ON p.CatID = c.CatID
+								WHERE p.CatID = @Code";
+
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("@Code", code);
                 using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                 {
                     DataSet ds = new DataSet();

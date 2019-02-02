@@ -52,7 +52,7 @@
                     <!-- Navigation -->
                     <ul class="navbar-nav">
                         <li class="nav-item p-0">
-                            <a class="nav-link" href="GuestHome.aspx">
+                            <a class="nav-link" href="Member.aspx">
                                 <i class="fa fa-home"></i>Home
                             </a>
                         </li>
@@ -61,36 +61,37 @@
                                 <i class="fa fa-user-circle"></i>Products
                             </a>
                         </li>
-                        <li class="nav-item p-0">
+                        <%--<li class="nav-item p-0">
                             <a class="nav-link" href="Register.aspx"> <!-- Change URL -->
                                 <i class="fa fa-user-circle"></i>FAQ
                             </a>
-                        </li>
-                        <li class="nav-item p-0">
+                        </li>--%>
+                        <%--<li class="nav-item p-0">
                             <a class="nav-link" href="Register.aspx"> <!-- Change URL -->
                                 <i class="fa fa-user-circle"></i>Announcement
                             </a>
-                        </li>
-                        <li class="nav-item p-0">
+                        </li>--%>
+                        <%--<li class="nav-item p-0">
                             <a class="nav-link" href="Register.aspx"> <!-- Change URL -->
                                 <i class="fa fa-user-circle"></i>Order History
                             </a>
-                        </li>
-                        <li class="nav-item p-0">
+                        </li>--%>
+                        <%--<li class="nav-item p-0">
                             <a class="nav-link" href="Register.aspx"> <!-- Change URL -->
                                 <i class="fa fa-user-circle"></i>Feedback
                             </a>
-                        </li>
+                        </li>--%>
                         <li class="nav-item p-0">
-                            <a class="nav-link" href="Register.aspx"> <!-- Change URL -->
+                            <a class="nav-link" href="Cart.aspx"> <!-- Change URL -->
                                 <i class="fa fa-user-circle"></i>Cart
                             </a>
                         </li>
-                        <li class="nav-item p-0">
+                        <%--<li class="nav-item p-0">
                             <a class="nav-link" href="Register.aspx"> <!-- Change URL -->
                                 <i class="fa fa-user-circle"></i>Profile
                             </a>
-                        </li>
+
+                        </li>--%>
                         <%--ASK SIR JAKE ABOUT THIS--%>
                         <%--NAKA LOGIN ANG USER THIS CODE BELOW WILL WORK--%>
                         <%if (Session["UserID"] != null){  %>

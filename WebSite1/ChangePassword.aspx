@@ -21,7 +21,7 @@
                                 </div>--%>
                                 <br />
                                 <div class="form-group">
-                                    <asp:TextBox runat="server" ID="password" Placeholder="Password" CssClass="form-control"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="password" type="password" Placeholder="Password" CssClass="form-control"></asp:TextBox>
                                 </div>
                                 <div class="form-group">
                                     <asp:TextBox runat="server" ID="cpassword" type="password" Placeholder="Confirm Password" CssClass="form-control"></asp:TextBox>
