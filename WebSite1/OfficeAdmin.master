@@ -86,7 +86,7 @@
                         </a>
                     </li>--%>
                     <li class="nav-item p-0">
-                        <a class="nav-link" href="Logout.aspx"> <!-- Change URL -->
+                        <a class="nav-link" href="Logout.aspx">
                             <i class="fa fa-user-circle"></i>Logout
                         </a>
                     </li>

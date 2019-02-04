@@ -16,7 +16,8 @@
                     <div class="list-group">
                         <a href="ProductDisplay.aspx" class="list-group-item">
                             <span class="badge">
-                                <asp:Literal ID="ltTotal" runat="server" /></span>
+                                <asp:Literal ID="ltTotal" runat="server" />
+                            </span>
                             All Products
                         </a>
                         <asp:ListView ID="lvCategories" runat="server">
@@ -34,17 +35,13 @@
                     <div class="">
                         <div class="card-deck">
                             <asp:ListView ID="lvProducts" runat="server" OnItemCommand="lvProducts_ItemCommand">
-
-                            <ItemTemplate>
-                          
-                                 
+                                <ItemTemplate>
+                                    <div class="col-lg-4">
                                         <div class="card">
-                                          
-                                                <img src='Images/Products/<%# Eval("Image") %>' class="card-img-top" width="239" height="180" style="object-fit:cover" alt='<%# Eval("Name") %>' />
-                                            
-                                            <div class="card-header">
+                                            <img src='Images/Products/<%# Eval("Image") %>' class="card-img-top" width="239" height="180" style="object-fit:cover" alt='<%# Eval("Name") %>' />
+                                            <%--<div class="card-header">
                                                 <a href='Details.aspx?ID=<%# Eval("ProductID") %>' style="text-decoration: none;">
-                                            </div>
+                                            </div>--%>
                                             <div class="card-body">
                                                 <asp:Literal ID="ltID" runat="server" Text='<%# Eval("ProductID") %>' Visible="false" />
                                                 <h3><%# Eval("Name") %></h3>
@@ -58,25 +55,21 @@
                                                 </asp:LinkButton>
                                                 </a>
                                             </div>
-
-                                       
-                                  
-                                </div>
-
-                            </ItemTemplate>
-                            <EmptyDataTemplate>
-                                <p class="text-white">There are no Products.</p>
-
-                            </EmptyDataTemplate>
-                        </asp:ListView>
+                                        </div>
+                                        <br />
+                                    </div>
+                                </ItemTemplate>
+                                <EmptyDataTemplate>
+                                    <p class="text-white">There are no Products.</p>
+                                </EmptyDataTemplate>
+                            </asp:ListView>
                         </div>
-                        
                     </div>
                 </div>
             </div>
         </div>
-       
     </form>
+    <br />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scripts" runat="Server">
 </asp:Content>

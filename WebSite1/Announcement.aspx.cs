@@ -53,7 +53,6 @@ public partial class Announcement : System.Web.UI.Page
         GetAnnouncement();
     }
 
-
     void GetAnnouncement()
     {
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
@@ -181,10 +180,4 @@ public partial class Announcement : System.Web.UI.Page
     {
         Response.Redirect("Announcement.aspx");
     }
-
-    //protected void lvRates_PagePropertiesChanging(object sender, PagePropertiesChangingEventArgs e)
-    //{
-    //    GetAnnouncement();
-    //}
-
 }

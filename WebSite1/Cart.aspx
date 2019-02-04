@@ -12,7 +12,7 @@
     <form runat="server" class="form-horizontal">
         <div class="container">
             <div class="text-white">
-                <i class="fa fa-shopping-cart"></i> My Shopping Cart
+                <h3><i class="fa fa-shopping-cart"></i> My Shopping Cart</h3>
             </div>
             <div class="row">
                 <div class="col-lg-9">
@@ -113,10 +113,10 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <hr />
                         <a href="Checkout.aspx" class="btn btn-block btn-lg btn-success">
                             <i class="fa fa-money">Checkout </i>
                         </a>
+                        <br />
                     </div>
                 </div>
             </div>
