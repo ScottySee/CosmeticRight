@@ -77,10 +77,10 @@
                             </div>
                             <br />
                             <br />
-                            <%--<span class="pull-right">
+                            <span class="pull-right">
                                 <asp:Button ID="btnEdit" runat="server" class="btn btn-success"
                                     Text="Edit" OnClick="btnEdit_Click" />
-                            </span>--%>
+                            </span>
                         </div>
                     </div>
                     <%--<a href="javascript:void(0)" class="btn btn-danger btn-round btn-lg">Register</a>--%>
