@@ -37,4 +37,13 @@ public partial class ViewAnnouncement2 : System.Web.UI.Page
             }
         }
     }
+
+    protected void lvAnnouncements_ItemCommand(object sender, ListViewCommandEventArgs e)
+    {
+        if (e.CommandName == "addtocart")
+        {
+            Literal ltID = (Literal)e.Item.FindControl("ltID");
+            Util.AddToCart(ltID.Text, "1");
+        }
+    }
 }

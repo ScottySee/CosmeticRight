@@ -9,7 +9,7 @@
     </div>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" Runat="Server">
-    <form runat="server" class="form-horizontal">
+    <form class="form-horizontal">
         <div class="container">
             <div class="row">
                 <%--<div class="col-lg-3">

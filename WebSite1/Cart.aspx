@@ -12,7 +12,7 @@
     <form runat="server" class="form-horizontal">
         <div class="container">
             <div class="text-white">
-                <h3><i class="fa fa-shopping-cart"></i> My Shopping Cart</h3>
+                <h3><i class="fa fa-shopping-cart"></i>My Shopping Cart</h3>
             </div>
             <div class="row">
                 <div class="col-lg-9">
@@ -40,7 +40,8 @@
                                             <h4><%# Eval("Name") %></h4>
                                             <small>Category: <%# Eval("Category") %></small>
                                         </td>
-                                        <td>Php<%# Eval("Price", "{0: #,##0.00}") %>
+                                        <td>
+                                            Php<%# Eval("Price", "{0: #,##0.00}") %>
                                         </td>
                                         <td>
                                             <asp:TextBox ID="txtQty" runat="server"
@@ -75,7 +76,6 @@
                             </asp:ListView>
                         </tbody>
                     </table>
-
                 </div>
                 <div class="col-lg-3">
                     <div class="well">
