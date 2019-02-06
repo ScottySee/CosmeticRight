@@ -59,6 +59,6 @@ public partial class MemberProfile : System.Web.UI.Page
 
     protected void btnEdit_Click(object sender, EventArgs e)
     {
-        Response.Redirect("EditMemberProfile.aspx");
+        //Response.Redirect("EditMemberProfile.aspx");
     }
 }

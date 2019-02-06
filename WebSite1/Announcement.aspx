@@ -84,7 +84,9 @@
                                                             <td><%# Eval("AnnouncementID") %></td>
                                                             <td><%# Eval("AnnouncementName") %></td>
                                                             <td><%# Eval("AnnouncementDetail") %></td>
-                                                            <td><%# Eval("Image") %></td>
+                                                            <td>
+                                                                <img src='/Images/Announcement/<%# Eval("Image") %>' class="img-fluid" width="100" /></td>
+                                                            <%--<td><%# Eval("Image") %></td>--%>
                                                             <td><%# Eval("Status") %></td>
                                                             <%--<td><%# Eval("DateAdded", "{0: MMMM dd, yyyy}") %></td>
                                                             <td><%# Eval("DateModified", "{0: MMMM dd, yyyy}") %></td>--%>
