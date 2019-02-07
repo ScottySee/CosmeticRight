@@ -10,11 +10,11 @@ public partial class EditMemberProfile : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["userid"] != null)
+        if (Session["UserID"] != null)
         {
             if (!IsPostBack)
             {
-                GetData(Convert.ToInt16(Session["userid"]));
+                GetData(Convert.ToInt16(Session["UserID"]));
             }
         }
         else
@@ -82,7 +82,6 @@ public partial class EditMemberProfile : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@Status", "Active");
                 cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
                 cmd.Parameters.AddWithValue("@UserID", Session["UserID"]);
-
                 cmd.ExecuteNonQuery();
 
                 Response.Redirect("Member.aspx");

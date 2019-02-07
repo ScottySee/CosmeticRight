@@ -1,12 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Member.master" AutoEventWireup="true" CodeFile="MemberProfile.aspx.cs" Inherits="MemberProfile" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="header" runat="Server">
-    <%--<div class="header bg-gradient-gray-dark pb-5 pt-5 pt-md-8">
-        <div class="container-fluid">
-            <div class="header-body">
-            </div>
-        </div>
-    </div>--%>
+    <%--<form runat="server" class="form-horizontal">--%>
     <div class="page-header header-filter">
         <div class="content">
             <div class="container">
@@ -77,10 +72,10 @@
                             </div>
                             <br />
                             <br />
-                            <%--<span class="pull-right">
+                            <span class="pull-right">
                                 <asp:Button ID="btnEdit" runat="server" class="btn btn-success"
                                     Text="Edit" OnClick="btnEdit_Click" />
-                            </span>--%>
+                            </span>
                         </div>
                     </div>
                     <%--<a href="javascript:void(0)" class="btn btn-danger btn-round btn-lg">Register</a>--%>
@@ -88,6 +83,7 @@
             </div>
         </div>
     </div>
+        <%--</form>--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
 </asp:Content>

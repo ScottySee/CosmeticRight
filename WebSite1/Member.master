@@ -63,7 +63,7 @@
                         </a>
                     </li>
                     <%--<li class="nav-item p-0">
-                            <a class="nav-link" href="Register.aspx"> <!-- Change URL -->
+                            <a class="nav-link" href="FAQ.aspx"> <!-- Change URL -->
                                 <i class="fa fa-user-circle"></i>FAQ
                             </a>
                         </li>--%>
@@ -73,12 +73,12 @@
                         </a>
                     </li>
                     <%--<li class="nav-item p-0">
-                            <a class="nav-link" href="Register.aspx"> <!-- Change URL -->
+                            <a class="nav-link" href="OrderHistory.aspx"> <!-- Change URL -->
                                 <i class="fa fa-user-circle"></i>Order History
                             </a>
                         </li>--%>
                     <%--<li class="nav-item p-0">
-                            <a class="nav-link" href="Register.aspx"> <!-- Change URL -->
+                            <a class="nav-link" href="Feedback.aspx"> <!-- Change URL -->
                                 <i class="fa fa-user-circle"></i>Feedback
                             </a>
                         </li>--%>
