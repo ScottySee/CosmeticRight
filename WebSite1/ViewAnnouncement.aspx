@@ -34,9 +34,9 @@
                                     <div class="col-lg-4">
                                         <div class="card">
                                         <img src='Images/Announcement/<%# Eval("Image") %>' class="card-img-top" width="239" height="180" style="object-fit:cover" alt='<%# Eval("AnnouncementName") %>' />
-                                            <%--<div class="card-header">
-                                                <a href='AnnouncementDetail.aspx?ID=<%# Eval("AnnouncementID") %>' style="text-decoration: none;">
-                                            </div>--%>
+                                            <div class="card-header">
+                                                <a href='ViewAnnouncementDetail.aspx?ID=<%# Eval("AnnouncementID") %>' style="text-decoration: none;">
+                                            </div>
                                             <div class="card-body">
                                                 <asp:Literal ID="ltID" runat="server" Text='<%# Eval("AnnouncementID") %>' Visible="false" />
                                                 <h2><%# Eval("AnnouncementName") %></h2>
