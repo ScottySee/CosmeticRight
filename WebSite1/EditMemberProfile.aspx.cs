@@ -49,7 +49,6 @@ public partial class EditMemberProfile : System.Web.UI.Page
                             landline.Text = data["Landline"].ToString();
                             mobile.Text = data["Mobile"].ToString();
                             email.Text = data["Email"].ToString();
-                            password.Text = data["Password"].ToString();
                         }
                     }
                 }
@@ -62,7 +61,7 @@ public partial class EditMemberProfile : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"UPDATE Users SET FirstName=@FirstName, LastName=@LastName, Gender=@Gender, BuildingNo=@BuildingNo, Street=@Street, Municipality=@Municipality, City=@City, Landline=@Landline, Mobile=@Mobile Email=@Email, Password=@Password, EmailCode=@EmailCode Status=@Status, DateModified=@DateModified
+            string query = @"UPDATE Users SET FirstName=@FirstName, LastName=@LastName, Gender=@Gender, BuildingNo=@BuildingNo, Street=@Street, Municipality=@Municipality, City=@City, Landline=@Landline, Mobile=@Mobile, Email=@Email, EmailCode=@EmailCode, DateModified=@DateModified
               WHERE UserID=@UserID";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
@@ -77,14 +76,12 @@ public partial class EditMemberProfile : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@Landline", landline.Text);
                 cmd.Parameters.AddWithValue("@Mobile", mobile.Text);
                 cmd.Parameters.AddWithValue("@Email", email.Text);
-                cmd.Parameters.AddWithValue("@Password", Util.CreateSHAHash(password.Text));
                 cmd.Parameters.AddWithValue("@EmailCode", "dgxdhtrse33434");
-                cmd.Parameters.AddWithValue("@Status", "Active");
                 cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
                 cmd.Parameters.AddWithValue("@UserID", Session["UserID"]);
                 cmd.ExecuteNonQuery();
 
-                Response.Redirect("Member.aspx");
+                Response.Redirect("MemberProfile.aspx");
             }
         }
     }

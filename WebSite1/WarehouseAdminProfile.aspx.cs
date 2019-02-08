@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class MemberProfile : System.Web.UI.Page
+public partial class WarehouseAdminProfile : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -58,6 +58,6 @@ public partial class MemberProfile : System.Web.UI.Page
 
     protected void btnEdit_Click(object sender, EventArgs e)
     {
-        Response.Redirect("EditMemberProfile.aspx");
+        Response.Redirect("EditWarehouseAdminProfile.aspx");
     }
 }

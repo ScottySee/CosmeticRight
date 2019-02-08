@@ -111,9 +111,9 @@
                                     
                                 </div>
                             </div>
-                            <div class="form-group">
-                                        <asp:Button ID="btnRegister" runat="server" Text="Register" class="btn btn-block btn-success submit btn-block" OnClick="btnRegister_Click" />
-                                    </div>
+                            <span class="pull-right">
+                                    <asp:Button ID="btnRegister" runat="server" Text="Register" class="btn btn-block btn-success submit btn-block" OnClick="btnRegister_Click" />
+                                </span>
                         </div>
                     </div>
                     <%--<a href="javascript:void(0)" class="btn btn-danger btn-round btn-lg">Register</a>--%>

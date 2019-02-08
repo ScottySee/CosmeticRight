@@ -60,7 +60,7 @@
                         </li>
                         <li class="nav-item p-0">
                             <a class="nav-link" href="ViewAnnouncement2.aspx"> <!-- Change URL -->
-                                <i class="fa fa-user-circle"></i>Announcement
+                                <i class="fa fa-sticky-note"></i>Announcement
                             </a>
                         </li>
                         <%--<li class="nav-item p-0">

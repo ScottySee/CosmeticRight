@@ -90,8 +90,8 @@ public class Util
 
             if (existingProduct)
             {
-                query = @"UPDATE OrderDetails SET Quantity = Quantity + @quantity,
-                    Amount = Amount + @amount WHERE OrderNo=@OrderNo AND
+                query = @"UPDATE OrderDetails SET Quantity = Quantity + @Quantity,
+                    Amount = Amount + @Amount WHERE OrderNo=@OrderNo AND
                     UserID=@UserID AND ProductID=@ProductID";
             }
             else
@@ -103,7 +103,7 @@ public class Util
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@OrderNo", 0);
-                cmd.Parameters.AddWithValue("@UserID", 1);
+                cmd.Parameters.AddWithValue("@UserID", 3);
                 // HttpContext.Current.Session["userid"].ToString()
                 cmd.Parameters.AddWithValue("@ProductID", ID);
                 cmd.Parameters.AddWithValue("@Quantity", quantity);

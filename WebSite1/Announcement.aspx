@@ -11,7 +11,7 @@
 <asp:Content ContentPlaceHolderID="body" runat="server">
     <div class="container mt--7">
         <!-- page content -->
-        <form runat="server" classa="form-horizontal">
+        <form runat="server" class="form-horizontal">
             <asp:ScriptManager runat="server" />
 <%--            <asp:UpdatePanel ID="Announcements" runat="server">
                 <ContentTemplate>--%>
