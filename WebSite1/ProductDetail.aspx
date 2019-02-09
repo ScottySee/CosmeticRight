@@ -28,8 +28,8 @@
                 <strong>Price: </strong>Php <asp:Literal ID="ltPrice" runat="server" />
                 <br />
                 <div class="input-group col-lg-6">
-                    <asp:TextBox ID="txtQty" runat="server" class="form-control" type="number" min="1" MaxLength="99"
-                        Text="1" required />
+                    <asp:TextBox ID="txtQty" runat="server" class="form-control" type="number" min="50" MaxLength="2000"
+                        Text="50" required />
                     <span class="input-group-btn">
                         <asp:Button ID="btnAddToCart" runat="server" class="btn btn-success" Text="Add To Cart" />
                     </span>
