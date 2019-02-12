@@ -66,12 +66,12 @@
                             <i class="fa fa-scroll"></i>Announcement
                         </a>
                     </li>
-                    <%--<li class="nav-item p-0">
-                        <a class="nav-link" href="Announcement.aspx"> <!-- Change URL -->
+                    <li class="nav-item p-0">
+                        <a class="nav-link" href="ViewFeedback.aspx">
                             <i class="fa fa-user-circle"></i>Feedback
                         </a>
                     </li>
-                    <li class="nav-item p-0">
+                    <%--<li class="nav-item p-0">
                         <a class="nav-link" href="Announcement.aspx"> <!-- Change URL -->
                             <i class="fa fa-user-circle"></i>Statistics & Dashboard
                         </a>
@@ -82,7 +82,7 @@
                         </a>
                     </li>--%>
                     <li class="nav-item p-0">
-                        <a class="nav-link" href="OfficeAdminProfile.aspx"> <!-- Change URL -->
+                        <a class="nav-link" href="OfficeAdminProfile.aspx">
                             <i class="fa fa-user-circle"></i>Profile
                         </a>
                     </li>

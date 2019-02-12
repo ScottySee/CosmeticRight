@@ -72,7 +72,7 @@ public class Util
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@OrderNo", 0);
-                cmd.Parameters.AddWithValue("@UserID", 1);
+                cmd.Parameters.AddWithValue("@UserID", 3);
                 // HttpContext.Current.Session["userid"].ToString()
                 cmd.Parameters.AddWithValue("@ProductID", ID);
                 return cmd.ExecuteScalar() == null ? false : true;

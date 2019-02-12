@@ -109,6 +109,9 @@
                     <div class="card mt-5">
                         <div class="card-body">
                             <div class="container">
+                                <div class="text-white">
+                                    <center><h1>Products</h1></center>
+                                </div>
                                 <div class="row">
                                     <div class="col-xs-12 table">
                                         <table id="datatable" class="table table-striped">
@@ -139,9 +142,9 @@
                                                                 <img src='/Images/Products/<%# Eval("Image") %>' class="img-fluid" width="100" /></td>
                                                             <td><%# Eval("Status") %></td>
                                                             <td>
-                                                                <a href='Products.aspx?EditID=<%# Eval("ProductID") %>' class="btn btn-info btn-sm"><i class="fa fa-edit"></i> Edit</a>&nbsp;
+                                                                <a href='Products.aspx?EditID=<%# Eval("ProductID") %>' class="btn btn-info btn-sm"><i class="fa fa-edit"></i>Edit</a>&nbsp;
                                                
-                                                                <a href='products.aspx?DeleteID=<%# Eval("ProductID") %>' class="btn btn-danger btn-sm" onclick="return confirm('Do you want to delete this item?')"><i class="fa fa-trash"></i> Delete</a>&nbsp;
+                                                                <a href='products.aspx?DeleteID=<%# Eval("ProductID") %>' class="btn btn-danger btn-sm" onclick="return confirm('Do you want to delete this item?')"><i class="fa fa-trash"></i>Delete</a>&nbsp;
                                             </td>
                                                         </tr>
                                                     </ItemTemplate>
