@@ -1,6 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Member.master" AutoEventWireup="true" CodeFile="ViewAnnouncementDetail.aspx.cs" Inherits="ViewAnnouncementDetail" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Member.master" AutoEventWireup="true" CodeFile="ViewAnnouncementDetail2.aspx.cs" Inherits="ViewAnnouncementDetail2" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="header" runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="header" Runat="Server">
     <div class="header bg-gradient-gray-dark pb-5 pt-5 pt-md-8">
         <div class="container-fluid">
             <div class="header-body">
@@ -8,14 +8,14 @@
         </div>
     </div>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
-    <form runat="server" class="form-horizontal">
+<asp:Content ID="Content2" ContentPlaceHolderID="body" Runat="Server">
+    <%--<form runat="server" class="form-horizontal">--%>
         <div class="container">
             <div class="text-white">
                 <h1><asp:Literal ID="ltName" runat="server" /></h1>
             </div>
             <div class="col-lg-6">
-                <asp:Image ID="imgProduct" runat="server" class="img-responsive img-circle" Width="239" Height="180" Style="object-fit: cover" />
+                <asp:Image ID="imgAnnouncement" runat="server" class="img-responsive img-circle" Width="239" Height="180" Style="object-fit: cover" />
             </div>
             <br />
             <div class="col-lg-6 text-white">
@@ -25,10 +25,8 @@
                 <br />
             </div>
         </div>
-
-
-    </form>
+<%--    </form>--%>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="scripts" runat="Server">
+<asp:Content ID="Content3" ContentPlaceHolderID="scripts" Runat="Server">
 </asp:Content>
 

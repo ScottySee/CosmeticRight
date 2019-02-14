@@ -56,11 +56,11 @@
                             <i class="fa fa-home"></i>Home
                         </a>
                     </li>
-                    <%--<li class="nav-item p-0">
-                        <a class="nav-link" href="Announcement.aspx"> <!-- Change URL -->
+                    <li class="nav-item p-0">
+                        <a class="nav-link" href="Orders.aspx">
                             <i class="fa fa-user-circle"></i>Orders
                         </a>
-                    </li>--%>
+                    </li>
                     <li class="nav-item p-0">
                         <a class="nav-link" href="Announcement.aspx">
                             <i class="fa fa-scroll"></i>Announcement
@@ -74,11 +74,6 @@
                     <%--<li class="nav-item p-0">
                         <a class="nav-link" href="Announcement.aspx"> <!-- Change URL -->
                             <i class="fa fa-user-circle"></i>Statistics & Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item p-0">
-                        <a class="nav-link" href="Announcement.aspx"> <!-- Change URL -->
-                            <i class="fa fa-user-circle"></i>Transaction History
                         </a>
                     </li>--%>
                     <li class="nav-item p-0">

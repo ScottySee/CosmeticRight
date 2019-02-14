@@ -6,13 +6,13 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class ViewAnnouncementDetail : System.Web.UI.Page
+public partial class ViewAnnouncementDetail2 : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.QueryString["ID"] == null)
         {
-            Response.Redirect("ViewAnnouncement.aspx");
+            Response.Redirect("ViewAnnouncement1.aspx");
         }
         else
         {
@@ -27,7 +27,7 @@ public partial class ViewAnnouncementDetail : System.Web.UI.Page
             }
             else
             {
-                Response.Redirect("ViewAnnouncement.aspx");
+                Response.Redirect("ViewAnnouncement1.aspx");
             }
         }
     }
@@ -49,13 +49,13 @@ public partial class ViewAnnouncementDetail : System.Web.UI.Page
                         while (dr.Read())
                         {
                             ltName.Text = dr["AnnouncementName"].ToString();
-                            imgProduct.ImageUrl = "~/Images/Announcement/" + dr["Image"].ToString();
+                            imgAnnouncement.ImageUrl = "~/Images/Announcement/" + dr["Image"].ToString();
                             ltDesc.Text = dr["AnnouncementDetail"].ToString();
                         }
                     }
                     else
                     {
-                        Response.Redirect("ViewAnnouncement.aspx");
+                        Response.Redirect("ViewAnnouncement1.aspx");
                     }
                 }
             }

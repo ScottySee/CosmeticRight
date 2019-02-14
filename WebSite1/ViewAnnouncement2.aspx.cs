@@ -15,30 +15,32 @@ public partial class ViewAnnouncement2 : System.Web.UI.Page
         {
             GetAnnouncement();
         }
-    }
 
-    void GetAnnouncement()
-    {
-        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        void GetAnnouncement()
         {
-            con.Open();
-            string query = @"SELECT AnnouncementID, Image, AnnouncementName,
+            using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+            {
+                con.Open();
+                string query = @"SELECT AnnouncementID, Image, AnnouncementName,
                                 AnnouncementDetail FROM Announcements";
 
-            using (SqlCommand cmd = new SqlCommand(query, con))
-            {
-                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                using (SqlCommand cmd = new SqlCommand(query, con))
                 {
-                    DataSet ds = new DataSet();
-                    da.Fill(ds, "Announcements");
-                    lvAnnouncement.DataSource = ds;
-                    lvAnnouncement.DataBind();
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        DataSet ds = new DataSet();
+                        da.Fill(ds, "Announcements");
+                        lvAnnouncement.DataSource = ds;
+                        lvAnnouncement.DataBind();
+                    }
                 }
             }
         }
+
+
     }
 
-    protected void lvAnnouncements_ItemCommand(object sender, ListViewCommandEventArgs e)
+    protected void lvAnnouncement_ItemCommand(object sender, ListViewCommandEventArgs e)
     {
         if (e.CommandName == "addtocart")
         {

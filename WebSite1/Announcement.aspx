@@ -13,7 +13,7 @@
         <!-- page content -->
         <form runat="server" class="form-horizontal">
             <asp:ScriptManager runat="server" />
-            <%--            <asp:UpdatePanel ID="Announcements" runat="server">
+            <%--<asp:UpdatePanel ID="Announcements" runat="server">
                 <ContentTemplate>--%>
             <div class="card shadow-lg">
                 <div class="card-body">

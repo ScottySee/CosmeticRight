@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -25,8 +27,8 @@ public partial class ViewFeedback : System.Web.UI.Page
                 {
                     DataSet ds = new DataSet();
                     da.Fill(ds, "Feedback");
-                    lvAnnouncements.DataSource = ds;
-                    lvAnnouncements.DataBind();
+                    lvFeedback.DataSource = ds;
+                    lvFeedback.DataBind();
                 }
             }
         }

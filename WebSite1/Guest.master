@@ -70,7 +70,7 @@
                             </a>
                         </li>
                         <li class="nav-item p-0">
-                            <a class="nav-link" href="ViewAnnouncement2.aspx">
+                            <a class="nav-link" href="ViewAnnouncement1.aspx">
                                 <i class="fa fa-sticky-note"></i>Announcement
                             </a>
                         </li>

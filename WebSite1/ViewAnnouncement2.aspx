@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Guest.master" AutoEventWireup="true" CodeFile="ViewAnnouncement2.aspx.cs" Inherits="ViewAnnouncement2" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Member.master" AutoEventWireup="true" CodeFile="ViewAnnouncement2.aspx.cs" Inherits="ViewAnnouncement2" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="header" Runat="Server">
     <div class="header bg-gradient-gray-dark pb-5 pt-5 pt-md-8">
@@ -28,14 +28,14 @@
                             <center><h1>Announcements</h1></center>
                         </div>
                         <div class="card-deck">
-                            <asp:ListView id="lvAnnouncement" runat="server" onitemcommand="lvAnnouncements_ItemCommand">
+                            <asp:ListView id="lvAnnouncement" runat="server" onitemcommand="lvAnnouncement_ItemCommand">
                                 <ItemTemplate>
                                     <div class="col-lg-4">
                                         <div class="card">
                                         <img src='Images/Announcement/<%# Eval("Image") %>' class="card-img-top" width="239" height="180" style="object-fit:cover" alt='<%# Eval("AnnouncementName") %>' />
-                                            <%--<div class="card-header">
-                                                <a href='AnnouncementDetail.aspx?ID=<%# Eval("AnnouncementID") %>' style="text-decoration: none;">
-                                            </div>--%>
+                                            <div class="card-header">
+                                                <a href='ViewAnnouncementDetail2.aspx?ID=<%# Eval("AnnouncementID") %>' style="text-decoration: none;">
+                                            </div>
                                             <div class="card-body">
                                                 <asp:Literal ID="ltID" runat="server" Text='<%# Eval("AnnouncementID") %>' Visible="false" />
                                                 <h2><%# Eval("AnnouncementName") %></h2>

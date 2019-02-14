@@ -29,13 +29,6 @@
                         <h2 class="display-3" id="about">About Us 
                         </h2>
                         <div>
-                            <h3>The Association for Adults with Autism, Philippines is an organization established by
-                            parents of individuals within the Autism Spectrum Disorder (ASD). The organization aims to provide
-                            sustained enrichment opportunities and long-term care to individuals on the spectrum. It
-                            will provide means to achieve personal growth, social interaction, and a cooperative life among
-                            their peers. AAAP is registered with the Philippine Securities and Exchange Commission as a
-                            non-stock, non-profit corporation.
-                            </h3>
                             <h3>Sure Options is a company that produces cosmedic products that are sold to dermatology clinics. The company aims to provide
                             the best quality of skincare products to our clients and to develop a better environment thru beautiful people. Cosmetic Rgiht
                             is registered 
