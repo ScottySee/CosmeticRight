@@ -37,7 +37,7 @@ public partial class ViewAnnouncementDetail1 : System.Web.UI.Page
         {
             con.Open();
             string query = @"SELECT AnnouncementID, Image, AnnouncementName,
-                                AnnouncementDetail FROM Announcements";
+                                AnnouncementDetail FROM Announcements WHERE AnnouncementID=@AnnouncementID";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@AnnouncementID", ID);

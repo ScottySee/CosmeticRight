@@ -77,7 +77,8 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="control-label">Unit Weight</label>
-                                        <asp:Label ID="lblunit" runat="server" class="form-control" required />
+                                        <asp:Label ID="lblunit" runat="server" required />
+                                        <asp:TextBox ID="Available" TextMode="Number" runat="server" class="form-control" type="number" required />
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
@@ -112,6 +113,18 @@
                                 <div class="text-white">
                                     <center><h1>Products</h1></center>
                                 </div>
+                                <div class="col-lg-4">
+                                    <div class="input-group">
+                                        <asp:TextBox ID="txtKeyword" runat="server" class="form-control"
+                                            placeholder="Search..." />
+                                        <span class="input-group-btn">
+                                            <asp:LinkButton ID="btnSearch" runat="server" class="btn btn-info"
+                                                OnClick="btnSearch_Click">
+                                                <i class="fa fa-search"></i>
+                                            </asp:LinkButton>
+                                        </span>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-xs-12 table">
                                         <table id="datatable" class="table table-striped">
@@ -120,6 +133,7 @@
                                                     <th>Product ID</th>
                                                     <th>Product Name</th>
                                                     <th>Category</th>
+                                                    <th>Available</th>
                                                     <th>Code</th>
                                                     <th>Price</th>
                                                     <th>Image</th>
@@ -135,6 +149,7 @@
                                                             <td><%# Eval("ProductID") %></td>
                                                             <td><%# Eval("Name") %></td>
                                                             <td><%# Eval("CatID") %></td>
+                                                            <td><%# Eval("Available") %></td>
                                                             <td><%# Eval("Code") %></td>
                                                             <td><%# Eval("Price") %></td>
 
@@ -156,11 +171,24 @@
                                                         </tr>
                                                     </EmptyDataTemplate>
                                                 </asp:ListView>
+                        
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
+                                                    <center>
+                        <asp:DataPager ID="dpProducts" runat="server" PageSize="10"
+                            PagedControlID="lvProducts">
+                            <Fields>
+                                <asp:NumericPagerField ButtonType="Button"
+                                    CurrentPageLabelCssClass="btn btn-info"
+                                    NumericButtonCssClass="btn btn-default"
+                                    NextPreviousButtonCssClass="btn btn-default"
+                                    ButtonCount="5" />
+                            </Fields>
+                        </asp:DataPager>
+                    </center>
                             <br />
                             <%--<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                                 <span class="pull-right">

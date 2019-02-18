@@ -10,8 +10,12 @@ public partial class Cart : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        GetCart();
-        GetOrderSummary();
+        if (!IsPostBack)
+        {
+            GetCart();
+            GetOrderSummary();
+        }
+
     }
 
     void GetCart()
@@ -19,14 +23,15 @@ public partial class Cart : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"SELECT od.RefNo, p.ProductID, p.Image, p.Name, p.CatID,
+            string query = @"SELECT od.RefNo, p.ProductID, p.Image, p.Name, p.CatID, c.Category,
                                 p.Price, od.Quantity, od.Amount FROM OrderDetails od
                                 INNER JOIN Products p ON od.ProductID = p.ProductID
+								INNER JOIN Categories c ON c.CatID = p.CatID
                                 WHERE od.OrderNo=0 AND od.UserID=@UserID";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@OrderNo", 0);
-                cmd.Parameters.AddWithValue("@UserID", 1);
+                cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
                 //use Session["userid"].ToString() instead of 1
 
                 using (SqlDataReader dr = cmd.ExecuteReader())
@@ -49,15 +54,16 @@ public partial class Cart : System.Web.UI.Page
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@OrderNo", 0);
-                cmd.Parameters.AddWithValue("@UserID", 1);
+                cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
                 // use Session ["userid"].ToString() instead of 1
                 double totalAmount = cmd.ExecuteScalar() == null ? 0 :
                     Convert.ToDouble((decimal)cmd.ExecuteScalar());
 
                 ltGross.Text = (totalAmount * .88).ToString("#,##0.00");
                 ltVAT.Text = (totalAmount * .12).ToString("#,##0.00");
-                ltDelivery.Text = (totalAmount * .1).ToString("#,##0.00");
-                ltTotal.Text = (totalAmount * 1.1).ToString("#,##0.00");
+
+                ltTotal.Text = (totalAmount * 1).ToString("#,##0.00");
+                Session["total"] = (totalAmount * 1);
             }
         }
     }
@@ -66,7 +72,7 @@ public partial class Cart : System.Web.UI.Page
     {
         Literal ltRefNo = (Literal)e.Item.FindControl("ltRefNo");
         Literal ltProductID = (Literal)e.Item.FindControl("ltProductID");
-        TextBox txtQty = (TextBox)e.Item.FindControl("txtQty");
+        TextBox txtQty = e.Item.FindControl("txtQty") as TextBox;
         double price = Util.GetPrice(ltProductID.Text);
 
         if (e.CommandName == "deleteitem")

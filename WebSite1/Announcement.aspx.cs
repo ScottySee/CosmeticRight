@@ -73,6 +73,28 @@ public partial class Announcement : System.Web.UI.Page
         }
     }
 
+    void GetAnnouncement(string keyword)
+    {
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        {
+            con.Open();
+            string query = @"SELECT * FROM Announcements
+                                WHERE AnnouncementName LIKE @keyword";
+
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("@keyword", "%" + keyword + "%");
+                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                {
+                    DataSet ds = new DataSet();
+                    da.Fill(ds, "Announcements");
+                    lvAnnouncements.DataSource = ds;
+                    lvAnnouncements.DataBind();
+                }
+            }
+        }
+    }
+
     protected void AddAnnouncement(object sender, EventArgs e)
     {
         string fileName = Path.GetFileName(fileUpload1.FileName);
@@ -179,5 +201,15 @@ public partial class Announcement : System.Web.UI.Page
     protected void btnCancel_Click(object sender, EventArgs e)
     {
         Response.Redirect("Announcement.aspx");
+    }
+
+    protected void btnSearch_Click(object sender, EventArgs e)
+    {
+        dpAnnouncements.SetPageProperties(0, dpAnnouncements.MaximumRows, false);
+
+        if (txtKeyword.Text == "")
+            GetAnnouncement();
+        else
+            GetAnnouncement(txtKeyword.Text);
     }
 }

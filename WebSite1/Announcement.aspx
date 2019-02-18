@@ -64,6 +64,18 @@
                         <div class="text-white">
                             <center><h1>Announcements</h1></center>
                         </div>
+                        <div class="col-lg-4">
+                        <div class="input-group">
+                            <asp:TextBox ID="txtKeyword" runat="server" class="form-control"
+                                placeholder="Search..." />
+                            <span class="input-group-btn">
+                                <asp:LinkButton ID="btnSearch" runat="server" class="btn btn-info"
+                                    OnClick="btnSearch_Click">
+                        <i class="fa fa-search"></i>
+                                </asp:LinkButton>
+                            </span>
+                        </div>
+                    </div>
                         <div class="row">
                             <div class="col-xs-12 table">
                                 <table id="datatable" class="table table-striped">
@@ -107,11 +119,25 @@
                                                 </tr>
                                             </EmptyDataTemplate>
                                         </asp:ListView>
+
                                     </tbody>
                                 </table>
                             </div>
+                            <center>
+                        <asp:DataPager ID="dpAnnouncements" runat="server" PageSize="10"
+                            PagedControlID="lvAnnouncements">
+                            <Fields>
+                                <asp:NumericPagerField ButtonType="Button"
+                                    CurrentPageLabelCssClass="btn btn-info"
+                                    NumericButtonCssClass="btn btn-default"
+                                    NextPreviousButtonCssClass="btn btn-default"
+                                    ButtonCount="5" />
+                            </Fields>
+                        </asp:DataPager>
+                    </center>
                         </div>
                     </div>
+                    
                     <br />
                     <%--<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                                 <span class="pull-right">

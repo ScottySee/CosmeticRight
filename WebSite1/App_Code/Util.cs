@@ -72,7 +72,7 @@ public class Util
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@OrderNo", 0);
-                cmd.Parameters.AddWithValue("@UserID", 3);
+                cmd.Parameters.AddWithValue("@UserID", HttpContext.Current.Session["UserID"].ToString());
                 // HttpContext.Current.Session["userid"].ToString()
                 cmd.Parameters.AddWithValue("@ProductID", ID);
                 return cmd.ExecuteScalar() == null ? false : true;
@@ -102,8 +102,9 @@ public class Util
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
+                string UserID = HttpContext.Current.Session["UserID"].ToString();
                 cmd.Parameters.AddWithValue("@OrderNo", 0);
-                cmd.Parameters.AddWithValue("@UserID", 3);
+                cmd.Parameters.AddWithValue("@UserID", UserID);
                 // HttpContext.Current.Session["userid"].ToString()
                 cmd.Parameters.AddWithValue("@ProductID", ID);
                 cmd.Parameters.AddWithValue("@Quantity", quantity);

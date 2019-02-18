@@ -50,6 +50,28 @@
                                                 <p>
                                                     Php <%# Eval("Price", "{0: #,##0.00}") %>
                                                 </p>
+                                                <%--<asp:DropDownList ID="ddlQuantity" runat="server" class="form-control" required>
+                                                <asp:ListItem Value="" style="color: black">----Select Quantity----</asp:ListItem>
+                                                <asp:ListItem Value="200" style="color: black">200</asp:ListItem>
+                                                <asp:ListItem Value="300" style="color: black">300</asp:ListItem>
+                                                <asp:ListItem Value="400" style="color: black">400</asp:ListItem>
+                                                <asp:ListItem Value="500" style="color: black">500</asp:ListItem>
+                                                <asp:ListItem Value="600" style="color: black">600</asp:ListItem>
+                                                <asp:ListItem Value="700" style="color: black">700</asp:ListItem>
+                                                <asp:ListItem Value="800" style="color: black">800</asp:ListItem>
+                                                <asp:ListItem Value="900" style="color: black">900</asp:ListItem>
+                                                <asp:ListItem Value="1000" style="color: black">1000</asp:ListItem>
+                                                <asp:ListItem Value="1100" style="color: black">1100</asp:ListItem>
+                                                <asp:ListItem Value="1200" style="color: black">1200</asp:ListItem>
+                                                <asp:ListItem Value="1300" style="color: black">1300</asp:ListItem>
+                                                <asp:ListItem Value="1400" style="color: black">1400</asp:ListItem>
+                                                <asp:ListItem Value="1500" style="color: black">1500</asp:ListItem>
+                                                <asp:ListItem Value="1600" style="color: black">1600</asp:ListItem>
+                                                <asp:ListItem Value="1700" style="color: black">1700</asp:ListItem>
+                                                <asp:ListItem Value="1800" style="color: black">1800</asp:ListItem>
+                                                <asp:ListItem Value="1900" style="color: black">1900</asp:ListItem>
+                                                <asp:ListItem Value="2000" style="color: black">2000</asp:ListItem>
+                                            </asp:DropDownList>--%>
                                                 <asp:LinkButton ID="btnAddToCart" runat="server" class="btn btn-success btn-block" CommandName="addtocart">
                                                     <i class="fa fa-shopping-cart"></i> Add To Cart
                                                 </asp:LinkButton>
@@ -73,7 +95,3 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scripts" runat="Server">
 </asp:Content>
-
-
-
-

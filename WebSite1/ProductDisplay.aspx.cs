@@ -67,6 +67,7 @@ public partial class ProductDisplay : System.Web.UI.Page
             }
         }
     }
+
     void GetSpecificProduct(string code)
     {
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
@@ -96,7 +97,7 @@ public partial class ProductDisplay : System.Web.UI.Page
         if (e.CommandName == "addtocart")
         {
             Literal ltID = (Literal)e.Item.FindControl("ltID");
-            Util.AddToCart(ltID.Text, "1");
+            Util.AddToCart(ltID.Text, "200");
         }
     }
 }

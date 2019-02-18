@@ -13,6 +13,7 @@ public partial class Products : System.Web.UI.Page
     SqlConnection con = new SqlConnection(Util.GetConnection());
     SqlCommand cmd;
     int editID = 0;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -72,6 +73,25 @@ public partial class Products : System.Web.UI.Page
         con.Close();
     }
 
+    void GetProducts(string keyword)
+    {
+        string query = @"SELECT * FROM Products
+                            WHERE Name LIKE @keyword OR
+                            Code LIKE @keyword";
+
+        cmd = new SqlCommand(query, con);
+        cmd.Parameters.AddWithValue("@keyword", "%" + keyword + "%");
+        con.Open();
+        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+        {
+            DataSet ds = new DataSet();
+            da.Fill(ds, "Products");
+            lvProducts.DataSource = ds;
+            lvProducts.DataBind();
+        }
+        con.Close();
+    }
+
     // di ako sure
     //void GetCategories()
     //{
@@ -110,7 +130,7 @@ public partial class Products : System.Web.UI.Page
         cmd.Parameters.AddWithValue("@Description", Server.HtmlEncode(txtDescription.Text));
         cmd.Parameters.AddWithValue("@Image", fileUpload.FileName);
         cmd.Parameters.AddWithValue("@Price", txtPrice.Text);
-        cmd.Parameters.AddWithValue("@Available", 0);
+        cmd.Parameters.AddWithValue("@Available", Available.Text);
         cmd.Parameters.AddWithValue("@Criticallevel", txtCritical.Text);
         cmd.Parameters.AddWithValue("@Maximum", txtMax.Text);
         cmd.Parameters.AddWithValue("@Status", "Active");
@@ -142,10 +162,11 @@ public partial class Products : System.Web.UI.Page
                     txtCode.Text = data["Code"].ToString();
                     Session["image"] = data["Image"].ToString();
                     txtDescription.Text = data["Description"].ToString();
+                    Available.Text = data["Available"].ToString();
                     txtPrice.Text = data["Price"].ToString();
                     txtCritical.Text = data["Criticallevel"].ToString();
                     txtMax.Text = data["Maximum"].ToString();
-                    
+
                 }
             }
             else
@@ -162,7 +183,7 @@ public partial class Products : System.Web.UI.Page
         con.Open();
         string query = @"UPDATE Products SET Name=@Name, CatID=@CatID, Code=@Code,
                 Description=@Description, Price=@Price, Image=@Image,
-                Criticallevel=@Criticallevel, Maximum=@Maximum,
+                Criticallevel=@Criticallevel, Maximum=@Maximum, Available=@Available,
                 DateModified=@DateModified WHERE ProductID=@ProductID";
         cmd = new SqlCommand(query, con);
         cmd.Parameters.AddWithValue("@Name", txtProductName.Text);
@@ -182,6 +203,7 @@ public partial class Products : System.Web.UI.Page
             Session.Remove("image");
         }
         cmd.Parameters.AddWithValue("@Price", txtPrice.Text);
+        cmd.Parameters.AddWithValue("@Available", Available.Text);
         cmd.Parameters.AddWithValue("@Criticallevel", txtCritical.Text);
         cmd.Parameters.AddWithValue("@Maximum", txtMax.Text);
         cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
@@ -210,8 +232,34 @@ public partial class Products : System.Web.UI.Page
         Response.Redirect("Products.aspx");
     }
 
+    protected void btnSearch_Click(object sender, EventArgs e)
+    {
+        dpProducts.SetPageProperties(0, dpProducts.MaximumRows, false);
+
+        if (txtKeyword.Text == "")
+            GetProducts();
+        else
+            GetProducts(txtKeyword.Text);
+    }
+
     protected void ddlCategories_SelectedIndexChanged(object sender, EventArgs e)
     {
+        switch (ddlCategories.SelectedValue)
+        {
+            case "1":
+                lblunit.Text = "Kg/Liters";
+                break;
+            case "2":
+                lblunit.Text = "Kg/Liters";
+                break;
+            case "3":
+                lblunit.Text = "Pieces";
+                break;
+            default:
+                lblunit.Text = "";
+                break;
 
+
+        }
     }
 }

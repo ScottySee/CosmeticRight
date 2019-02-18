@@ -88,8 +88,8 @@
                                                 <tr>
                                                     <td><%# Eval("FeedbackID") %></td>
                                                     <td><%# Eval("Comment") %></td>
-                                                    <td><%# Eval("Rating") %></td>
-                                                    <td>
+                                                    <td><%# Eval("Rating") %> out of 5</td>
+                                                    
                                                         <%--<img src='/Images/Announcement/<%# Eval("Image") %>' class="img-fluid" width="100" /></td>
                                                     <td><%# Eval("Image") %></td>--%>
                                                     <td><%# Eval("Datefeedback") %></td>

@@ -70,4 +70,9 @@ public partial class ProductDetail : System.Web.UI.Page
             }
         }
     }
+
+    protected void btnAddToCart_Click(object sender, EventArgs e)
+    {
+        Util.AddToCart(Request.QueryString["ID"], ddlCategories.SelectedValue);
+    }
 }
