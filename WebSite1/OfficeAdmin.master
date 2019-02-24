@@ -57,7 +57,7 @@
                         </a>
                     </li>
                     <li class="nav-item p-0">
-                        <a class="nav-link" href="Orders.aspx">
+                        <a class="nav-link" href="OrdersAdmin.aspx">
                             <i class="fa fa-user-circle"></i>Orders
                         </a>
                     </li>
@@ -71,11 +71,11 @@
                             <i class="fa fa-user-circle"></i>Feedback
                         </a>
                     </li>
-                    <%--<li class="nav-item p-0">
-                        <a class="nav-link" href="Announcement.aspx"> <!-- Change URL -->
+                    <li class="nav-item p-0">
+                        <a class="nav-link" href="StatisticsDashboard.aspx">
                             <i class="fa fa-user-circle"></i>Statistics & Dashboard
                         </a>
-                    </li>--%>
+                    </li>
                     <li class="nav-item p-0">
                         <a class="nav-link" href="OfficeAdminProfile.aspx">
                             <i class="fa fa-user-circle"></i>Profile
@@ -134,5 +134,8 @@
             }
         }
     </script>
+
+    <script src="Scripts/fusioncharts.js"></script>
+    <script src="Scripts/fusioncharts.charts.js"></script>
 </body>
 </html>

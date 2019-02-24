@@ -76,7 +76,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label class="control-label">Unit Weight</label>
+                                        <label class="control-label">Available</label>
                                         <asp:Label ID="lblunit" runat="server" required />
                                         <asp:TextBox ID="Available" TextMode="Number" runat="server" class="form-control" type="number" required />
                                     </div>
@@ -171,13 +171,12 @@
                                                         </tr>
                                                     </EmptyDataTemplate>
                                                 </asp:ListView>
-                        
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-                                                    <center>
+                            <center>
                         <asp:DataPager ID="dpProducts" runat="server" PageSize="10"
                             PagedControlID="lvProducts">
                             <Fields>

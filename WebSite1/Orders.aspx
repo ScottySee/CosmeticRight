@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OfficeAdmin.master" AutoEventWireup="true" CodeFile="Orders.aspx.cs" Inherits="OrderHistory" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Member.master" AutoEventWireup="true" CodeFile="Orders.aspx.cs" Inherits="OrderHistory" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="header" runat="Server">
     <div class="header bg-gradient-gray-dark pb-5 pt-5 pt-md-8">
@@ -10,15 +10,17 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
     <form runat="server" class="form-horizontal">
-        <div class="col-lg-offset-6 col-lg-3">
-            <asp:TextBox ID="txtStart" runat="server" CssClass="form-control"
+        <div class="col-lg-offset-6 col-lg-3 text-white">
+            START<asp:TextBox ID="txtStart" runat="server" CssClass="form-control"
                 type="date" AutoPostBack="true"  OnTextChanged="SearchByDate" />
         </div>
-        <div class="col-lg-3">
-            <asp:TextBox ID="txtEnd" runat="server" CssClass="form-control"
+        <br />
+        <div class="col-lg-3 text-white">
+            END<asp:TextBox ID="txtEnd" runat="server" CssClass="form-control"
                 type="date" AutoPostBack="true" OnTextChanged="SearchByDate" />
         </div>
         <div class="col-lg-12">
+            <center><h1>Orders</h1></center>
             <table class="table table-hover">
                 <thead>
                     <th>#</th>
@@ -26,20 +28,8 @@
                     <th>Payment Method</th>
                     <th>Customer</th>
                     <th>Total Amount</th>
-                    <th>Status</th>
-                    <th>Delivery Date</th>
                     <th></th>
                 </thead>
-                <tfoot>
-                    <th>#</th>
-                    <th>Order Date</th>
-                    <th>Payment Method</th>
-                    <th>Customer</th>
-                    <th>Total Amount</th>
-                    <th>Status</th>
-                    <th>Delivery Date</th>
-                    <th></th>
-                </tfoot>
                 <tbody>
                     <asp:ListView ID="lvOrders" runat="server">
                         <ItemTemplate>
@@ -49,10 +39,8 @@
                                 <td><%# Eval("PaymentMethod") %></td>
                                 <td><%# Eval("CustomerName") %></td>
                                 <td><%# Eval("TotalAmount", "{0: #,##0.00}") %></td>
-                                <td><%# Eval("Status") %></td>
-                                <td><%# Eval("DateDelivered") %></td>
                                 <td>
-                                    <a href='Details.aspx?ID=<%# Eval("OrderNo") %>' class="btn btn-xs btn-info"
+                                    <a href='OrderDetails.aspx?ID=<%# Eval("OrderNo") %>' class="btn btn-xs btn-info"
                                         title="View Details">
                                         <i class="fa fa-list"></i>
                                     </a>

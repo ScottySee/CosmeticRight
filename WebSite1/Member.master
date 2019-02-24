@@ -16,8 +16,8 @@
     <link href="bootstrap/assets/css/nucleo-icons.css" rel="stylesheet" />
     <link href="/assets/vendor/nucleo/css/nucleo-icons.css" rel="stylesheet">
     <!-- CSS Files -->
-  
-    <link href="bootstrap/assets/css/rating.css" rel="stylesheet"/>
+
+    <link href="bootstrap/assets/css/rating.css" rel="stylesheet" />
     <link href="bootstrap/assets/css/blk-design-system.css" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="bootstrap/assets/demo/demo.css" rel="stylesheet" />
@@ -69,11 +69,6 @@
                             <i></i>Contact
                         </a>
                     </li>
-                    <%--<li class="nav-item p-0">
-                            <a class="nav-link" href="FAQ.aspx"> <!-- Change URL -->
-                                <i class="fa fa-user-circle"></i>FAQ
-                            </a>
-                        </li>--%>
                     <li class="nav-item p-0">
                         <a class="nav-link" href="ViewAnnouncement2.aspx">
                             <i class="fa fa-sticky-note"></i>Announcement
@@ -90,7 +85,8 @@
                         </a>
                     </li>
                     <li class="nav-item p-0">
-                        <a class="nav-link" href="Orders.aspx"> <!--May Error pa-->
+                        <a class="nav-link" href="Orders.aspx">
+                            <!--May Error pa-->
                             <i class="fa fa-list-alt"></i>Orders
                         </a>
                     </li>
@@ -207,6 +203,21 @@
             }
         }
     </script>
+    <script type="text/javascript">
+        var headID = document.getElementsByTagName("head")[0];
+        var newCss = document.createElement('link');
+        newCss.rel = 'stylesheet';
+        newCss.type = 'text/css';
+        window._botUsername = '836310';
+        window._botName = 'Cosmetic Rights';
+        newCss.href = "https://rebot.me/assets/css/bot.css";
+        var newScript = document.createElement('script');
+        newScript.src = "https://rebot.me/assets/js/bot.js";
+        newScript.type = 'text/javascript';
+        headID.appendChild(newScript);
+        headID.appendChild(newCss);
+    </script>
+
     <%--<!-- SMOOTH SCROLL -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>

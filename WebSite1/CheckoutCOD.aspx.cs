@@ -59,7 +59,7 @@ public partial class CheckoutCOD : System.Web.UI.Page
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@OrderNo", 0);
-                cmd.Parameters.AddWithValue("@UserID", 1);
+                cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
                 // use Session["userid"].ToString() instead of 1
                 double totalAmount = cmd.ExecuteScalar() == null ? 0 :
                     Convert.ToDouble((decimal)cmd.ExecuteScalar());
@@ -80,7 +80,7 @@ public partial class CheckoutCOD : System.Web.UI.Page
             string query = @"SELECT FirstName, LastName, BuildingNo, Street, Municipality, City, Landline, Mobile FROM Users WHERE UserID=@UserID";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
-                cmd.Parameters.AddWithValue("@UserID", 3);
+                cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
                 // use Session["userid"].ToString() instead of 1
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
@@ -121,7 +121,7 @@ public partial class CheckoutCOD : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@Landline", txtPhone.Text);
                 cmd.Parameters.AddWithValue("@Mobile", txtMobile.Text);
                 cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
-                cmd.Parameters.AddWithValue("@UserID", 1);
+                cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
                 // use Session["userid"].ToString() instead of 1
                 cmd.ExecuteNonQuery();
             }

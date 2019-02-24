@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Member.master" AutoEventWireup="true" CodeFile="CheckoutCOD.aspx.cs" Inherits="CheckoutCOD" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Member.master" AutoEventWireup="true" CodeFile="OrderDetails.aspx.cs" Inherits="OrderDetails" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="header" runat="Server">
     <div class="header bg-gradient-gray-dark pb-5 pt-5 pt-md-8">
@@ -9,9 +9,11 @@
     </div>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
-
     <form runat="server" class="form-horizontal">
         <div class="container">
+            <div class="text-white">
+                <i class="fa fa-money"></i>Order #<asp:Literal ID="ltOrderNo" runat="server" /> Details
+            </div>
             <div class="row">
                 <div class="col-lg-8">
                     <table class="table table-hover">
@@ -26,27 +28,21 @@
                                 <ItemTemplate>
                                     <tr>
                                         <td>
-                                            <img src='../Images/Products/<%# Eval("Image") %>'
-                                                width="120" alt='<%# Eval("Name") %>' />
+                                            <img runat="server" src='<%# string.Concat("~/Images/Products/", Eval("Image")) %>' width="120" alt='<%# Eval("Name") %>' />
                                         </td>
                                         <td>
                                             <h4><%# Eval("Name") %></h4>
                                             <small>Category: <%# Eval("Category") %></small>
                                         </td>
-                                        <td>Php<%# Eval("Price", "{0: #,##0.00}") %>
-                                        </td>
-                                        <td>
-                                            <%# Eval("Quantity") %>
-                                        </td>
-                                        <td>Php<%# Eval("Amount", "{0: #,##0.00}") %>
-                                        </td>
+                                        <td>Php<%# Eval("Price", "{0: #,##0.00}") %></td>
+                                        <td><%# Eval("Quantity") %>
+                                        <td>Php<%# Eval("Amount", "{0: #,##0.00}") %></td>
                                     </tr>
                                 </ItemTemplate>
                                 <EmptyDataTemplate>
                                     <tr>
                                         <td colspan="6">
-                                            <h3 class="text-center">No records found.
-                                            </h3>
+                                            <h3 class="text-center">No records found.</h3>
                                         </td>
                                     </tr>
                                 </EmptyDataTemplate>
@@ -55,13 +51,30 @@
                     </table>
                     <br />
                     <hr />
-
                 </div>
                 <div class="col-lg-4">
                     <div class="well">
                         <h4 class="text-center">Order Summary</h4>
                         <table class="table">
                             <tbody>
+                                <%--<tr>
+                                    <td>Status</td>
+                                    <td align="right">
+                                        <asp:Literal ID="ltStatus" runat="server" />
+                                    </td>
+                                </tr>--%>
+                                <tr>
+                                    <td>Payment Method</td>
+                                    <td align="right">
+                                        <asp:Literal ID="ltPaymentMethod" runat="server" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Date Ordered</td>
+                                    <td align="right">
+                                        <asp:Literal ID="ltDateOrdered" runat="server" />
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td>Gross Amount</td>
                                     <td align="right">Php<asp:Literal ID="ltGross" runat="server" />
@@ -73,6 +86,12 @@
                                         <asp:Literal ID="ltVAT" runat="server" />
                                     </td>
                                 </tr>
+                                <%--<tr>
+                                    <td>Delivery</td>
+                                    <td align="right">
+                                        <asp:Literal ID="ltDelivery" runat="server" />
+                                    </td>
+                                </tr>--%>
                                 <tr>
                                     <td>Total Amount</td>
                                     <td align="right">
@@ -81,29 +100,19 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <hr />
-                        <br />
-                        <div class="form-group text-white">
-                            <label class="control-label">Payment Method: Cash on Delivery</label>
-                            <%--                    <div class="col-lg-8">
-                        Cash on Delivery
-                    </div>--%>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-lg-12 text-white">
-                                <label>
-                                    <asp:CheckBox ID="cboTerms" runat="server" required />
-                                    I have agreed to the <a href="#">Terms & Conditions.</a>
-                                </label>
-                            </div>
-                        </div>
-                        <asp:LinkButton ID="btnCheckout" runat="server"
+                        <%--<asp:LinkButton ID="btnAccept" runat="server"
                             CssClass="btn btn-success btn-lg btn-block"
-                            OnClientClick='return confirm("Are you sure?");'
-                            OnClick="btnCheckout_Click">
-                    <i class="fa fa-money"></i> Order Now
+                            OnClientClick='return confirm("Accept order?");'
+                            OnClick="btnAccept_Click">
+                    <i class="fa fa-thumbs-up"></i> Accept
                         </asp:LinkButton>
-                        <a href="Cart.aspx" class="btn btn-default btn-block btn-lg">Back to Cart
+                        <asp:LinkButton ID="btnReject" runat="server"
+                            CssClass="btn btn-danger btn-lg btn-block"
+                            OnClientClick='return confirm("Reject order?");'
+                            OnClick="btnReject_Click">
+                    <i class="fa fa-thumbs-down"></i> Reject
+                        </asp:LinkButton>--%>
+                        <a href="Orders.aspx" class="btn btn-default btn-block btn-lg">Back to Orders
                         </a>
                     </div>
                 </div>
@@ -114,25 +123,25 @@
                     <div class="form-group">
                         <label class="control-label col-lg-4">First Name</label>
                         <div class="col-lg-8">
-                            <asp:TextBox ID="txtFN" runat="server" class="form-control" MaxLength="80" required />
+                            <asp:Label ID="txtFN" runat="server" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-lg-4">Last Name</label>
                         <div class="col-lg-8">
-                            <asp:TextBox ID="txtLN" runat="server" class="form-control" MaxLength="50" required />
+                            <asp:Label ID="txtLN" runat="server" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-lg-4">Unit/Building No.</label>
                         <div class="col-lg-8">
-                            <asp:TextBox ID="txtbuilding" runat="server" class="form-control" MaxLength="50" required />
+                            <asp:Label ID="txtbuilding" runat="server" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-lg-4">Street</label>
                         <div class="col-lg-8">
-                            <asp:TextBox ID="txtStreet" runat="server" class="form-control" MaxLength="50" required />
+                            <asp:Label ID="txtStreet" runat="server" class="form-control" />
                         </div>
                     </div>
                 </div>
@@ -140,32 +149,31 @@
                     <div class="form-group">
                         <label class="control-label col-lg-4">Municipality</label>
                         <div class="col-lg-8">
-                            <asp:TextBox ID="txtMunicipality" runat="server" class="form-control" MaxLength="100" required />
+                            <asp:Label ID="txtMunicipality" runat="server" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-lg-4">City</label>
                         <div class="col-lg-8">
-                            <asp:TextBox ID="txtCity" runat="server" class="form-control" MaxLength="50" required />
+                            <asp:Label ID="txtCity" runat="server" class="form-control" />
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="control-label col-lg-4">Phone</label>
                         <div class="col-lg-8">
-                            <asp:TextBox ID="txtPhone" runat="server" class="form-control" MaxLength="12" />
+                            <asp:Label ID="txtPhone" runat="server" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-lg-4">Mobile</label>
                         <div class="col-lg-8">
-                            <asp:TextBox ID="txtMobile" runat="server" class="form-control" MaxLength="12" />
+                            <asp:Label ID="txtMobile" runat="server" class="form-control" />
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+            </div>
     </form>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="scripts" runat="Server">
-</asp:Content>
+

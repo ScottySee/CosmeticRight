@@ -96,8 +96,21 @@ public partial class ProductDisplay : System.Web.UI.Page
     {
         if (e.CommandName == "addtocart")
         {
+            string QTY = "";
             Literal ltID = (Literal)e.Item.FindControl("ltID");
-            Util.AddToCart(ltID.Text, "200");
+            Label category = (Label)e.Item.FindControl("category");
+            if(category.Text == "Soap")
+            {
+                QTY = "200";
+            }else if (category.Text == "Lotion")
+            {
+                QTY = "3";
+            }else if (category.Text == "Toners")
+            {
+                QTY = "3";
+            }
+
+            Util.AddToCart(ltID.Text, QTY);
         }
     }
 }

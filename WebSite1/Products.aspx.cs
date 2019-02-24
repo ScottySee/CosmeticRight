@@ -258,8 +258,6 @@ public partial class Products : System.Web.UI.Page
             default:
                 lblunit.Text = "";
                 break;
-
-
         }
     }
 }

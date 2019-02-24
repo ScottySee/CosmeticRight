@@ -25,13 +25,13 @@
                                         First Name
                                     </div>
                                     <div class="form-group">
-                                        <asp:TextBox runat="server" ID="firstname" Placeholder="First Name" CssClass="form-control" required></asp:TextBox>
+                                        <asp:TextBox runat="server" ID="firstname" Placeholder="First Name" CssClass="form-control" MaxLength="80" required></asp:TextBox>
                                     </div>
                                     <div class="card-title pull-left">
                                         Last Name
                                     </div>
                                     <div class="form-group">
-                                        <asp:TextBox runat="server" ID="lastname" Placeholder="Last Name" CssClass="form-control" required></asp:TextBox>
+                                        <asp:TextBox runat="server" ID="lastname" Placeholder="Last Name" CssClass="form-control" MaxLength="50" required></asp:TextBox>
                                     </div>
                                     <div class="card-title pull-left">
                                         Gender
@@ -47,7 +47,7 @@
                                         Unit/Building Number
                                     </div>
                                     <div class="form-group">
-                                        <asp:TextBox runat="server" ID="buildingno" Placeholder="Building Number" CssClass="form-control"></asp:TextBox>
+                                        <asp:TextBox runat="server" ID="buildingno" Placeholder="Building Number" CssClass="form-control" MaxLength="50"></asp:TextBox>
                                     </div>
 
 
@@ -60,25 +60,25 @@
                                         Street
                                     </div>
                                     <div class="form-group">
-                                        <asp:TextBox runat="server" ID="street" Placeholder="Street" CssClass="form-control" required></asp:TextBox>
+                                        <asp:TextBox runat="server" ID="street" Placeholder="Street" CssClass="form-control" MaxLength="50" required></asp:TextBox>
                                     </div>
                                     <div class="card-title pull-left">
                                         Municipality
                                     </div>
                                     <div class="form-group">
-                                        <asp:TextBox runat="server" ID="municipality" Placeholder="Barangay" CssClass="form-control"></asp:TextBox>
+                                        <asp:TextBox runat="server" ID="municipality" Placeholder="Municipality" CssClass="form-control" MaxLength="50"></asp:TextBox>
                                     </div>
                                     <div class="card-title pull-left">
                                         City
                                     </div>
                                     <div class="form-group">
-                                        <asp:TextBox runat="server" ID="city" Placeholder="City" CssClass="form-control"></asp:TextBox>
+                                        <asp:TextBox runat="server" ID="city" Placeholder="City" CssClass="form-control" MaxLength="50"></asp:TextBox>
                                     </div>
                                     <div class="card-title pull-left">
                                         Landline
                                     </div>
                                     <div class="form-group">
-                                        <asp:TextBox runat="server" ID="landline" Placeholder="Phone" CssClass="form-control"></asp:TextBox>
+                                        <asp:TextBox runat="server" ID="landline" Placeholder="Phone" CssClass="form-control" MaxLength="12"></asp:TextBox>
                                     </div>
                                     
                                 </div>
@@ -88,25 +88,25 @@
                                         Mobile Number
                                     </div>
                                     <div class="form-group">
-                                        <asp:TextBox runat="server" ID="mobile" Placeholder="Mobile" CssClass="form-control" required></asp:TextBox>
+                                        <asp:TextBox runat="server" ID="mobile" Placeholder="Mobile" CssClass="form-control" MaxLength="12" required></asp:TextBox>
                                     </div>
                                     <div class="card-title pull-left">
                                         Email
                                     </div>
                                     <div class="form-group">
-                                        <asp:TextBox runat="server" ID="email" Placeholder="Username" CssClass="form-control" required></asp:TextBox>
+                                        <asp:TextBox runat="server" ID="email" Placeholder="Email" CssClass="form-control" type="email" MaxLength="80" required></asp:TextBox>
                                     </div>
                                     <div class="card-title pull-left">
                                         Password
                                     </div>
                                     <div class="form-group">
-                                        <asp:TextBox runat="server" ID="password" Placeholder="Password" CssClass="form-control" required></asp:TextBox>
+                                        <asp:TextBox runat="server" ID="password" Placeholder="Password" CssClass="form-control" TextMode="Password" MaxLength="20" required></asp:TextBox>
                                     </div>
                                     <div class="card-title pull-left">
                                         Confirm Password
                                     </div>
                                     <div class="form-group">
-                                        <asp:TextBox runat="server" ID="cpassword" Placeholder="Password" CssClass="form-control" required></asp:TextBox>
+                                        <asp:TextBox runat="server" ID="cpassword" Placeholder="Password" CssClass="form-control" TextMode="Password" MaxLength="20" required></asp:TextBox>
                                     </div>
                                     
                                 </div>

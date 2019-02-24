@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class OrderHistory : System.Web.UI.Page
+public partial class OrdersAdmin : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -24,8 +24,8 @@ public partial class OrderHistory : System.Web.UI.Page
             con.Open();
             string query = @"SELECT DISTINCT o.OrderNo, o.DateOrdered, o.PaymentMethod, 
                                 u.Lastname + ' ' + u.Firstname AS CustomerName,
-                                (SELECT SUM(Amount) FROM OrderDetails WHERE OrderNo= o.OrderNo) AS TotalAmount
-                                FROM Orders o
+                                (SELECT SUM(Amount) FROM OrderDetails WHERE OrderNo= o.OrderNo) AS TotalAmount,
+                                o.Status FROM Orders o
                                 INNER JOIN OrderDetails od ON o.OrderNo= od.OrderNo
                                 INNER JOIN Users u ON od.UserID = u.UserID
                                 ORDER BY o.DateOrdered DESC";
@@ -50,8 +50,8 @@ public partial class OrderHistory : System.Web.UI.Page
             string query = @"SELECT DISTINCT o.OrderNo, o.DateOrdered, o.PaymentMethod,
                                  u.LastName + ' ' + u.FirstName AS CustomerName,
                                   (SELECT SUM(Amount) FROM OrderDetails
-                                    WHERE OrderNo= o.OrderNo) AS TotalAmount
-                                    FROM Orders o
+                                    WHERE OrderNo= o.OrderNo) AS TotalAmount,
+                                    o.Status FROM Orders o
                                     INNER JOIN OrderDetails od ON o.OrderNo= od.OrderNo
                                     INNER JOIN Users u ON od.UserID = u.UserID
                                         WHERE o.DateOrdered BETWEEN @start AND @end

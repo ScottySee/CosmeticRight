@@ -61,7 +61,7 @@ public partial class Cart : System.Web.UI.Page
 
                 ltGross.Text = (totalAmount * .88).ToString("#,##0.00");
                 ltVAT.Text = (totalAmount * .12).ToString("#,##0.00");
-
+                //ltDelivery.Text = (totalAmount * .1).ToString("#,##0.00");
                 ltTotal.Text = (totalAmount * 1).ToString("#,##0.00");
                 Session["total"] = (totalAmount * 1);
             }

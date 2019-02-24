@@ -16,7 +16,7 @@
         </div>
         <div class="row">
             <form runat="server">
-                <div class="col-lg-15">
+                <div class="col-lg-9">
                     <table class="table table-hover">
                         <thead>
                             <th colspan="2">Item Name</th>
@@ -35,10 +35,12 @@
                                         <td>
                                             <asp:Literal ID="ltRefNo" runat="server"
                                                 Text='<%# Eval ("RefNo") %>' Visible="false" />
+
                                             <asp:Literal ID="ltProductID" runat="server"
                                                 Text='<%# Eval("ProductID") %>' Visible="false" />
+                                            <%--<img src='Images/Products/<%# Eval("Image") %>' class="card-img-top" width="239" height="180" style="object-fit:cover" alt='<%# Eval("Name") %>' />--%>
                                             <img src='../Images/Products/<%# Eval("Image") %>'
-                                                width="120" alt='<%# Eval ("Name") %>' />
+                                                width="200" alt='<%# Eval ("Name") %>' />
                                         </td>
                                         <td>
                                             <h4><%# Eval("Name") %></h4>
@@ -69,21 +71,22 @@
                                                 <asp:ListItem Value="1900" style="color: black">1900</asp:ListItem>
                                                 <asp:ListItem Value="2000" style="color: black">2000</asp:ListItem>
                                             </asp:DropDownList>--%>
-                                            <asp:TextBox ID="txtQty" runat="server"
+                                            <%--<asp:TextBox ID="txtQty" runat="server"
                                                 class="form-control" type="number"
                                                 min="1" max="50000" Text='<%# Eval("Quantity") %>'
-                                                required />
+                                                required />--%>
+                                            <%# Eval("Quantity") %>
                                         </td>
                                         <td>Php<%# Eval("Amount", "{0: #,##0.00}") %>
                                         </td>
                                         <td>
-                                            <asp:LinkButton ID="btnUpdate" runat="server"
+                                            <%--<asp:LinkButton ID="btnUpdate" runat="server"
                                                 class="btn btn-xs btn-info" CommandName="updateqty"
                                                 ToolTip="Update quantity">
                                         <i class="fa fa-refresh"></i>&nbsp;Update
-                                            </asp:LinkButton>
+                                            </asp:LinkButton>--%>
                                             <asp:LinkButton ID="btnDelete" runat="server"
-                                                class="btn btn-xs btn-danger" CommandName="deleteitem"
+                                                class="btn btn-sm btn-danger" CommandName="deleteitem"
                                                 ToolTip="Remove an Item">
                                         <i class="fa fa-trash-o"></i>&nbsp;Remove
                                             </asp:LinkButton>
@@ -122,6 +125,13 @@
 
                                 </td>
                             </tr>
+                            <%--<tr>
+                                <td>Delivery</td>
+                                <td align="right">
+                                    <asp:literal id="ltDelivery" runat="server" />
+
+                                </td>
+                            </tr>--%>
 
                             <tr>
                                 <td>Total Amount</td>
@@ -134,7 +144,7 @@
                             </tr>                            
                         </tbody>
                     </table>
-                        <a href="PaymentDetailCOD.aspx">Cash on Delivery</a>
+                        <a href="CheckoutCOD.aspx">Cash on Delivery</a>
                     
                     <%--PAYPAL--%>
                     <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" target="paypal" method="post">

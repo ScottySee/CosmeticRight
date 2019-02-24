@@ -97,7 +97,7 @@ public class Util
             else
             {
                 query = @"INSERT INTO OrderDetails VALUES (@OrderNo, @UserID,
-                    @ProductID, @Quantity, @Amount, @Status)";
+                    @ProductID, @Quantity, @Amount)";
             }
 
             using (SqlCommand cmd = new SqlCommand(query, con))
@@ -110,7 +110,6 @@ public class Util
                 cmd.Parameters.AddWithValue("@Quantity", quantity);
                 cmd.Parameters.AddWithValue("@Amount",
                     int.Parse(quantity) * GetPrice(ID));
-                cmd.Parameters.AddWithValue("@Status", "In Cart");
                 cmd.ExecuteNonQuery();
 
             }

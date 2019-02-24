@@ -12,21 +12,21 @@
                             <div class="card-body">
                                 <div class="alert alert-success" id="success" runat="server" visible="false">
                                     <strong>Login Successful.</strong>
-                                    <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
+                                    <asp:label id="Label2" runat="server" text="Label"></asp:label>
                                 </div>
                                 <div class="alert alert-danger" id="error" runat="server" visible="false">
-                                    <strong>Invalid Username or Password.</strong>
+                                    <strong>Invalid Email or Password.</strong>
                                 </div>
                                 <br />
                                 <div class="form-group">
-                                    <asp:TextBox runat="server" ID="email" Placeholder="Email" CssClass="form-control"></asp:TextBox>
+                                    <asp:textbox runat="server" id="email" placeholder="Email" cssclass="form-control" type="email" maxlength="80"></asp:textbox>
                                 </div>
                                 <div class="form-group">
-                                    <asp:TextBox runat="server" ID="password" type="password" Placeholder="Password" CssClass="form-control"></asp:TextBox>
+                                    <asp:textbox runat="server" id="password" type="password" placeholder="Password" cssclass="form-control" maxlength="20"></asp:textbox>
                                 </div>
 
                                 <div class="text-center">
-                                    <asp:Button ID="btnLogin" runat="server" Text="Login" class="btn btn-default submit btn-block" OnClick="BtnLogin_Click" />
+                                    <asp:button id="btnLogin" runat="server" text="Login" class="btn btn-default submit btn-block" onclick="BtnLogin_Click" />
                                 </div>
                             </div>
                         </div>
@@ -48,5 +48,8 @@
                 });
         });
     </script>
+
+    
+
 </asp:Content>
 
