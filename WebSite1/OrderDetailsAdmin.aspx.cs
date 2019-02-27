@@ -38,7 +38,7 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"SELECT OrderNo, DateOrdered, PaymentMethod
+            string query = @"SELECT OrderNo, DateOrdered, PaymentMethod, Status
                             FROM Orders WHERE OrderNo=@OrderNo";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -50,7 +50,7 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
                         while (data.Read())
                         {
                             ltOrderNo.Text = data["OrderNo"].ToString();
-
+                            ltStatus.Text = data["Status"].ToString();
                             //btnAccept.Visible = ltStatus.Text == "Pending" ? true : false;
                             //btnReject.Visible = ltStatus.Text == "Pending" ? true : false;
 

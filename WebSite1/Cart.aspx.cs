@@ -108,4 +108,9 @@ public partial class Cart : System.Web.UI.Page
         GetCart();
         GetOrderSummary();
     }
+
+    protected void btnCheckout_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("CheckoutCOD.aspx");
+    }
 }

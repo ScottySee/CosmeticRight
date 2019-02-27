@@ -81,10 +81,12 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <hr />
-                        <br />
+                        <div class="form-group text-primary">
+                            <small><label class="control-label">*The default payment would be "Cash on Delivery".</label></small>
+                            <small><label class="control-label">*The delivery duration would be 1-2 weeks after the order was received.</label></small>
+                        </div>
                         <div class="form-group text-white">
-                            <label class="control-label">Payment Method: Cash on Delivery</label>
+                            Payment Method: <label class="control-label text-primary">Cash on Delivery</label>
                             <%--                    <div class="col-lg-8">
                         Cash on Delivery
                     </div>--%>
@@ -95,6 +97,20 @@
                             OnClick="btnCheckout_Click">
                     <i class="fa fa-money"></i> Order Now
                         </asp:LinkButton>
+                        <%--PAYPAL--%>
+                    <%--<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" target="paypal" method="post">
+
+                        <input type="hidden" name="cmd" value="_xclick" />
+                        <input type="hidden" name="business" value="david.aligaen-buyer@benilde.edu.ph" />
+                        <input type="hidden" name="currency_code" value="PHP" />
+
+                        <input type="hidden" name="item_name" value="My Cart" />
+                        <input type="hidden" name="amount" value="<%= Session["total"].ToString() %>" />
+                        <input type="submit" class="btn btn-lg btn-success btn-block" value="Paypal" />
+
+                    </form>--%>
+                        <br />
+                        <br />
                         <a href="Cart.aspx" class="btn btn-default btn-block btn-lg">Back to Cart
                         </a>
                     </div>

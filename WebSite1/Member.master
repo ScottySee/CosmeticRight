@@ -86,7 +86,6 @@
                     </li>
                     <li class="nav-item p-0">
                         <a class="nav-link" href="Orders.aspx">
-                            <!--May Error pa-->
                             <i class="fa fa-list-alt"></i>Orders
                         </a>
                     </li>
@@ -204,19 +203,19 @@
         }
     </script>
     <script type="text/javascript">
-        var headID = document.getElementsByTagName("head")[0];
-        var newCss = document.createElement('link');
-        newCss.rel = 'stylesheet';
-        newCss.type = 'text/css';
-        window._botUsername = '836310';
-        window._botName = 'Cosmetic Rights';
-        newCss.href = "https://rebot.me/assets/css/bot.css";
-        var newScript = document.createElement('script');
-        newScript.src = "https://rebot.me/assets/js/bot.js";
-        newScript.type = 'text/javascript';
-        headID.appendChild(newScript);
-        headID.appendChild(newCss);
-    </script>
+		var headID = document.getElementsByTagName("head")[0];
+		var newCss = document.createElement('link');
+		newCss.rel = 'stylesheet';
+		newCss.type = 'text/css';
+		window._botUsername = '836310';
+		window._botName = 'Cosmetic Rights';
+		newCss.href = "https://rebot.me/assets/css/bot.css";
+		var newScript = document.createElement('script');
+		newScript.src = "https://rebot.me/assets/js/bot.js";
+		newScript.type = 'text/javascript';
+		headID.appendChild(newScript);
+		headID.appendChild(newCss);
+	</script>
 
     <%--<!-- SMOOTH SCROLL -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>

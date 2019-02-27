@@ -156,13 +156,13 @@ public partial class CheckoutCOD : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"UPDATE OrderDetails SET OrderNo=@OrderNo,
-            Status=@Status WHERE OrderNo=0 AND UserID=@UserID";
+            string query = @"UPDATE OrderDetails SET OrderNo=@OrderNo
+             WHERE OrderNo=0 AND UserID=@UserID";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@OrderNo ", orderNo);
-                cmd.Parameters.AddWithValue("@Status ", "Pending");
+                //cmd.Parameters.AddWithValue("@Status ", "Pending");
                 cmd.Parameters.AddWithValue("@UserID ", Session["UserID"].ToString());
                 // use Session["userid"].ToString() instead of 1
                 cmd.ExecuteNonQuery();

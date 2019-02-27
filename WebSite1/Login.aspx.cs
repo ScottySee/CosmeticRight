@@ -41,7 +41,7 @@ public partial class Login : System.Web.UI.Page
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@Email", email.Text);
-                cmd.Parameters.AddWithValue("@Password", password.Text);
+                cmd.Parameters.AddWithValue("@Password", Util.CreateSHAHash(password.Text));
                 using (SqlDataReader data = cmd.ExecuteReader())
                 {
                     if (data.HasRows) //credentials are correct

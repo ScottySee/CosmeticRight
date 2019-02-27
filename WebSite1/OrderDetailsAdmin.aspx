@@ -72,6 +72,12 @@
                                                 </td>
                                             </tr>
                                             <tr>
+                                                <td>Status</td>
+                                                <td align="right">
+                                                    <asp:Literal ID="ltStatus" runat="server" />
+                                                </td>
+                                            </tr>
+                                            <tr>
                                                 <td>Date Ordered</td>
                                                 <td align="right">
                                                     <asp:Literal ID="ltDateOrdered" runat="server" />

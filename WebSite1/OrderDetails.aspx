@@ -12,7 +12,8 @@
     <form runat="server" class="form-horizontal">
         <div class="container">
             <div class="text-white">
-                <i class="fa fa-money"></i>Order #<asp:Literal ID="ltOrderNo" runat="server" /> Details
+                <i class="fa fa-money"></i>Order #<asp:Literal ID="ltOrderNo" runat="server" />
+                Details
             </div>
             <div class="row">
                 <div class="col-lg-8">
@@ -173,7 +174,7 @@
                     </div>
                 </div>
             </div>
-            </div>
+        </div>
     </form>
 </asp:Content>
 

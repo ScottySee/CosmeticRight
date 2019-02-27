@@ -39,6 +39,7 @@
                                 <th>Payment Method</th>
                                 <th>Customer</th>
                                 <th>Total Amount</th>
+                                <th>Status</th>
                                 <th></th>
                             </thead>
                             <tbody>
@@ -50,6 +51,7 @@
                                             <td><%# Eval("PaymentMethod") %></td>
                                             <td><%# Eval("CustomerName") %></td>
                                             <td><%# Eval("TotalAmount", "{0: #,##0.00}") %></td>
+                                            <td><%# Eval("Status") %></td>
                                             <td>
                                                 <a href='OrderDetailsAdmin.aspx?ID=<%# Eval("OrderNo") %>' class="btn btn-xs btn-info"
                                                     title="View Details">
