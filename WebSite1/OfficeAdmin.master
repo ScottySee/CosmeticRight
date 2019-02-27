@@ -119,6 +119,9 @@
     <script src="bootstrap/assets/demo/demo.js"></script>
     <!-- Control Center for Black UI Kit: parallax effects, scripts for the example pages etc -->
     <script src="bootstrap/assets/js/blk-design-system.min.js?v=1.0.0" type="text/javascript"></script>
+
+    <script src="Scripts/fusioncharts.js"></script>
+    <script src="Scripts/fusioncharts.charts.js"></script>
     <script>
         $(document).ready(function () {
             blackKit.initDatePicker();

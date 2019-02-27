@@ -27,7 +27,7 @@
                     </div>
                    <br />
                     <div class="col-lg-3 text-white">
-                       END <asp:TextBox ID="txtEnd" runat="server" CssClass="form-control"
+                       END<asp:TextBox ID="txtEnd" runat="server" CssClass="form-control"
                             type="date" AutoPostBack="true" OnTextChanged="SearchByDate" />
                     </div>
                     <div class="col-lg-12">

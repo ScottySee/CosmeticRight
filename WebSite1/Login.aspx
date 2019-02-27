@@ -48,8 +48,5 @@
                 });
         });
     </script>
-
-    
-
 </asp:Content>
 

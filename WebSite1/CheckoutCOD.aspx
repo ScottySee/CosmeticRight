@@ -89,14 +89,6 @@
                         Cash on Delivery
                     </div>--%>
                         </div>
-                        <div class="form-group">
-                            <div class="col-lg-12 text-white">
-                                <label>
-                                    <asp:CheckBox ID="cboTerms" runat="server" required />
-                                    I have agreed to the <a href="#">Terms & Conditions.</a>
-                                </label>
-                            </div>
-                        </div>
                         <asp:LinkButton ID="btnCheckout" runat="server"
                             CssClass="btn btn-success btn-lg btn-block"
                             OnClientClick='return confirm("Are you sure?");'
