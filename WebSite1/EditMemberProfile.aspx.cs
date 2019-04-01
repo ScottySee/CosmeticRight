@@ -81,6 +81,10 @@ public partial class EditMemberProfile : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@UserID", Session["UserID"]);
                 cmd.ExecuteNonQuery();
 
+                //start of Auditlog 
+                Util.Log(Session["UserID"].ToString(), "The Member has updated their profile");
+                //end of auditlog
+
                 Response.Redirect("MemberProfile.aspx");
             }
         }

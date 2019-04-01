@@ -59,7 +59,7 @@ public partial class Products : System.Web.UI.Page
 
     void GetProducts()
     {
-        string query = @"SELECT * FROM Products";
+        string query = @"SELECT * FROM Products WHERE Status != 'Archived'";
 
         cmd = new SqlCommand(query, con);
         con.Open();
@@ -92,7 +92,6 @@ public partial class Products : System.Web.UI.Page
         con.Close();
     }
 
-    // di ako sure
     //void GetCategories()
     //{
     //    using (SqlConnection con = new SqlConnection(Util.GetConnection()))
@@ -137,6 +136,11 @@ public partial class Products : System.Web.UI.Page
         cmd.Parameters.AddWithValue("@DateAdded", DateTime.Now);
         cmd.Parameters.AddWithValue("@DateModified", DBNull.Value);
         cmd.ExecuteNonQuery();
+
+        //start of Auditlog 
+        Util.Log(Session["UserID"].ToString(), "The Warehouse Admin has addded a product.");
+        //end of auditlog
+
         con.Close();
 
         Response.Redirect("Products.aspx");
@@ -157,6 +161,7 @@ public partial class Products : System.Web.UI.Page
                 while (data.Read())
                 {
                     productID.Text = data["ProductID"].ToString();
+                    Session["ProductID"] = data["ProductID"].ToString();
                     txtProductName.Text = data["Name"].ToString();
                     ddlCategories.SelectedValue = data["CatID"].ToString();
                     txtCode.Text = data["Code"].ToString();
@@ -166,7 +171,6 @@ public partial class Products : System.Web.UI.Page
                     txtPrice.Text = data["Price"].ToString();
                     txtCritical.Text = data["Criticallevel"].ToString();
                     txtMax.Text = data["Maximum"].ToString();
-
                 }
             }
             else
@@ -190,16 +194,20 @@ public partial class Products : System.Web.UI.Page
         cmd.Parameters.AddWithValue("@CatID", ddlCategories.SelectedValue);
         cmd.Parameters.AddWithValue("@Code", txtCode.Text);
         cmd.Parameters.AddWithValue("@Description", Server.HtmlEncode(txtDescription.Text));
+        //cmd.Parameters.AddWithValue("@Image", fileUpload.FileName);
+
         if (fileUpload.HasFile)
         {
-            string fileExt = Path.GetExtension(fileUpload.FileName);
-            //string id = Guid.NewGuid().ToString();
+            string fileExt = Path.GetFileName(fileUpload.FileName);
             cmd.Parameters.AddWithValue("@Image", fileExt);
-            fileUpload.SaveAs("~/Images/Products/" + fileExt);
+            //fileUpload1.SaveAs("~/Images/Announcement/" + fileExt);
+            fileUpload.PostedFile.SaveAs(Server.MapPath("~/Images/Products/") + fileExt);
         }
         else
         {
-            cmd.Parameters.AddWithValue("@Image", Session["image"].ToString());
+            string fileExt = Path.GetFileName(fileUpload.FileName);
+
+           cmd.Parameters.AddWithValue("@Image", Session["image"].ToString());
             Session.Remove("image");
         }
         cmd.Parameters.AddWithValue("@Price", txtPrice.Text);
@@ -207,22 +215,32 @@ public partial class Products : System.Web.UI.Page
         cmd.Parameters.AddWithValue("@Criticallevel", txtCritical.Text);
         cmd.Parameters.AddWithValue("@Maximum", txtMax.Text);
         cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
-        cmd.Parameters.AddWithValue("@ProductID", productID.Text);
+        cmd.Parameters.AddWithValue("@ProductID", Session["ProductID"].ToString());
         //cmd.Parameters.AddWithValue("@Image", "Sample.jpg");
+
+        //start of Auditlog 
+        Util.Log(Session["UserID"].ToString(), "The Warehouse Admin has updated the product");
+        //end of auditlog
 
         cmd.ExecuteNonQuery();
         con.Close();
         Response.Redirect("Products.aspx");
+
     }
 
     void DeleteRecord(int ID)
     {
         con.Open();
-        string query = @"DELETE FROM Products WHERE ProductID=@ProductID";
+        string query = @"UPDATE Products SET Status = 'Archived' WHERE ProductID=@ProductID";
 
         cmd = new SqlCommand(query, con);
         cmd.Parameters.AddWithValue("@ProductID", ID);
         cmd.ExecuteNonQuery();
+
+        //start of Auditlog 
+        Util.Log(Session["UserID"].ToString(), "The Warehouse Admin has archived a product");
+        //end of auditlog
+
         con.Close();
         Response.Redirect("Products.aspx");
     }
@@ -247,10 +265,10 @@ public partial class Products : System.Web.UI.Page
         switch (ddlCategories.SelectedValue)
         {
             case "1":
-                lblunit.Text = "Kg/Liters";
+                lblunit.Text = "Kilogram";
                 break;
             case "2":
-                lblunit.Text = "Kg/Liters";
+                lblunit.Text = "Liters";
                 break;
             case "3":
                 lblunit.Text = "Pieces";

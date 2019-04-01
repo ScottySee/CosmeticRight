@@ -74,5 +74,9 @@ public partial class ProductDetail : System.Web.UI.Page
     protected void btnAddToCart_Click(object sender, EventArgs e)
     {
         Util.AddToCart(Request.QueryString["ID"], ddlCategories.SelectedValue);
+
+        //start of Auditlog 
+        Util.Log(Session["UserID"].ToString(), "The Member has added product to cart");
+        //end of auditlog
     }
 }

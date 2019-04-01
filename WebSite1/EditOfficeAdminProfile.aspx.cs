@@ -81,6 +81,10 @@ public partial class EditOfficeAdminProfile : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@UserID", Session["UserID"]);
                 cmd.ExecuteNonQuery();
 
+                //start of Auditlog 
+                Util.Log(Session["UserID"].ToString(), "The Office Admin updated their profile");
+                //end of auditlog
+
                 Response.Redirect("OfficeAdminProfile.aspx");
             }
         }

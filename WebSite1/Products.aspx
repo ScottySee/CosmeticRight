@@ -13,7 +13,7 @@
         <!-- page content -->
         <form runat="server" classa="form-horizontal">
             <asp:ScriptManager runat="server" />
-            <asp:UpdatePanel ID="Product" runat="server">
+          
                 <ContentTemplate>
                     <div class="card shadow-lg">
                         <div class="card-body">
@@ -59,7 +59,7 @@
                                     <label for="body_fileUpload" class="btn btn-success">
                                         Upload Image Here
                                         <asp:FileUpload CssClass="btn btn alert-info" hidden ID="fileUpload" runat="server" />
-                                    </label>
+                                                                    </label>
 
                                     <%--<asp:FileUpload id="fupload" runat="server" Height="21px" Width="220px" />
                                     <asp:Button id="ButtonUpload" OnClick="ButtonUpload_Click" CssClass="btn btn-lg btn-success" runat="server" />--%>
@@ -159,8 +159,11 @@
                                                             <td>
                                                                 <a href='Products.aspx?EditID=<%# Eval("ProductID") %>' class="btn btn-info btn-sm"><i class="fa fa-edit"></i>Edit</a>&nbsp;
                                                
-                                                                <a href='products.aspx?DeleteID=<%# Eval("ProductID") %>' class="btn btn-danger btn-sm" onclick="return confirm('Do you want to delete this item?')"><i class="fa fa-trash"></i>Delete</a>&nbsp;
+                                                                <a href='products.aspx?DeleteID=<%# Eval("ProductID") %>' class="btn btn-danger btn-sm" onclick="return confirm('Do you want to archive this item?')"><i class="fa fa-trash"></i>Archive</a>&nbsp;
                                             </td>
+
+                                                            
+
                                                         </tr>
                                                     </ItemTemplate>
                                                     <EmptyDataTemplate>
@@ -201,7 +204,7 @@
                     <asp:PostBackTrigger ControlID="btnAdd" />
                     <%--<asp:AsyncPostBackTrigger ControlID="btnAdd" />--%>
                 </Triggers>
-            </asp:UpdatePanel>
+          
         </form>
         <!-- /.col -->
     </div>

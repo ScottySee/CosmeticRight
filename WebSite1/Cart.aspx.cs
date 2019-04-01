@@ -27,7 +27,7 @@ public partial class Cart : System.Web.UI.Page
                                 p.Price, od.Quantity, od.Amount FROM OrderDetails od
                                 INNER JOIN Products p ON od.ProductID = p.ProductID
 								INNER JOIN Categories c ON c.CatID = p.CatID
-                                WHERE od.OrderNo=0 AND od.UserID=@UserID";
+                                WHERE od.OrderNo IS NULL AND od.UserID=@UserID";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@OrderNo", 0);
@@ -49,11 +49,11 @@ public partial class Cart : System.Web.UI.Page
         {
             con.Open();
             string query = @"SELECT SUM(Amount) FROM OrderDetails
-                                WHERE OrderNo=@OrderNo AND UserID=@UserID
+                                WHERE OrderNo IS NULL AND UserID=@UserID
                                    HAVING COUNT(RefNo) > 0";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
-                cmd.Parameters.AddWithValue("@OrderNo", 0);
+                //cmd.Parameters.AddWithValue("@OrderNo", 0);
                 cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
                 // use Session ["userid"].ToString() instead of 1
                 double totalAmount = cmd.ExecuteScalar() == null ? 0 :

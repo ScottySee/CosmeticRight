@@ -28,6 +28,10 @@ public partial class Feedback : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@Datefeedback", DateTime.Now);
                 cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
                 cmd.ExecuteNonQuery();
+
+                //start of Auditlog 
+                Util.Log(Session["UserID"].ToString(), "The Member has sent a feedback");
+                //end of auditlog
             }
         }
     }

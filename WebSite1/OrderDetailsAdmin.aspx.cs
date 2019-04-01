@@ -138,40 +138,4 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
             }
         }
     }
-
-    //protected void btnAccept_Click(object sender, EventArgs e)
-    //{
-    //    using (SqlConnection con = new SqlConnection(Util.GetConnection()))
-    //    {
-    //        con.Open();
-    //        string query = @"UPDATE Orders SET Status =@Status
-    //                        WHERE OrderNo=@OrderNo;";
-    //        using (SqlCommand cmd = new SqlCommand(query, con))
-    //        {
-    //            cmd.Parameters.AddWithValue("@Status", "Accepted");
-    //            cmd.Parameters.AddWithValue("OrderNo", ltOrderNo.Text);
-    //            //cmd.Parameters.AddWithValue("@Status2", "For Delivery");
-    //            cmd.ExecuteNonQuery();
-    //            Response.Redirect("Orders.aspx");
-    //        }
-    //    }
-    //}
-
-    //protected void btnReject_Click(object sender, EventArgs e)
-    //{
-    //    using (SqlConnection con = new SqlConnection(Util.GetConnection()))
-    //    {
-    //        con.Open();
-    //        string query = @"UPDATE Orders SET Status =@Status
-    //                        WHERE OrderNo=@OrderNo WHERE OrderNo=@OrderNo";
-    //        using (SqlCommand cmd = new SqlCommand(query, con))
-    //        {
-    //            cmd.Parameters.AddWithValue("@Status", "Rejected");
-    //            cmd.Parameters.AddWithValue("OrderNo", ltOrderNo.Text);
-    //            //cmd.Parameters.AddWithValue("@Status2", "Cancelled");
-    //            cmd.ExecuteNonQuery();
-    //            Response.Redirect("Orders.aspx");
-    //        }
-    //    }
-    //}
 }

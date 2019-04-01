@@ -32,7 +32,7 @@
                     </div>
                     <div class="col-lg-12">
                         <center><h1>Orders</h1></center>
-                        <table class="table table-hover">
+                        <table id="dtOrders" class="table table-hover">
                             <thead>
                                 <th>#</th>
                                 <th>Order Date</th>
@@ -45,7 +45,7 @@
                             <tbody>
                                 <asp:ListView ID="lvOrders" runat="server">
                                     <ItemTemplate>
-                                        <tr>
+                                        <tr class="bg-default">
                                             <td><%# Eval("OrderNo") %></td>
                                             <td><%# Eval("DateOrdered") %></td>
                                             <td><%# Eval("PaymentMethod") %></td>
@@ -80,5 +80,3 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scripts" runat="Server">
 </asp:Content>
-
-

@@ -9,6 +9,7 @@
     </div>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
+    
     <div class="container mt--7">
         <!-- page content -->
         <form runat="server" class="form-horizontal">
@@ -18,6 +19,14 @@
             <div class="card shadow-lg">
                 <div class="card-body">
                     <div class="container">
+                        <span class="pull-right">
+                            <a href="PrintOrders.aspx?ID=<%= Request.QueryString["ID"] %>" class="btn btn-sm btn-success btn-block">
+                                Print Order Receipt
+                            </a>
+                            <a href="PrintDelivery.aspx?ID=<%= Request.QueryString["ID"] %>" class="btn btn-sm btn-success btn-block">
+                                Print Delivery Receipt
+                            </a>
+                        </span>
                         <div class="text-white">
                             <i class="fa fa-money"></i>Order #<asp:Literal ID="ltOrderNo" runat="server" />
                             Details
@@ -85,7 +94,8 @@
                                             </tr>
                                             <tr>
                                                 <td>Gross Amount</td>
-                                                <td align="right">Php <asp:Literal ID="ltGross" runat="server" />
+                                                <td align="right">Php
+                                                    <asp:Literal ID="ltGross" runat="server" />
                                                 </td>
                                             </tr>
                                             <tr>
@@ -103,7 +113,8 @@
                                             <tr>
                                                 <td>Total Amount</td>
                                                 <td align="right">
-                                                    <h3>Php <asp:Literal ID="ltTotal" runat="server" /></h3>
+                                                    <h3>Php
+                                                        <asp:Literal ID="ltTotal" runat="server" /></h3>
                                                 </td>
                                             </tr>
                                         </tbody>

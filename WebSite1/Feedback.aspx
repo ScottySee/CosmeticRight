@@ -25,7 +25,7 @@
                                     <asp:ScriptManager runat="server"></asp:ScriptManager>
 
 
-                                    <div class="stars">
+                                    <div class="stars" required>
                                         <input type="radio" name="star" class="star-1" value="1" id="star-1" />
                                         <label class="star-1" for="star-1">1</label>
                                         <input type="radio" name="star" class="star-2" value="2" id="star-2" />
@@ -41,7 +41,7 @@
 
                                     <label class="control-label">Subject</label>
                                     <div class="form-group">
-                                        <asp:TextBox runat="server" ID="subject" Placeholder="Subject" CssClass="form-control"></asp:TextBox>
+                                        <asp:TextBox runat="server" ID="subject" Placeholder="Subject" CssClass="form-control" required></asp:TextBox>
                                     </div>
                                     <label class="control-label">Message</label>
                                     <div class="form-group">

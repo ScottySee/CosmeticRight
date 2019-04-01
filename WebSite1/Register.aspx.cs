@@ -44,6 +44,10 @@ public partial class Register : System.Web.UI.Page
                     cmd.Parameters.AddWithValue("@DateModified", DBNull.Value);
                     cmd.ExecuteNonQuery();
 
+                    //start of Auditlog 
+                    //Util.Log(Session["UserID"].ToString(), "The Member has created their account");
+                    //end of auditlog
+
                     Response.Redirect("Login.aspx");
                 }
             }

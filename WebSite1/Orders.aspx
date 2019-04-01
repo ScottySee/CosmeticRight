@@ -33,7 +33,7 @@
                 <tbody>
                     <asp:ListView ID="lvOrders" runat="server">
                         <ItemTemplate>
-                            <tr>
+                            <tr class="bg-default">
                                 <td><%# Eval("OrderNo") %></td>
                                 <td><%# Eval("DateOrdered") %></td>
                                 <td><%# Eval("PaymentMethod") %></td>

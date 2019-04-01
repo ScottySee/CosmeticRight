@@ -56,9 +56,10 @@ public partial class Announcement : System.Web.UI.Page
     void GetAnnouncement()
     {
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        //@"Server=MSI\MSSQLSERVER2;Database=Test;Integrated Security=true";
         {
             con.Open();
-            string query = @"SELECT * FROM Announcements";
+            string query = @"SELECT * FROM Announcements WHERE Status != 'Archived'";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -102,18 +103,22 @@ public partial class Announcement : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"INSERT INTO Announcements VALUES (@AnnouncementName, @AnnouncementDetail, @Image, @AdminID, @Status, @DateAdded, @DateModified)";
+            string query = @"INSERT INTO Announcements VALUES (@AnnouncementName, @AnnouncementDetail, @Image, @UserID, @Status, @DateAdded, @DateModified)";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@AnnouncementName", txtannouncement.Text);
                 cmd.Parameters.AddWithValue("@AnnouncementDetail", txtdetails.Text);
                 cmd.Parameters.AddWithValue("@Image", fileUpload1.FileName);
-                cmd.Parameters.AddWithValue("@AdminID", "1");
+                cmd.Parameters.AddWithValue("@UserID", "4");
                 cmd.Parameters.AddWithValue("@Status", "Active");
                 cmd.Parameters.AddWithValue("@DateAdded", DateTime.Now);
                 cmd.Parameters.AddWithValue("@DateModified", DBNull.Value);
                 cmd.ExecuteNonQuery();
+
+                //start of Auditlog 
+                Util.Log(Session["UserID"].ToString(), "The office admin has added an announcement");
+                //end of auditlog
 
                 Response.Redirect("Announcement.aspx");
             }
@@ -137,6 +142,7 @@ public partial class Announcement : System.Web.UI.Page
                         while (data.Read())
                         {
                             announcementID.Text = data["AnnouncementID"].ToString();
+                            Session["AnnouncementID"] = data["AnnouncementID"].ToString();
                             txtannouncement.Text = data["AnnouncementName"].ToString();
                             txtdetails.Text = data["AnnouncementDetail"].ToString();
                             Session["image"] = data["Image"].ToString();
@@ -172,10 +178,14 @@ public partial class Announcement : System.Web.UI.Page
                     cmd.Parameters.AddWithValue("@Image", Session["image"].ToString());
                     Session.Remove("image");
                 }
-                cmd.Parameters.AddWithValue("@AnnouncementID", announcementID.Text);
+                cmd.Parameters.AddWithValue("@AnnouncementID", Session["AnnouncementID"].ToString());
                 //cmd.Parameters.AddWithValue("@Image", "Sample.jpg");
 
                 cmd.ExecuteNonQuery();
+
+                //start of Auditlog 
+                Util.Log(Session["UserID"].ToString(), "The office admin has updated an announcement");
+                //end of auditlog
 
                 Response.Redirect("Announcement.aspx");
             }
@@ -187,12 +197,17 @@ public partial class Announcement : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"DELETE FROM Announcements WHERE AnnouncementID=@AnnouncementID";
+            string query = @"UPDATE Announcements SET Status = 'Archived' WHERE AnnouncementID=@AnnouncementID";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@AnnouncementID", ID);
                 cmd.ExecuteNonQuery();
+
+                //start of Auditlog 
+                Util.Log(Session["UserID"].ToString(), "The office admin has archived an announcement");
+                //end of auditlog
+
                 Response.Redirect("Announcement.aspx");
             }
         }
@@ -201,15 +216,5 @@ public partial class Announcement : System.Web.UI.Page
     protected void btnCancel_Click(object sender, EventArgs e)
     {
         Response.Redirect("Announcement.aspx");
-    }
-
-    protected void btnSearch_Click(object sender, EventArgs e)
-    {
-        dpAnnouncements.SetPageProperties(0, dpAnnouncements.MaximumRows, false);
-
-        if (txtKeyword.Text == "")
-            GetAnnouncement();
-        else
-            GetAnnouncement(txtKeyword.Text);
     }
 }

@@ -38,6 +38,7 @@ public partial class Login : System.Web.UI.Page
             con.Open();
             string query = @"SELECT * FROM Users
                                 WHERE Email=@Email AND Password=@Password";
+            string query1 = @"INSERT INTO WebsiteVisit VALUES (@Date)";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@Email", email.Text);
@@ -54,19 +55,35 @@ public partial class Login : System.Web.UI.Page
                             // eto yung para madistinguish kung anong type ang user
                             if (data["UserType"].ToString() == "1") //OFFICE ADMIN
                             {
+                                Util.Log(Session["UserID"].ToString(), "The office admin has logged in");
                                 Response.Redirect("OfficeAdminHome.aspx");
                             }
                             else if (data["UserType"].ToString() == "2") //WAREHOUSE ADMIN
                             {
+                                Util.Log(Session["UserID"].ToString(), "The warehouse admin has logged in");
                                 Response.Redirect("WarehouseAdminHome.aspx");
                             }
-                            else if(data["UserType"].ToString() == "3") // USER/MEMBER
+                            else if (data["UserType"].ToString() == "3") // USER/MEMBER
                             {
+                                Util.Log(Session["UserID"].ToString(), "The user has logged in");
+                                con.Close();
+                                con.Open();
+                                using (SqlCommand cmd1 = new SqlCommand(query1, con))
+                                {
+                                    cmd1.Parameters.AddWithValue("@Date", DateTime.Now);
+                                    cmd1.ExecuteNonQuery();
+                                }
                                 Response.Redirect("Member.aspx");
+
+                               
                             }
                             
 
                         }
+
+                        //start of Auditlog 
+                        Util.Log(Session["UserID"].ToString(), "The user has logged in");
+                        //end of auditlog
 
                         Response.Redirect("Member.aspx");
                     }

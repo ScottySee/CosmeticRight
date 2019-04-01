@@ -24,11 +24,14 @@ public partial class ChangePassword : System.Web.UI.Page
                 string query = @"UPDATE Users SET Password=@Password WHERE UserID=@UserID";
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
-                    cmd.Parameters.AddWithValue("@Password", password.Text);
+                    cmd.Parameters.AddWithValue("@Password", Util.CreateSHAHash(password.Text));
                     cmd.Parameters.AddWithValue("@UserID", Request.QueryString["UserID"]);
                     //cmd.Parameters.AddWithValue("@Image", "Sample.jpg");
-
                     cmd.ExecuteNonQuery();
+
+                    //start of Auditlog 
+                    Util.Log(Session["UserID"].ToString(), "The user has changed password");
+                    //end of auditlog
 
                     Response.Redirect("Login.aspx");
                 }

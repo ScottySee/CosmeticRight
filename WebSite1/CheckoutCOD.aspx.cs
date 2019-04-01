@@ -27,10 +27,10 @@ public partial class CheckoutCOD : System.Web.UI.Page
                 p.Price, od.Quantity, od.Amount FROM OrderDetails od
                 INNER JOIN Products p ON od.ProductID = p.ProductID 
                 INNER JOIN Categories c ON p.CatID = c.CatID
-                WHERE od.OrderNo=@OrderNo AND od.UserID=@UserID";
+                WHERE od.OrderNo IS NULL AND od.UserID=@UserID";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
-                cmd.Parameters.AddWithValue("@OrderNo", 0);
+                //cmd.Parameters.AddWithValue("@OrderNo", 0);
                 cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
                 // use Session["userid"].ToString() instead of 1
                 using (SqlDataReader dr = cmd.ExecuteReader())
@@ -54,7 +54,7 @@ public partial class CheckoutCOD : System.Web.UI.Page
         {
             con.Open();
             string query = @"SELECT SUM(Amount) FROM OrderDetails
-                WHERE OrderNo=@OrderNo AND UserID=@UserID
+                WHERE OrderNo IS NULL AND UserID=@UserID
                 HAVING COUNT(RefNo) > 0";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -157,11 +157,11 @@ public partial class CheckoutCOD : System.Web.UI.Page
         {
             con.Open();
             string query = @"UPDATE OrderDetails SET OrderNo=@OrderNo
-             WHERE OrderNo=0 AND UserID=@UserID";
+             WHERE OrderNo IS NULL AND UserID=@UserID";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
-                cmd.Parameters.AddWithValue("@OrderNo ", orderNo);
+                cmd.Parameters.AddWithValue("@OrderNo", orderNo);
                 //cmd.Parameters.AddWithValue("@Status ", "Pending");
                 cmd.Parameters.AddWithValue("@UserID ", Session["UserID"].ToString());
                 // use Session["userid"].ToString() instead of 1
@@ -171,22 +171,31 @@ public partial class CheckoutCOD : System.Web.UI.Page
         }
         #endregion
 
-        #region Step #4: Insert Delivery Record 
-        //using (SqlConnection con = new SqlConnection(Util.GetConnection()))
-        //{
-        //    con.Open();
-        //    string query = @"INSERT INTO Deliveries VALUES (@OrderNo, @Deadline,
-        //    @DateDelivered, @Status)";
-        //    using (SqlCommand cmd = new SqlCommand(query, con))
-        //    {
-        //        cmd.Parameters.AddWithValue("@OrderNo ", orderNo);
-        //        cmd.Parameters.AddWithValue("@Deadline ", DateTime.Now.AddDays(7));
-        //        cmd.Parameters.AddWithValue("@DateDelivered ", DBNull.Value);
-        //        cmd.Parameters.AddWithValue("@Status ", "Pending");
-        //        cmd.ExecuteNonQuery();
-        //    }
+        #region Step #4: Insert ProductCount Record 
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        {
+            //con.Open();
+            //string query = @"INSERT INTO Deliveries VALUES (@OrderNo, @Deadline,
+            //@DateDelivered, @Status)";
+            //using (SqlCommand cmd = new SqlCommand(query, con))
+            //{
+            //    cmd.Parameters.AddWithValue("@OrderNo ", orderNo);
+            //    cmd.Parameters.AddWithValue("@Deadline ", DateTime.Now.AddDays(7));
+            //    cmd.Parameters.AddWithValue("@DateDelivered ", DBNull.Value);
+            //    cmd.Parameters.AddWithValue("@Status ", "Pending");
+            //    cmd.ExecuteNonQuery();
+            //}
 
-        //}
+            //con.Open();
+            //string query = @"INSERT INTO ProductCount VALUES (@ProductID, @Count)";
+            //using (SqlCommand cmd = new SqlCommand(query, con))
+            //{
+            //    cmd.Parameters.AddWithValue("@OrderNo ", orderNo);
+            //    cmd.Parameters.AddWithValue("@Count ", );
+            //    cmd.ExecuteNonQuery();
+            //}
+
+        }
 
         #endregion
 

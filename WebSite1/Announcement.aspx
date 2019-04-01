@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OfficeAdmin.master" AutoEventWireup="true" CodeFile="Announcement.aspx.cs" Inherits="Announcement" %>
 
+
 <asp:Content ContentPlaceHolderID="header" runat="server">
     <div class="header bg-gradient-gray-dark pb-5 pt-5 pt-md-8">
         <div class="container-fluid">
@@ -13,8 +14,6 @@
         <!-- page content -->
         <form runat="server" class="form-horizontal">
             <asp:ScriptManager runat="server" />
-            <%--<asp:UpdatePanel ID="Announcements" runat="server">
-                <ContentTemplate>--%>
             <div class="card shadow-lg">
                 <div class="card-body">
                     <!-- Main Content -->
@@ -64,21 +63,9 @@
                         <div class="text-white">
                             <center><h1>Announcements</h1></center>
                         </div>
-                        <div class="col-lg-4">
-                        <div class="input-group">
-                            <asp:TextBox ID="txtKeyword" runat="server" class="form-control"
-                                placeholder="Search..." />
-                            <span class="input-group-btn">
-                                <asp:LinkButton ID="btnSearch" runat="server" class="btn btn-info"
-                                    OnClick="btnSearch_Click">
-                        <i class="fa fa-search"></i>
-                                </asp:LinkButton>
-                            </span>
-                        </div>
-                    </div>
                         <div class="row">
                             <div class="col-xs-12 table">
-                                <table id="datatable" class="table table-striped">
+                                <table id="dtannouncement" class="table table-striped">
                                     <thead>
                                         <tr>
                                             <th>Announcement ID</th>
@@ -86,28 +73,22 @@
                                             <th>Announcement Detail</th>
                                             <th>Image</th>
                                             <th>Status</th>
-                                            <%--<th>Date Added</th>
-                                                    <th>Date Modified</th>--%>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <%--OnPagePropertiesChanging="lvRates_PagePropertiesChanging"--%>
                                         <asp:ListView ID="lvAnnouncements" runat="server">
                                             <ItemTemplate>
-                                                <tr>
+                                                <tr class="bg-default">
                                                     <td><%# Eval("AnnouncementID") %></td>
                                                     <td><%# Eval("AnnouncementName") %></td>
                                                     <td><%# Eval("AnnouncementDetail") %></td>
                                                     <td>
                                                         <img src='/Images/Announcement/<%# Eval("Image") %>' class="img-fluid" width="100" /></td>
-                                                    <%--<td><%# Eval("Image") %></td>--%>
                                                     <td><%# Eval("Status") %></td>
-                                                    <%--<td><%# Eval("DateAdded", "{0: MMMM dd, yyyy}") %></td>
-                                                            <td><%# Eval("DateModified", "{0: MMMM dd, yyyy}") %></td>--%>
                                                     <td>
-                                                        <a href='Announcement.aspx?EditID=<%# Eval("AnnouncementID") %>'><i class="fa fa-edit"></i></a>&nbsp;
-                                                                <a href='Announcement.aspx?DeleteID=<%# Eval("AnnouncementID") %>' onclick="return confirm('Do you want to delete this item?')"><i class="fa fa-trash"></i></a>&nbsp;
+                                                        <a href='Announcement.aspx?EditID=<%# Eval("AnnouncementID") %>' class="btn btn-info btn-sm"><i class="fa fa-edit"></i>Edit</a>&nbsp;
+                                                                <a href='Announcement.aspx?DeleteID=<%# Eval("AnnouncementID") %>' class="btn btn-danger btn-sm" onclick="return confirm('Do you want to archive this item?')"><i class="fa fa-trash"></i>Archive</a>&nbsp;
                                                             </td>
                                                 </tr>
                                             </ItemTemplate>
@@ -119,141 +100,67 @@
                                                 </tr>
                                             </EmptyDataTemplate>
                                         </asp:ListView>
-
                                     </tbody>
                                 </table>
                             </div>
-                            <center>
-                        <asp:DataPager ID="dpAnnouncements" runat="server" PageSize="10"
-                            PagedControlID="lvAnnouncements">
-                            <Fields>
-                                <asp:NumericPagerField ButtonType="Button"
-                                    CurrentPageLabelCssClass="btn btn-info"
-                                    NumericButtonCssClass="btn btn-default"
-                                    NextPreviousButtonCssClass="btn btn-default"
-                                    ButtonCount="5" />
-                            </Fields>
-                        </asp:DataPager>
-                    </center>
                         </div>
                     </div>
-                    
                     <br />
-                    <%--<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-                                <span class="pull-right">
-                                    <button class="btn btn-default" onclick="window.print();"><i class="fa fa-print"></i>Print</button>
-                                </span>
-                            </div>--%>
                 </div>
             </div>
-            <%--                </ContentTemplate>
-            </asp:UpdatePanel>--%>
         </form>
-        <!-- /.col -->
     </div>
     <br />
 </asp:Content>
 
 <asp:Content runat="server" ContentPlaceHolderID="scripts">
-    <%--    <script type="text/javascript">
-        function Confirm() {
-            var confirm_value = document.createElement("INPUT");
-            confirm_value.type = "hidden";
-            confirm_value.name = "confirm_value";
-            if (confirm("Do you want to save data?")) {
-                confirm_value.value = "Yes";
-            } else {
-                confirm_value.value = "No";
-            }
-            document.forms[0].appendChild(confirm_value);
-        }
-    </script>
 
-    <script type="text/javascript">
-        //On UpdatePanel Refresh
-        var prm = Sys.WebForms.PageRequestManager.getInstance();
-        if (prm != null) {
-            prm.add_endRequest(function (sender, e) {
-                if (sender._postBackSettings.panelsToUpdate != null) {
-                    $('table').DataTable({
-                        pagingType: 'numbers',
-
-                        responsive: {
-                            details: {
-                                type: 'column',
-
-                            }
-                        },
-
-
-                        columnDefs: [{
-                            className: 'control',
-                            orderable: false,
-                            targets: 0
-                        }],
-                        order: [1, 'asc']
-                    });
-                }
-            });
-        };
-
-    </script>
+    <%-- for data tables --%>
     <script>
         $(document).ready(function () {
-            $('table').DataTable({
-                pagingType: 'numbers',
-
-                responsive: {
-                    details: {
-                        type: 'column'
-                    }
-                },
-
-
-
-                columnDefs: [{
-                    className: 'control',
-                    orderable: false,
-                    targets: 0
-                }],
-                order: [1, 'asc'],
-
-                dom: 'flrtiBp',
+            $('#dtannouncement').DataTable({
+                dom: 'Bfrtip',
                 buttons: [
-                    {
-                        extend: 'excel',
-                        title: 'Saving Logistics',
-                        messageTop: 'Route Report',
-                        messageBottom: null,
-                        //className: 'btn btn-success',
-
-
-                    },
-                    {
-                        extend: 'colvis',
-                        columns: ':not(:first-child)',
-                        text: 'Show / Hide Columns'
-
-
-
-
-                    }
-
-                    //{
-                    //    extend: 'print',
-                    //    title: 'Saving Logistics',
-                    //    messageTop: 'Booking Report',
-                    //    messageBottom: null
-                    //}
-                    //{
-                    //    extend: 'pdf',
-                    //    title: 'Saving Logistics',
-                    //    messageTop: 'Booking Report',
-                    //    messageBottom: null
-                    //}
-                ],
+                    'print'
+                ]
             });
+        });
+    </script>
 
+    <%-- <!-- Data tables Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js" type="text/javascript"></script>
+
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.4/js/dataTables.buttons.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.4/js/buttons.flash.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.4/js/buttons.html5.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.4/js/buttons.print.min.js" type="text/javascript"></script>
+
+    <!-- eto yung code para sa data tables -->
+    <style>
+        @media print {
+            div {
+                font-size: large;
+            }
+
+            @page {
+                text-size-adjust: auto;
+                background-size: auto;
+                font-size: larger;
+            }
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $('#dtReport').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'pdf'
+                ]
+            });
         });
     </script>--%>
 </asp:Content>

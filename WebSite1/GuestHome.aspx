@@ -64,7 +64,7 @@
                                 <div class="pl-4">
                                     <h5 class="title text-success">Mobile Number</h5>
                                     <p>0933-898-8751</p>
-                                    <p>0927-879-2286 </p>
+                                    <p>0927-879-2286</p>
                                 </div>
                             </div>
                         </div>

@@ -13,14 +13,35 @@ public partial class StatisticsDashboard : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if(!IsPostBack)
+        if (!IsPostBack)
         {
             GetUser();
             GetProducts();
+            GetCount();
         }
+    }
 
-        //Chart newChart = new Chart("column2d", "simplechart", "600", "400", "jsonurl", "data.json");
-        //chart.Text = newChart.Render();
+    void GetCount()
+    {
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        {
+            con.Open();
+            string query = @"select count(*) as Count from WebsiteVisit";
+
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                using (SqlDataReader data = cmd.ExecuteReader())
+                {
+                    if (data.HasRows)
+                    {
+                        while (data.Read())
+                        {
+                            count.Text = data["Count"].ToString();
+                        }
+                    }
+                }
+            }
+        }
     }
 
     void GetUser()
