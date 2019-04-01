@@ -7,12 +7,36 @@ using System.Web.UI.WebControls;
 
 using System.Data;
 using System.Data.SqlClient;
+using System.Net.Mail;
+using System.Net;
 
 public partial class Register : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        GetCity();
+    }
 
+    void GetCity()
+    {
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        {
+            con.Open();
+            string query = @"SELECT CityID, City FROM City";
+
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                using (SqlDataReader data = cmd.ExecuteReader())
+                {
+                    ddlCity.DataSource = data;
+                    ddlCity.BackColor = System.Drawing.Color.Black;
+                    ddlCity.DataTextField = "City";
+                    ddlCity.DataValueField = "CityID";
+                    ddlCity.DataBind();
+                    ddlCity.Items.Insert(0, new ListItem("Select a city...", ""));
+                }
+            }
+        }
     }
 
     protected void btnRegister_Click(object sender, EventArgs e)
@@ -28,18 +52,18 @@ public partial class Register : System.Web.UI.Page
                 using (SqlCommand cmd = new SqlCommand(SQL, con))
                 {
                     cmd.Parameters.AddWithValue("@UserType", "3");
-                    cmd.Parameters.AddWithValue("@Firstname", firstname.Text);
-                    cmd.Parameters.AddWithValue("@Lastname", lastname.Text);
+                    cmd.Parameters.AddWithValue("@Firstname", Server.HtmlEncode(firstname.Text.Trim()));
+                    cmd.Parameters.AddWithValue("@Lastname", Server.HtmlEncode(lastname.Text.Trim()));
                     cmd.Parameters.AddWithValue("@Gender", gender.SelectedValue);
-                    cmd.Parameters.AddWithValue("@BuildingNo", buildingno.Text);
-                    cmd.Parameters.AddWithValue("@Street", street.Text);
-                    cmd.Parameters.AddWithValue("@Municipality", municipality.Text);
-                    cmd.Parameters.AddWithValue("@City", city.Text);
-                    cmd.Parameters.AddWithValue("@Landline", landline.Text);
-                    cmd.Parameters.AddWithValue("@Mobile", mobile.Text);
-                    cmd.Parameters.AddWithValue("@Email", email.Text);
+                    cmd.Parameters.AddWithValue("@BuildingNo", Server.HtmlEncode(buildingno.Text.Trim()));
+                    cmd.Parameters.AddWithValue("@Street", Server.HtmlEncode(street.Text.Trim()));
+                    cmd.Parameters.AddWithValue("@Municipality", Server.HtmlEncode(municipality.Text.Trim()));
+                    cmd.Parameters.AddWithValue("@City", ddlCity.SelectedValue);
+                    cmd.Parameters.AddWithValue("@Landline", Server.HtmlEncode(landline.Text.Trim()));
+                    cmd.Parameters.AddWithValue("@Mobile", Server.HtmlEncode(mobile.Text.Trim()));
+                    cmd.Parameters.AddWithValue("@Email", Server.HtmlEncode(email.Text.Trim()));
                     cmd.Parameters.AddWithValue("@Password", Util.CreateSHAHash(password.Text));
-                    cmd.Parameters.AddWithValue("@EmailCode", "dgxdhtrse33434");
+                    cmd.Parameters.AddWithValue("@EmailCode", Server.HtmlEncode("dgxdhtrse33434"));
                     cmd.Parameters.AddWithValue("@DateAdded", DateTime.Now);
                     cmd.Parameters.AddWithValue("@DateModified", DBNull.Value);
                     cmd.ExecuteNonQuery();
@@ -47,6 +71,36 @@ public partial class Register : System.Web.UI.Page
                     //start of Auditlog 
                     //Util.Log(Session["UserID"].ToString(), "The Member has created their account");
                     //end of auditlog
+
+                //    string message = "Hi, " + txtEmailAddress.Text + "<br/>" + "Thank you for registering on our website!<br/>"
+                //+ "<br/>" + "This email is send for congratulating you for successfully registering on our website!" + "<br/>" +
+                //"These are your ID & your Password " + "<br/>" +
+                //"Username:" + txtUsername.Text + "<br/>" + "Password:" + txtPassword.Text + "<br/>"
+                //+ "<br/>" + "If you have any question, please email us at asktheexcellent@gmail.com" + "<br/>" +
+                //"Thank You!"
+                //;
+
+                //    Util.SendEmail(txtEmailAddress.Text, "Registration", message);
+
+
+                    //send email
+                    using (MailMessage mm = new MailMessage("scottysee98@gmail.com", email.Text))
+                    {
+                        mm.Subject = "Email Verification";
+                        mm.Body = "Hi, " + firstname.Text + "<br/>" + "Thank you for registering on our website!<br/>" + "<br/>" + "This email is send for congratulating you for successfully registering on our website!" + "<br/>" +
+                          "These are your email & your password " + "<br/>" + "Email: " + email.Text + "<br/>" + "Password: " + password.Text + "<br/>" + "<br/>" + "If you have any question, please email us at scottysee98@gmail.com" + "<br/>" + "Thank You!";
+
+                        mm.IsBodyHtml = true;
+                        SmtpClient smtp = new SmtpClient();
+                        smtp.Host = "smtp.gmail.com";
+                        smtp.EnableSsl = true;
+                        NetworkCredential NetworkCred = new NetworkCredential("scottysee98@gmail.com", "POOHPOOH98"); //email and password of the sender.
+                        smtp.UseDefaultCredentials = true;
+                        smtp.Credentials = NetworkCred;
+                        smtp.Port = 587;
+                        smtp.Send(mm);
+                        ClientScript.RegisterStartupScript(GetType(), "alert", "alert('Email sent.');", true);
+                    }
 
                     Response.Redirect("Login.aspx");
                 }

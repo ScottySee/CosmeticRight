@@ -10,8 +10,6 @@ using System.IO;
 
 public partial class Products : System.Web.UI.Page
 {
-    SqlConnection con = new SqlConnection(Util.GetConnection());
-    SqlCommand cmd;
     int editID = 0;
 
     protected void Page_Load(object sender, EventArgs e)
@@ -51,198 +49,222 @@ public partial class Products : System.Web.UI.Page
             }
             //DELETE ID CHECKING END
             GetProducts();
+            GetCategories();
         }
         //FOR VIEWING
         GetProducts();
-        //GetCategories();
+        GetCategories();
     }
 
     void GetProducts()
     {
-        string query = @"SELECT * FROM Products WHERE Status != 'Archived'";
-
-        cmd = new SqlCommand(query, con);
-        con.Open();
-        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        //@"Server=MSI\MSSQLSERVER2;Database=Test;Integrated Security=true";
         {
-            DataSet ds = new DataSet();
-            da.Fill(ds, "Products");
-            lvProducts.DataSource = ds;
-            lvProducts.DataBind();
+            con.Open();
+            string query = @"SELECT * FROM Products WHERE Status != 'Archived'";
+
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                {
+                    DataSet ds = new DataSet();
+                    da.Fill(ds, "Products");
+                    lvProducts.DataSource = ds;
+                    lvProducts.DataBind();
+                }
+            }
         }
-        con.Close();
     }
 
-    void GetProducts(string keyword)
+    // eto yung para sa pagconnect sa database para sa category
+    void GetCategories()
     {
-        string query = @"SELECT * FROM Products
-                            WHERE Name LIKE @keyword OR
-                            Code LIKE @keyword";
-
-        cmd = new SqlCommand(query, con);
-        cmd.Parameters.AddWithValue("@keyword", "%" + keyword + "%");
-        con.Open();
-        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
-            DataSet ds = new DataSet();
-            da.Fill(ds, "Products");
-            lvProducts.DataSource = ds;
-            lvProducts.DataBind();
+            con.Open();
+            string query = @"SELECT CatID, Category FROM Category";
+
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                using (SqlDataReader data = cmd.ExecuteReader())
+                {
+                    ddlCategories.DataSource = data;
+                    ddlCategories.BackColor = System.Drawing.Color.Black;
+                    ddlCategories.DataTextField = "Category";
+                    ddlCategories.DataValueField = "CatID";
+                    ddlCategories.DataBind();
+                    ddlCategories.Items.Insert(0, new ListItem("Select a category...", ""));
+                }
+            }
         }
-        con.Close();
     }
-
-    //void GetCategories()
-    //{
-    //    using (SqlConnection con = new SqlConnection(Util.GetConnection()))
-    //    {
-    //        con.Open();
-    //        string query = @"SELECT * FROM Categories";
-
-    //        using (SqlCommand cmd = new SqlCommand(query, con))
-    //        {
-    //            using (SqlDataAdapter data = new SqlDataAdapter())
-    //            {
-    //                ddlCategories.DataSource = data;
-    //                ddlCategories.DataTextField = "Categories";
-    //                ddlCategories.DataValueField = "CatID";
-    //                ddlCategories.DataBind();
-
-    //                ddlCategories.Items.Insert(0, new ListItem("Select a Category...", ""));
-    //            }
-    //        }
-    //    }
-    //}
 
     protected void AddProduct(object sender, EventArgs e)
     {
-        string fileName = Path.GetFileName(fileUpload.FileName);
-        fileUpload.PostedFile.SaveAs(Server.MapPath("~/Images/Products/") + fileName);
+        string fileName = Path.GetFileName(fileUpload1.FileName);
+        fileUpload1.PostedFile.SaveAs(Server.MapPath("~/Images/Products/") + fileName);
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        {
+            con.Open();
+            string query = @"INSERT INTO Products VALUES (@Name, @CatID, @Code, @Description, @Image, @Price, @Available, @Criticallevel, @Maximum, @DateManufactured, @DateExpired, @Status, @DateAdded, @DateModified)";
 
-        con.Open();
-        string query = @"INSERT INTO Products VALUES (@Name, @CatID, @Code, @Description, @Image, @Price, @Available, @Criticallevel, @Maximum, @Status, @DateAdded, @DateModified)";
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("@Name", Server.HtmlEncode(txtProductName.Text.Trim()));
+                cmd.Parameters.AddWithValue("@CatID", ddlCategories.SelectedValue);
+                cmd.Parameters.AddWithValue("@Code", Server.HtmlEncode(txtCode.Text.Trim()));
+                cmd.Parameters.AddWithValue("@Description", Server.HtmlEncode(txtDescription.Text.Trim()));
+                cmd.Parameters.AddWithValue("@Image", fileUpload1.FileName);
+                cmd.Parameters.AddWithValue("@Price", Server.HtmlEncode(txtPrice.Text.Trim()));
+                cmd.Parameters.AddWithValue("@Available", Server.HtmlEncode(Available.Text.Trim()));
+                cmd.Parameters.AddWithValue("@Criticallevel", Server.HtmlEncode(txtCritical.Text.Trim()));
+                cmd.Parameters.AddWithValue("@Maximum", Server.HtmlEncode(txtMax.Text.Trim()));
+                cmd.Parameters.AddWithValue("@DateManufactured", Server.HtmlEncode(datestart.Text));
+                cmd.Parameters.AddWithValue("@DateExpired", Server.HtmlEncode(dateend.Text));
+                cmd.Parameters.AddWithValue("@Status", Server.HtmlEncode("Active"));
+                cmd.Parameters.AddWithValue("@DateAdded", DateTime.Now);
+                cmd.Parameters.AddWithValue("@DateModified", DBNull.Value);
+                cmd.ExecuteNonQuery();
 
-        cmd = new SqlCommand(query, con);
-        cmd.Parameters.AddWithValue("@Name", txtProductName.Text);
-        cmd.Parameters.AddWithValue("@CatID", ddlCategories.SelectedValue);
-        cmd.Parameters.AddWithValue("@Code", txtCode.Text);
-        cmd.Parameters.AddWithValue("@Description", Server.HtmlEncode(txtDescription.Text));
-        cmd.Parameters.AddWithValue("@Image", fileUpload.FileName);
-        cmd.Parameters.AddWithValue("@Price", txtPrice.Text);
-        cmd.Parameters.AddWithValue("@Available", Available.Text);
-        cmd.Parameters.AddWithValue("@Criticallevel", txtCritical.Text);
-        cmd.Parameters.AddWithValue("@Maximum", txtMax.Text);
-        cmd.Parameters.AddWithValue("@Status", "Active");
-        cmd.Parameters.AddWithValue("@DateAdded", DateTime.Now);
-        cmd.Parameters.AddWithValue("@DateModified", DBNull.Value);
-        cmd.ExecuteNonQuery();
+                //start of Auditlog 
+                Util.Log(Session["UserID"].ToString(), "The warehouse admin has added a product");
+                //end of auditlog
 
-        //start of Auditlog 
-        Util.Log(Session["UserID"].ToString(), "The Warehouse Admin has addded a product.");
-        //end of auditlog
+                message.InnerText = "Product Successfully Added.";
 
-        con.Close();
-
-        Response.Redirect("Products.aspx");
-
+                //lahat ng textbox
+                txtProductName.Text = null;
+                txtCode.Text = null;
+                txtDescription.Text = null;
+                txtPrice.Text = null;
+                Available.Text = null;
+                txtCritical.Text = null;
+                txtMax.Text = null;
+                datestart.Text = null;
+                dateend.Text = null;
+            }
+        }
     }
 
     protected void EditProduct(int ID)
     {
-        con.Open();
-        string query = @"SELECT * FROM Products WHERE ProductID=@ProductID";
-
-        cmd = new SqlCommand(query, con);
-        cmd.Parameters.AddWithValue("@ProductID", ID);
-        using (SqlDataReader data = cmd.ExecuteReader())
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
-            if (data.HasRows)
+            con.Open();
+            string query = @"SELECT * FROM Products WHERE ProductID=@ProductID";
+
+            using (SqlCommand cmd = new SqlCommand(query, con))
             {
-                while (data.Read())
+                cmd.Parameters.AddWithValue("@ProductID", ID);
+                using (SqlDataReader data = cmd.ExecuteReader())
                 {
-                    productID.Text = data["ProductID"].ToString();
-                    Session["ProductID"] = data["ProductID"].ToString();
-                    txtProductName.Text = data["Name"].ToString();
-                    ddlCategories.SelectedValue = data["CatID"].ToString();
-                    txtCode.Text = data["Code"].ToString();
-                    Session["image"] = data["Image"].ToString();
-                    txtDescription.Text = data["Description"].ToString();
-                    Available.Text = data["Available"].ToString();
-                    txtPrice.Text = data["Price"].ToString();
-                    txtCritical.Text = data["Criticallevel"].ToString();
-                    txtMax.Text = data["Maximum"].ToString();
+                    if (data.HasRows)
+                    {
+                        while (data.Read())
+                        {
+                            productID.Text = data["ProductID"].ToString();
+                            Session["ProductID"] = data["ProductID"].ToString();
+                            txtProductName.Text = data["Name"].ToString();
+                            ddlCategories.SelectedValue = data["CatID"].ToString();
+                            txtCode.Text = data["Code"].ToString();
+                            Session["image"] = data["Image"].ToString();
+                            txtDescription.Text = data["Description"].ToString();
+                            Available.Text = data["Available"].ToString();
+                            txtPrice.Text = data["Price"].ToString();
+                            txtCritical.Text = data["Criticallevel"].ToString();
+                            txtMax.Text = data["Maximum"].ToString();
+                            datestart.Text = Convert.ToDateTime(data["DateManufactured"]).ToString("MM/dd/yyyy");
+                            dateend.Text = Convert.ToDateTime(data["DateExpired"]).ToString("MM/dd/yyyy");
+                        }
+                    }
+                    else
+                    {
+                        Response.Redirect("Announcement.aspx");
+                    }
                 }
             }
-            else
-            {
-                Response.Redirect("Products.aspx");
-            }
-
         }
-        con.Close();
     }
 
     protected void SaveProduct(object sender, EventArgs e)
     {
-        con.Open();
-        string query = @"UPDATE Products SET Name=@Name, CatID=@CatID, Code=@Code,
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        {
+            con.Open();
+            string query = @"UPDATE Products SET Name=@Name, CatID=@CatID, Code=@Code,
                 Description=@Description, Price=@Price, Image=@Image,
-                Criticallevel=@Criticallevel, Maximum=@Maximum, Available=@Available,
-                DateModified=@DateModified WHERE ProductID=@ProductID";
-        cmd = new SqlCommand(query, con);
-        cmd.Parameters.AddWithValue("@Name", txtProductName.Text);
-        cmd.Parameters.AddWithValue("@CatID", ddlCategories.SelectedValue);
-        cmd.Parameters.AddWithValue("@Code", txtCode.Text);
-        cmd.Parameters.AddWithValue("@Description", Server.HtmlEncode(txtDescription.Text));
-        //cmd.Parameters.AddWithValue("@Image", fileUpload.FileName);
+                Criticallevel=@Criticallevel, Maximum=@Maximum, Available=@Available, DateManufactured=@DateManufactured,
+                DateExpired=@DateExpired, DateModified =@DateModified WHERE ProductID=@ProductID";
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("@Name", Server.HtmlEncode(txtProductName.Text.Trim()));
+                cmd.Parameters.AddWithValue("@CatID", ddlCategories.SelectedValue);
+                cmd.Parameters.AddWithValue("@Code", Server.HtmlEncode(txtCode.Text.Trim()));
+                cmd.Parameters.AddWithValue("@Description", Server.HtmlEncode(txtDescription.Text.Trim()));
 
-        if (fileUpload.HasFile)
-        {
-            string fileExt = Path.GetFileName(fileUpload.FileName);
-            cmd.Parameters.AddWithValue("@Image", fileExt);
-            //fileUpload1.SaveAs("~/Images/Announcement/" + fileExt);
-            fileUpload.PostedFile.SaveAs(Server.MapPath("~/Images/Products/") + fileExt);
+                if (fileUpload1.HasFile)
+                {
+                    string fileExt = Path.GetFileName(fileUpload1.FileName);
+                    cmd.Parameters.AddWithValue("@Image", fileExt);
+                    //fileUpload1.SaveAs("~/Images/Announcement/" + fileExt);
+                    fileUpload1.PostedFile.SaveAs(Server.MapPath("~/Images/Products/") + fileExt);
+                }
+                else
+                {
+                    string fileExt = Path.GetFileName(fileUpload1.FileName);
+
+                    cmd.Parameters.AddWithValue("@Image", Session["image"].ToString());
+                    Session.Remove("image");
+                }
+                cmd.Parameters.AddWithValue("@Price", Server.HtmlEncode(txtPrice.Text.Trim()));
+                cmd.Parameters.AddWithValue("@Available", Server.HtmlEncode(Available.Text.Trim()));
+                cmd.Parameters.AddWithValue("@Criticallevel", Server.HtmlEncode(txtCritical.Text.Trim()));
+                cmd.Parameters.AddWithValue("@Maximum", Server.HtmlEncode(txtMax.Text.Trim()));
+                cmd.Parameters.AddWithValue("@DateManufactured", Server.HtmlEncode(datestart.Text.Trim()));
+                cmd.Parameters.AddWithValue("@DateExpired", Server.HtmlEncode(dateend.Text.Trim()));
+                cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
+                cmd.Parameters.AddWithValue("@ProductID", Session["ProductID"].ToString());
+                cmd.ExecuteNonQuery();
+
+                //start of Auditlog 
+                Util.Log(Session["UserID"].ToString(), "The office admin has updated a product");
+                //end of auditlog
+
+                message.InnerText = "Product Successfully Updated.";
+
+                txtProductName.Text = null;
+                txtCode.Text = null;
+                txtDescription.Text = null;
+                txtPrice.Text = null;
+                Available.Text = null;
+                txtCritical.Text = null;
+                txtMax.Text = null;
+                datestart.Text = null;
+                dateend.Text = null;
+            }
         }
-        else
-        {
-            string fileExt = Path.GetFileName(fileUpload.FileName);
-
-           cmd.Parameters.AddWithValue("@Image", Session["image"].ToString());
-            Session.Remove("image");
-        }
-        cmd.Parameters.AddWithValue("@Price", txtPrice.Text);
-        cmd.Parameters.AddWithValue("@Available", Available.Text);
-        cmd.Parameters.AddWithValue("@Criticallevel", txtCritical.Text);
-        cmd.Parameters.AddWithValue("@Maximum", txtMax.Text);
-        cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
-        cmd.Parameters.AddWithValue("@ProductID", Session["ProductID"].ToString());
-        //cmd.Parameters.AddWithValue("@Image", "Sample.jpg");
-
-        //start of Auditlog 
-        Util.Log(Session["UserID"].ToString(), "The Warehouse Admin has updated the product");
-        //end of auditlog
-
-        cmd.ExecuteNonQuery();
-        con.Close();
-        Response.Redirect("Products.aspx");
-
     }
 
     void DeleteRecord(int ID)
     {
-        con.Open();
-        string query = @"UPDATE Products SET Status = 'Archived' WHERE ProductID=@ProductID";
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        {
+            con.Open();
+            string query = @"UPDATE Products SET Status = 'Archived' WHERE ProductID=@ProductID";
 
-        cmd = new SqlCommand(query, con);
-        cmd.Parameters.AddWithValue("@ProductID", ID);
-        cmd.ExecuteNonQuery();
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("@ProductID", ID);
+                cmd.ExecuteNonQuery();
 
-        //start of Auditlog 
-        Util.Log(Session["UserID"].ToString(), "The Warehouse Admin has archived a product");
-        //end of auditlog
+                //start of Auditlog 
+                Util.Log(Session["UserID"].ToString(), "The Warehouse Admin has archived a product");
+                //end of auditlog
 
-        con.Close();
-        Response.Redirect("Products.aspx");
+                Response.Redirect("Products.aspx");
+            }
+        }
     }
 
     protected void btnCancel_Click(object sender, EventArgs e)
@@ -250,15 +272,15 @@ public partial class Products : System.Web.UI.Page
         Response.Redirect("Products.aspx");
     }
 
-    protected void btnSearch_Click(object sender, EventArgs e)
-    {
-        dpProducts.SetPageProperties(0, dpProducts.MaximumRows, false);
+    //protected void btnSearch_Click(object sender, EventArgs e)
+    //{
+    //    dpProducts.SetPageProperties(0, dpProducts.MaximumRows, false);
 
-        if (txtKeyword.Text == "")
-            GetProducts();
-        else
-            GetProducts(txtKeyword.Text);
-    }
+    //    if (txtKeyword.Text == "")
+    //        GetProducts();
+    //    else
+    //        GetProducts(txtKeyword.Text);
+    //}
 
     protected void ddlCategories_SelectedIndexChanged(object sender, EventArgs e)
     {

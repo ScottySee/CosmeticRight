@@ -34,7 +34,7 @@
                                             <td><%# Eval("LogID") %></td>
                                             <td><%# Eval("CustomerName") %></td>
                                             <td><%# Eval("LogTime", "{0:MM/dd/yyyy hh:mm tt}") %></td>
-                                            <td><%# Eval("Activity") %></td>
+                                            <td><%# Util.DecodeFrom64(Eval("Activity").ToString()) %></td>
                                         </tr>
                                     </ItemTemplate>
                                     <EmptyDataTemplate>
@@ -62,7 +62,6 @@
             $('#dtLogs').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
-                    'print'
                 ]
             });
         });

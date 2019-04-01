@@ -13,9 +13,15 @@
     <div class="container mt--7">
         <!-- page content -->
         <form runat="server" class="form-horizontal">
-            <asp:ScriptManager runat="server" />
+            <asp:scriptmanager runat="server" />
+            <asp:updatepanel runat="server" id="Upd1">
+                <Triggers>  
+                    <asp:PostBackTrigger ControlID="btnAdd" />  
+                </Triggers>
+                    <contenttemplate>
             <div class="card shadow-lg">
                 <div class="card-body">
+                    <label runat="server" id="message"></label>
                     <!-- Main Content -->
                     <div class="row">
                         <div class="col-lg-2">
@@ -31,11 +37,28 @@
                             </div>
                         </div>
                         <div class="col-lg-6">
+
                             <label class="control-label">Images</label><br />
-                            <label for="body_fileUpload1" class="btn btn-success">
+                         <%--   <label for="body_fileUpload1" class="btn btn-success">--%>
                                 Upload Image Here
-                                        <asp:FileUpload CssClass="btn btn alert-info" hidden ID="fileUpload1" runat="server" />
-                            </label>
+                                        <asp:FileUpload  CssClass="btn btn alert-info"  ID="fileUpload1"  runat="server" />
+                            <asp:regularexpressionvalidator id="RegularExpressionValidator1" runat="server" errormessage="Only .jpg , .png or .jpeg files are allowed." validationexpression="^(([a-zA-Z]:)|(\\{2}\w+)\$?)(\\(\w[\w].*))+(.jpg|.png|.jpeg)$" controltovalidate="fileUpload1" xmlns:asp="#unknown">
+                        </asp:regularexpressionvalidator>
+                            <%--</label>--%>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="control-label">Date Start:</label>
+                                <%--<input type="text" id="dateControl" runat="server">--%>
+                                <asp:TextBox ID="datestart" runat="server" class="form-control" placeholder="mm/dd/yyyy" />
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="control-label">Date End:</label>
+                                <asp:TextBox ID="dateend" runat="server" class="form-control" placeholder="mm/dd/yyyy" />
+                            </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">
@@ -55,7 +78,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- Table row -->
             <div class="card mt-5">
                 <div class="card-body">
@@ -72,12 +94,14 @@
                                             <th>Announcement Name</th>
                                             <th>Announcement Detail</th>
                                             <th>Image</th>
+                                            <th>Date Start</th>
+                                            <th>Date End</th>
                                             <th>Status</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <asp:ListView ID="lvAnnouncements" runat="server">
+                                        <asp:listview id="lvAnnouncements" runat="server">
                                             <ItemTemplate>
                                                 <tr class="bg-default">
                                                     <td><%# Eval("AnnouncementID") %></td>
@@ -85,6 +109,8 @@
                                                     <td><%# Eval("AnnouncementDetail") %></td>
                                                     <td>
                                                         <img src='/Images/Announcement/<%# Eval("Image") %>' class="img-fluid" width="100" /></td>
+                                                    <td><%# Eval("DateStart", "{0:MMM dd, yyyy}")  %></td>
+                                                    <td><%# Eval("DateEnd", "{0:MMM dd, yyyy}") %></td>
                                                     <td><%# Eval("Status") %></td>
                                                     <td>
                                                         <a href='Announcement.aspx?EditID=<%# Eval("AnnouncementID") %>' class="btn btn-info btn-sm"><i class="fa fa-edit"></i>Edit</a>&nbsp;
@@ -99,7 +125,7 @@
                                                     </td>
                                                 </tr>
                                             </EmptyDataTemplate>
-                                        </asp:ListView>
+                                        </asp:listview>
                                     </tbody>
                                 </table>
                             </div>
@@ -108,6 +134,8 @@
                     <br />
                 </div>
             </div>
+                         </contenttemplate>
+                </asp:updatepanel>
         </form>
     </div>
     <br />
@@ -126,6 +154,29 @@
             });
         });
     </script>
+
+<%--    <script>
+$(document).ready(function () {
+ $("#dateControl").datepicker();
+});
+    </script>--%>
+    
+
+    <%--<script type="text/javascript">
+        $(document).ready(function () {
+            $('#fileUpload1').uploadify({
+                'uploader': 'uploadify/multiupload/uploadify.swf',
+                'script': 'uploadify/multiupload/SampleUpload.ashx',
+                'folder': 'Images/Announcement/',
+                'auto': true,
+                'multi': false,
+                'removeCompleted': false,
+                'sizeLimit': 512000,
+                'fileExt': '*.jpg;*.jpeg;*.png',
+                'fileDesc': 'Image Files',
+            });
+        });
+    </script>--%>
 
     <%-- <!-- Data tables Scripts -->
     <script src="https://code.jquery.com/jquery-3.3.1.js" type="text/javascript"></script>

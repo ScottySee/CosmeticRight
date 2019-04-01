@@ -66,17 +66,17 @@ public partial class EditOfficeAdminProfile : System.Web.UI.Page
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
-                cmd.Parameters.AddWithValue("@Firstname", firstname.Text);
-                cmd.Parameters.AddWithValue("@Lastname", lastname.Text);
+                cmd.Parameters.AddWithValue("@Firstname", Server.HtmlEncode(firstname.Text.Trim()));
+                cmd.Parameters.AddWithValue("@Lastname", Server.HtmlEncode(lastname.Text.Trim()));
                 cmd.Parameters.AddWithValue("@Gender", gender.SelectedValue);
-                cmd.Parameters.AddWithValue("@BuildingNo", buildingno.Text);
-                cmd.Parameters.AddWithValue("@Street", street.Text);
-                cmd.Parameters.AddWithValue("@Municipality", municipality.Text);
-                cmd.Parameters.AddWithValue("@City", city.Text);
-                cmd.Parameters.AddWithValue("@Landline", landline.Text);
-                cmd.Parameters.AddWithValue("@Mobile", mobile.Text);
-                cmd.Parameters.AddWithValue("@Email", email.Text);
-                cmd.Parameters.AddWithValue("@EmailCode", "dgxdhtrse33434");
+                cmd.Parameters.AddWithValue("@BuildingNo", Server.HtmlEncode(buildingno.Text.Trim()));
+                cmd.Parameters.AddWithValue("@Street", Server.HtmlEncode(street.Text));
+                cmd.Parameters.AddWithValue("@Municipality", Server.HtmlEncode(municipality.Text.Trim()));
+                cmd.Parameters.AddWithValue("@City", Server.HtmlEncode(city.Text.Trim()));
+                cmd.Parameters.AddWithValue("@Landline", Server.HtmlEncode(landline.Text.Trim()));
+                cmd.Parameters.AddWithValue("@Mobile", Server.HtmlEncode(mobile.Text.Trim()));
+                cmd.Parameters.AddWithValue("@Email", Server.HtmlEncode(email.Text.Trim()));
+                cmd.Parameters.AddWithValue("@EmailCode", Server.HtmlEncode("dgxdhtrse33434"));
                 cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
                 cmd.Parameters.AddWithValue("@UserID", Session["UserID"]);
                 cmd.ExecuteNonQuery();

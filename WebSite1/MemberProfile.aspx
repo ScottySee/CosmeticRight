@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Member.master" AutoEventWireup="true" CodeFile="MemberProfile.aspx.cs" Inherits="MemberProfile" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="header" runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="header" Runat="Server">
     <form runat="server" class="form-horizontal">
         <div class="page-header header-filter">
             <div class="content">
@@ -83,7 +83,7 @@
         </div>
     </form>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
+<asp:Content ID="Content2" ContentPlaceHolderID="body" Runat="Server">
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="scripts" runat="Server">
+<asp:Content ID="Content3" ContentPlaceHolderID="scripts" Runat="Server">
 </asp:Content>

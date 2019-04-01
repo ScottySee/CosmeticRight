@@ -34,7 +34,7 @@ public partial class ProductDisplay : System.Web.UI.Page
             con.Open();
             string query = @"SELECT c.CatID, c.Category,
                                 (SELECT COUNT(ProductID) FROM Products WHERE CatID = c.CatID)
-                                AS TotalCount FROM Categories c ORDER BY Category";
+                                AS TotalCount FROM CategorY c ORDER BY Category";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 using (SqlDataReader data = cmd.ExecuteReader())
@@ -53,7 +53,7 @@ public partial class ProductDisplay : System.Web.UI.Page
             con.Open();
             string query = @"SELECT p.ProductID, p.Image, p.Name,
                                 p.Code, p.Price, c.Category FROM Products p
-                                INNER JOIN Categories c ON p.CatID = c.CatID";
+                                INNER JOIN CategorY c ON p.CatID = c.CatID";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -75,7 +75,7 @@ public partial class ProductDisplay : System.Web.UI.Page
             con.Open();
             string query = @"SELECT p.ProductID, p.Image, p.Name,
                                 p.Code, p.Price, c.Category FROM Products p
-                                INNER JOIN Categories c ON p.CatID = c.CatID
+                                INNER JOIN Category c ON p.CatID = c.CatID
 								WHERE p.CatID = @Code";
 
             using (SqlCommand cmd = new SqlCommand(query, con))

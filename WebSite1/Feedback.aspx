@@ -39,9 +39,9 @@
                                         <span></span>
                                     </div>
 
-                                    <label class="control-label">Subject</label>
                                     <div class="form-group">
-                                        <asp:TextBox runat="server" ID="subject" Placeholder="Subject" CssClass="form-control" required></asp:TextBox>
+                                        <label class="control-label col-lg-4">Product</label>
+                                            <center><asp:DropDownList ID="ddlProduct" runat="server" class="form-control" required /></center>
                                     </div>
                                     <label class="control-label">Message</label>
                                     <div class="form-group">

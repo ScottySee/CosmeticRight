@@ -13,10 +13,15 @@
         <!-- page content -->
         <form runat="server" classa="form-horizontal">
             <asp:ScriptManager runat="server" />
-          
+            <asp:UpdatePanel runat="server" ID="Upd1">
+                <Triggers>
+                    <asp:PostBackTrigger ControlID="btnAdd" />
+                    <%--<asp:AsyncPostBackTrigger ControlID="btnAdd" />--%>
+                </Triggers>
                 <ContentTemplate>
                     <div class="card shadow-lg">
                         <div class="card-body">
+                            <label runat="server" id="message"></label>
                             <!-- Main Content -->
                             <div class="row">
                                 <div class="col-lg-2">
@@ -31,7 +36,16 @@
                                         <asp:TextBox ID="txtProductName" runat="server" class="form-control" MaxLength="50" required />
                                     </div>
                                 </div>
+                                <!-- dapat ata eto para sa category -->
                                 <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4">Category</label>
+                                        <div class="col-lg-8">
+                                            <asp:DropDownList ID="ddlCategories" runat="server" class="form-control" required />
+                                        </div>
+                                    </div>
+                                </div>
+                                <%--<div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="control-label">Category</label>
                                         <asp:DropDownList ID="ddlCategories" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlCategories_SelectedIndexChanged" class="form-control" required>
@@ -41,7 +55,7 @@
                                             <asp:ListItem Value="3" style="color: black">Soap</asp:ListItem>
                                         </asp:DropDownList>
                                     </div>
-                                </div>
+                                </div--%>
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="control-label">Code</label>
@@ -56,17 +70,12 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <label class="control-label">Images</label><br />
-                                    <label for="body_fileUpload" class="btn btn-success">
-                                        Upload Image Here
-                                        <asp:FileUpload CssClass="btn btn alert-info" hidden ID="fileUpload" runat="server" />
-                                                                    </label>
-
-                                    <%--<asp:FileUpload id="fupload" runat="server" Height="21px" Width="220px" />
-                                    <asp:Button id="ButtonUpload" OnClick="ButtonUpload_Click" CssClass="btn btn-lg btn-success" runat="server" />--%>
-                                    <%--<div>
-                                        <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span><asp:FileUpload ID="fuImage" runat="server" required /></span>
-                                        <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
-                                    </div>--%>
+                                    <%--   <label for="body_fileUpload1" class="btn btn-success">--%>
+                                Upload Image Here
+                                        <asp:FileUpload CssClass="btn btn alert-info" ID="fileUpload1" runat="server" />
+                                    <asp:regularexpressionvalidator id="RegularExpressionValidator1" runat="server" errormessage="Only .jpg , .png or .jpeg files are allowed." validationexpression="^(([a-zA-Z]:)|(\\{2}\w+)\$?)(\\(\w[\w].*))+(.jpg|.png|.jpeg)$" controltovalidate="fileUpload1" xmlns:asp="#unknown">
+                        </asp:regularexpressionvalidator>
+                                    <%--</label>--%>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
@@ -93,6 +102,18 @@
                                         <asp:TextBox ID="txtMax" runat="server" class="form-control" type="number" min="100" max="1000" required />
                                     </div>
                                 </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Date Manufactured:</label>
+                                        <asp:TextBox ID="datestart" runat="server" class="form-control" min="03-28-2019" max="12-31-2019" placeholder="From: MM/DD/YYYY" required />
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Date Expired:</label>
+                                        <asp:TextBox ID="dateend" runat="server" class="form-control" min="03-28-2019" max="12-31-2019" placeholder="To: MM/DD/YYYY" required />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="container">
@@ -113,21 +134,21 @@
                                 <div class="text-white">
                                     <center><h1>Products</h1></center>
                                 </div>
-                                <div class="col-lg-4">
-                                    <div class="input-group">
-                                        <asp:TextBox ID="txtKeyword" runat="server" class="form-control"
-                                            placeholder="Search..." />
-                                        <span class="input-group-btn">
-                                            <asp:LinkButton ID="btnSearch" runat="server" class="btn btn-info"
-                                                OnClick="btnSearch_Click">
+                                <%--<div class="col-lg-4">
+                    <div class="input-group">
+                        <asp:TextBox ID="txtKeyword" runat="server" class="form-control"
+                            placeholder="Search..." />
+                        <span class="input-group-btn">
+                            <asp:LinkButton ID="btnSearch" runat="server" class="btn btn-info"
+                                OnClick="btnSearch_Click">
                                                 <i class="fa fa-search"></i>
-                                            </asp:LinkButton>
-                                        </span>
-                                    </div>
-                                </div>
+                            </asp:LinkButton>
+                        </span>
+                    </div>
+                </div>--%>
                                 <div class="row">
                                     <div class="col-xs-12 table">
-                                        <table id="datatable" class="table table-striped">
+                                        <table id="dtProducts" class="table table-striped">
                                             <thead>
                                                 <tr>
                                                     <th>Product ID</th>
@@ -137,6 +158,8 @@
                                                     <th>Code</th>
                                                     <th>Price</th>
                                                     <th>Image</th>
+                                                    <th>Date Manufactured</th>
+                                                    <th>Date Expired</th>
                                                     <th>Status</th>
                                                     <th>Actions</th>
                                                 </tr>
@@ -155,6 +178,8 @@
 
                                                             <td>
                                                                 <img src='/Images/Products/<%# Eval("Image") %>' class="img-fluid" width="100" /></td>
+                                                            <td><%# Eval("DateManufactured", "{0:MMM dd, yyyy}") %></td>
+                                                            <td><%# Eval("DateExpired", "{0:MMM dd, yyyy}") %></td>
                                                             <td><%# Eval("Status") %></td>
                                                             <td>
                                                                 <a href='Products.aspx?EditID=<%# Eval("ProductID") %>' class="btn btn-info btn-sm"><i class="fa fa-edit"></i>Edit</a>&nbsp;
@@ -162,7 +187,7 @@
                                                                 <a href='products.aspx?DeleteID=<%# Eval("ProductID") %>' class="btn btn-danger btn-sm" onclick="return confirm('Do you want to archive this item?')"><i class="fa fa-trash"></i>Archive</a>&nbsp;
                                             </td>
 
-                                                            
+
 
                                                         </tr>
                                                     </ItemTemplate>
@@ -179,18 +204,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <center>
-                        <asp:DataPager ID="dpProducts" runat="server" PageSize="10"
-                            PagedControlID="lvProducts">
-                            <Fields>
-                                <asp:NumericPagerField ButtonType="Button"
-                                    CurrentPageLabelCssClass="btn btn-info"
-                                    NumericButtonCssClass="btn btn-default"
-                                    NextPreviousButtonCssClass="btn btn-default"
-                                    ButtonCount="5" />
-                            </Fields>
-                        </asp:DataPager>
-                    </center>
                             <br />
                             <%--<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                                 <span class="pull-right">
@@ -200,16 +213,23 @@
                         </div>
                     </div>
                 </ContentTemplate>
-                <Triggers>
-                    <asp:PostBackTrigger ControlID="btnAdd" />
-                    <%--<asp:AsyncPostBackTrigger ControlID="btnAdd" />--%>
-                </Triggers>
-          
+
+            </asp:UpdatePanel>
         </form>
         <!-- /.col -->
     </div>
     <br />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scripts" runat="Server">
+    <script>
+        $(document).ready(function () {
+            $('#dtProducts').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'print'
+                ]
+            });
+        });
+    </script>
 </asp:Content>
 

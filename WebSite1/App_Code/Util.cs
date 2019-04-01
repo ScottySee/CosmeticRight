@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Net.Mail;
 using System.Net;
+using System.Text;
 using System.IO;
 
 /// <summary>
@@ -37,99 +38,23 @@ public class Util
         return Convert.ToBase64String(EncryptedBytes);
     }
 
-    //for encryption
-    public static string EnryptString(string strEncrypted)
+    public static string EncryptString(string strEncrypted)
     {
-	    try
-	    {
-		    string EncryptionKey = ConfihurationManager.AppSettings["encQRKey"].ToString();
-		    byte[] clearBytes = Encoding.Unicode.GetBytes(strEncrypted);
-            using (Aes qrencryptor = Aes.Create())
-            {
-                Rfc2898DeriveBytes qrdb = new Rfc2898DeriveBytes(EncrytionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
-                qrencryptor.Key = qrdb.GetBytes(32);
-                qrencryptor.IV = qrdb.GetBytes(16);
-                using (MemoryStream qrms = new MemoryStream())
-                {
-                    using (CryptoStream qrcs = new CryptoStream(qrms, qrencryptor.CreateEncryptor(), CryptoStreamMode.Write))
-                    {
-                        qrcs.Write(clearBytes, 0, clearBytes.Length);
-                        qrcs.Close();
-                    }
-                    strEncrypted = Convert.ToBase64String(qrms.ToArray());
-                }
-            }
-            return paramval;
-	    }
-        catch (Exception)
-        {
-            return "NotExistingPage.aspx";
-        }
+        byte[] b = System.Text.ASCIIEncoding.ASCII.GetBytes(strEncrypted);
+        string encrypted = Convert.ToBase64String(b);
+        return encrypted;
     }
 
-    //for decryption
-    public static string DecryptString(string strDecrypted)
+    public static string DecodeFrom64(string encodedData)
     {
-        try
-        {
-            string EncryptionKey = ConfihurationManager.AppSettings["encQRKey"].ToString();
-            qrencrypt = qrencrypt.Replace(" ", "+");
-            byte[] qrencryptBytes = Encoding.Unicode.GetBytes(strDecrypted);
-            using (Aes qrencryptor = Aes.Create())
-            {
-                Rfc2898DeriveBytes qrdb = new Rfc2898DeriveBytes(EncrytionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
-                qrencryptor.Key = qrdb.GetBytes(32);
-                qrencryptor.IV = qrdb.GetBytes(16);
-                using (MemoryStream qrms = new MemoryStream())
-                {
-                    using (CryptoStream qrcs = new CryptoStream(qrms, qrencryptor.CreateEncryptor(), CryptoStreamMode.Write))
-                    {
-                        qrcs.Write(clearBytes, 0, clearBytes.Length);
-                        qrcs.Close();
-                    }
-                    strEncrypted = Convert.ToBase64String(qrms.ToArray());
-                }
-            }
-            return paramval;
-        }
-        catch (Exception)
-        {
-            return "NotExistingPage.aspx";
-        }
-    }
-
-    //public static string DecodeFrom64(string encodedData)
-    //{
-    //    System.Text.UTF8Encoding encoder = new System.Text.UTF8Encoding();
-    //    System.Text.Decoder utf8Decode = encoder.GetDecoder();
-    //    byte[] todecode_byte = Convert.FromBase64String(encodedData);
-    //    int charCount = utf8Decode.GetCharCount(todecode_byte, 0, todecode_byte.Length);
-    //    char[] decoded_char = new char[charCount];
-    //    utf8Decode.GetChars(todecode_byte, 0, todecode_byte.Length, decoded_char, 0);
-    //    string result = new String(decoded_char);
-    //    return result;
-    //}
-
-    //for sending activation email (hindi pa tapos)
-    public static void SendActivationEmail(string recipient, string name, 
-        string usertype, string body)
-    {
-        MailMessage mm = new MailMessage();
-        mm.From = new MailAddress("lifelineambulancerescue@gmail.com");
-        mm.To.Add(recipient);
-        mm.Subject = "Account Activation";
-        mm.Body = body;
-        mm.IsBodyHtml = true;
-
-        SmtpClient client = new SmtpClient();
-        client.EnableSsl = true;
-        client.UseDefaultCredentials = true;
-        NetworkCredential cred = new NetworkCredential("lifelineambulancerescue@gmail.com", "swantonbomb");
-        client.Host = "smtp.gmail.com";
-        client.Port = 587;
-        client.DeliveryMethod = SmtpDeliveryMethod.Network;
-        client.Credentials = cred;
-        client.Send(mm);
+        System.Text.UTF8Encoding encoder = new System.Text.UTF8Encoding();
+        System.Text.Decoder utf8Decode = encoder.GetDecoder();
+        byte[] todecode_byte = Convert.FromBase64String(encodedData);
+        int charCount = utf8Decode.GetCharCount(todecode_byte, 0, todecode_byte.Length);
+        char[] decoded_char = new char[charCount];
+        utf8Decode.GetChars(todecode_byte, 0, todecode_byte.Length, decoded_char, 0);
+        string result = new String(decoded_char);
+        return result;
     }
 
     //public static int CountData(string table)
@@ -143,6 +68,21 @@ public class Util
     //    con.Close();
     //    con.Dispose();
     //    return count;
+    //}
+
+    //public static void SendEmail(string email, string subject, string message)
+    //{
+    //    MailMessage emailMessage = new MailMessage();
+    //    emailMessage.From = new MailAddress("asktheexcellent@gmail.com", "Admin");
+    //    emailMessage.To.Add(new MailAddress(email));
+    //    emailMessage.Subject = subject;
+    //    emailMessage.Body = message;
+    //    emailMessage.IsBodyHtml = true;
+    //    emailMessage.Priority = MailPriority.Normal;
+    //    SmtpClient MailClient = new SmtpClient("smtp.gmail.com", 587);
+    //    MailClient.EnableSsl = true;
+    //    MailClient.Credentials = new System.Net.NetworkCredential("asktheexcellent@gmail.com", "ask12345");
+    //    MailClient.Send(emailMessage);
     //}
 
     public static double GetPrice(string ID)
@@ -226,7 +166,7 @@ public class Util
             {
                 cmd.Parameters.AddWithValue("@UserID", UserID);
                 cmd.Parameters.AddWithValue("@LogTime", DateTime.Now);
-                cmd.Parameters.AddWithValue("@Activity", CreateSHAHash(activity));
+                cmd.Parameters.AddWithValue("@Activity", EncryptString(activity));
 
                 cmd.ExecuteNonQuery();
             }

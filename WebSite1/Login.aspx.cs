@@ -41,7 +41,7 @@ public partial class Login : System.Web.UI.Page
             string query1 = @"INSERT INTO WebsiteVisit VALUES (@Date)";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
-                cmd.Parameters.AddWithValue("@Email", email.Text);
+                cmd.Parameters.AddWithValue("@Email", Server.HtmlEncode(email.Text.Trim()));
                 cmd.Parameters.AddWithValue("@Password", Util.CreateSHAHash(password.Text));
                 using (SqlDataReader data = cmd.ExecuteReader())
                 {
@@ -74,11 +74,7 @@ public partial class Login : System.Web.UI.Page
                                     cmd1.ExecuteNonQuery();
                                 }
                                 Response.Redirect("Member.aspx");
-
-                               
                             }
-                            
-
                         }
 
                         //start of Auditlog 

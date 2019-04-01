@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.IO;
+using System.Globalization;
 
 public partial class Announcement : System.Web.UI.Page
 {
@@ -74,27 +75,27 @@ public partial class Announcement : System.Web.UI.Page
         }
     }
 
-    void GetAnnouncement(string keyword)
-    {
-        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
-        {
-            con.Open();
-            string query = @"SELECT * FROM Announcements
-                                WHERE AnnouncementName LIKE @keyword";
+    //void GetAnnouncement(string keyword)
+    //{
+    //    using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+    //    {
+    //        con.Open();
+    //        string query = @"SELECT * FROM Announcements
+    //                            WHERE AnnouncementName LIKE @keyword";
 
-            using (SqlCommand cmd = new SqlCommand(query, con))
-            {
-                cmd.Parameters.AddWithValue("@keyword", "%" + keyword + "%");
-                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-                {
-                    DataSet ds = new DataSet();
-                    da.Fill(ds, "Announcements");
-                    lvAnnouncements.DataSource = ds;
-                    lvAnnouncements.DataBind();
-                }
-            }
-        }
-    }
+    //        using (SqlCommand cmd = new SqlCommand(query, con))
+    //        {
+    //            cmd.Parameters.AddWithValue("@keyword", "%" + keyword + "%");
+    //            using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+    //            {
+    //                DataSet ds = new DataSet();
+    //                da.Fill(ds, "Announcements");
+    //                lvAnnouncements.DataSource = ds;
+    //                lvAnnouncements.DataBind();
+    //            }
+    //        }
+    //    }
+    //}
 
     protected void AddAnnouncement(object sender, EventArgs e)
     {
@@ -103,15 +104,17 @@ public partial class Announcement : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"INSERT INTO Announcements VALUES (@AnnouncementName, @AnnouncementDetail, @Image, @UserID, @Status, @DateAdded, @DateModified)";
+            string query = @"INSERT INTO Announcements VALUES (@AnnouncementName, @AnnouncementDetail, @Image, @DateStart, @DateEnd, @UserID, @Status, @DateAdded, @DateModified)";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
-                cmd.Parameters.AddWithValue("@AnnouncementName", txtannouncement.Text);
-                cmd.Parameters.AddWithValue("@AnnouncementDetail", txtdetails.Text);
+                cmd.Parameters.AddWithValue("@AnnouncementName", Server.HtmlEncode(txtannouncement.Text.Trim()));
+                cmd.Parameters.AddWithValue("@AnnouncementDetail", Server.HtmlEncode(txtdetails.Text.Trim()));
                 cmd.Parameters.AddWithValue("@Image", fileUpload1.FileName);
-                cmd.Parameters.AddWithValue("@UserID", "4");
-                cmd.Parameters.AddWithValue("@Status", "Active");
+                cmd.Parameters.AddWithValue("@DateStart", Server.HtmlEncode(datestart.Text.Trim()));
+                cmd.Parameters.AddWithValue("@DateEnd", Server.HtmlEncode(dateend.Text.Trim()));
+                cmd.Parameters.AddWithValue("@UserID", Session["UserID"]);
+                cmd.Parameters.AddWithValue("@Status", Server.HtmlEncode("Active"));
                 cmd.Parameters.AddWithValue("@DateAdded", DateTime.Now);
                 cmd.Parameters.AddWithValue("@DateModified", DBNull.Value);
                 cmd.ExecuteNonQuery();
@@ -120,7 +123,14 @@ public partial class Announcement : System.Web.UI.Page
                 Util.Log(Session["UserID"].ToString(), "The office admin has added an announcement");
                 //end of auditlog
 
-                Response.Redirect("Announcement.aspx");
+                message.InnerText = "Announcement Successfully Added.";
+
+                //lahat ng textbox
+                txtannouncement.Text = null;
+                txtdetails.Text = null;
+                datestart.Text = null;
+                dateend.Text = null;
+                
             }
         }
     }
@@ -146,6 +156,8 @@ public partial class Announcement : System.Web.UI.Page
                             txtannouncement.Text = data["AnnouncementName"].ToString();
                             txtdetails.Text = data["AnnouncementDetail"].ToString();
                             Session["image"] = data["Image"].ToString();
+                            datestart.Text = Convert.ToDateTime(data["DateStart"]).ToString("MM/dd/yyyy");
+                            dateend.Text = Convert.ToDateTime(data["DateEnd"]).ToString("MM/dd/yyyy");
                         }
                     }
                     else
@@ -160,17 +172,17 @@ public partial class Announcement : System.Web.UI.Page
     {
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
+
             con.Open();
-            string query = @"UPDATE Announcements SET AnnouncementName=@AnnouncementName, Image=@Image, AnnouncementDetail=@AnnouncementDetail WHERE AnnouncementID=@AnnouncementID";
+            string query = @"UPDATE Announcements SET AnnouncementName=@AnnouncementName, Image=@Image, DateStart=@DateStart, DateEnd=@DateEnd, AnnouncementDetail=@AnnouncementDetail, DateModified=@DateModified WHERE AnnouncementID=@AnnouncementID";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
-                cmd.Parameters.AddWithValue("@AnnouncementName", txtannouncement.Text);
-                cmd.Parameters.AddWithValue("@AnnouncementDetail", txtdetails.Text);
+                cmd.Parameters.AddWithValue("@AnnouncementName", Server.HtmlEncode(txtannouncement.Text.Trim()));
+                cmd.Parameters.AddWithValue("@AnnouncementDetail", Server.HtmlEncode(txtdetails.Text.Trim()));
                 if (fileUpload1.HasFile)
                 {
                     string filename = Path.GetFileName(fileUpload1.FileName);
                     cmd.Parameters.AddWithValue("@Image", filename);
-                    //fileUpload1.SaveAs("~/Images/Announcement/" + fileExt);
                     fileUpload1.PostedFile.SaveAs(Server.MapPath("~/Images/Announcement/") + filename);
                 }
                 else
@@ -178,8 +190,10 @@ public partial class Announcement : System.Web.UI.Page
                     cmd.Parameters.AddWithValue("@Image", Session["image"].ToString());
                     Session.Remove("image");
                 }
+                cmd.Parameters.AddWithValue("@DateStart", Server.HtmlEncode(datestart.Text));
+                cmd.Parameters.AddWithValue("@DateEnd", Server.HtmlEncode(dateend.Text));
+                cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
                 cmd.Parameters.AddWithValue("@AnnouncementID", Session["AnnouncementID"].ToString());
-                //cmd.Parameters.AddWithValue("@Image", "Sample.jpg");
 
                 cmd.ExecuteNonQuery();
 
@@ -187,7 +201,12 @@ public partial class Announcement : System.Web.UI.Page
                 Util.Log(Session["UserID"].ToString(), "The office admin has updated an announcement");
                 //end of auditlog
 
-                Response.Redirect("Announcement.aspx");
+                message.InnerText = "Announcement Successfully Updated.";
+
+                txtannouncement.Text = null;
+                txtdetails.Text = null;
+                datestart.Text = null;
+                dateend.Text = null;
             }
         }
     }

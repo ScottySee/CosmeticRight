@@ -143,6 +143,9 @@
     <!-- Control Center for Black UI Kit: parallax effects, scripts for the example pages etc -->
     <script src="bootstrap/assets/js/blk-design-system.min.js?v=1.0.0" type="text/javascript"></script>
 
+    <%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> --%>
+
     <asp:ContentPlaceHolder ID="scripts" runat="server">
     </asp:ContentPlaceHolder>
 

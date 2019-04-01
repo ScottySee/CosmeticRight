@@ -38,7 +38,7 @@ public partial class ForgotPassword : System.Web.UI.Page
                             string SQL = @"UPDATE Users SET EmailCode = 'dgxdhtrse33434' WHERE Email=@Email";
                             using (SqlCommand cmd2 = new SqlCommand(SQL, com))
                             {
-                                cmd2.Parameters.AddWithValue("@Email", email.Text);
+                                cmd2.Parameters.AddWithValue("@Email", Server.HtmlEncode(email.Text.Trim()));
                                 cmd2.ExecuteNonQuery();
                             }
                         }

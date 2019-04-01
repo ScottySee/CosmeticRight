@@ -112,14 +112,14 @@ public partial class CheckoutCOD : System.Web.UI.Page
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
-                cmd.Parameters.AddWithValue("@FirstName", txtFN.Text);
-                cmd.Parameters.AddWithValue("@LastName", txtLN.Text);
-                cmd.Parameters.AddWithValue("@BuildingNo", txtbuilding.Text);
-                cmd.Parameters.AddWithValue("@Street", txtStreet.Text);
-                cmd.Parameters.AddWithValue("@Municipality", txtMunicipality.Text);
-                cmd.Parameters.AddWithValue("@City", txtCity.Text);
-                cmd.Parameters.AddWithValue("@Landline", txtPhone.Text);
-                cmd.Parameters.AddWithValue("@Mobile", txtMobile.Text);
+                cmd.Parameters.AddWithValue("@FirstName", Server.HtmlEncode(txtFN.Text.Trim()));
+                cmd.Parameters.AddWithValue("@LastName", Server.HtmlEncode(txtLN.Text.Trim()));
+                cmd.Parameters.AddWithValue("@BuildingNo", Server.HtmlEncode(txtbuilding.Text.Trim()));
+                cmd.Parameters.AddWithValue("@Street", Server.HtmlEncode(txtStreet.Text.Trim()));
+                cmd.Parameters.AddWithValue("@Municipality", Server.HtmlEncode(txtMunicipality.Text.Trim()));
+                cmd.Parameters.AddWithValue("@City", Server.HtmlEncode(txtCity.Text.Trim()));
+                cmd.Parameters.AddWithValue("@Landline", Server.HtmlEncode(txtPhone.Text.Trim()));
+                cmd.Parameters.AddWithValue("@Mobile", Server.HtmlEncode(txtMobile.Text.Trim()));
                 cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
                 cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
                 // use Session["userid"].ToString() instead of 1
@@ -141,8 +141,8 @@ public partial class CheckoutCOD : System.Web.UI.Page
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@DateOrdered", DateTime.Now);
-                cmd.Parameters.AddWithValue("@PaymentMethod", "Cash on Delivery");
-                cmd.Parameters.AddWithValue("@Status", "Pending");
+                cmd.Parameters.AddWithValue("@PaymentMethod", Server.HtmlEncode("Cash on Delivery"));
+                cmd.Parameters.AddWithValue("@Status", Server.HtmlEncode("Pending"));
                 orderNo = (int)cmd.ExecuteScalar();
 
             }

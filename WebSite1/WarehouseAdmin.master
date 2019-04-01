@@ -67,6 +67,11 @@
                         </a>
                     </li>
                     <li class="nav-item p-0">
+                        <a class="nav-link" href="Categories.aspx">
+                            <i class="fa fa-medkit"></i>Category
+                        </a>
+                    </li>
+                    <li class="nav-item p-0">
                         <a class="nav-link" href="WarehouseAdminProfile.aspx">
                             <i class="fa fa-user-circle"></i>Profile
                         </a>
