@@ -113,7 +113,7 @@ public partial class Announcement : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@Image", fileUpload1.FileName);
                 cmd.Parameters.AddWithValue("@DateStart", Server.HtmlEncode(datestart.Text.Trim()));
                 cmd.Parameters.AddWithValue("@DateEnd", Server.HtmlEncode(dateend.Text.Trim()));
-                cmd.Parameters.AddWithValue("@UserID", Session["UserID"]);
+                cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
                 cmd.Parameters.AddWithValue("@Status", Server.HtmlEncode("Active"));
                 cmd.Parameters.AddWithValue("@DateAdded", DateTime.Now);
                 cmd.Parameters.AddWithValue("@DateModified", DBNull.Value);
@@ -130,7 +130,6 @@ public partial class Announcement : System.Web.UI.Page
                 txtdetails.Text = null;
                 datestart.Text = null;
                 dateend.Text = null;
-                
             }
         }
     }

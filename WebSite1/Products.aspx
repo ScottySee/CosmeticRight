@@ -41,7 +41,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-lg-4">Category</label>
                                         <div class="col-lg-8">
-                                            <asp:DropDownList ID="ddlCategories" runat="server" class="form-control" required />
+                                            <asp:DropDownList ID="ddlCategories" runat="server" class="form-control" required/>
                                         </div>
                                     </div>
                                 </div>

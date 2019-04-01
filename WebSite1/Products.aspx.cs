@@ -28,6 +28,7 @@ public partial class Products : System.Web.UI.Page
                 {
                     btnAdd.Visible = false;
                     btnEdit.Visible = true;
+                    //GetCategories();
                     EditProduct(editID);
                 }
                 else
@@ -49,7 +50,6 @@ public partial class Products : System.Web.UI.Page
             }
             //DELETE ID CHECKING END
             GetProducts();
-            GetCategories();
         }
         //FOR VIEWING
         GetProducts();
@@ -96,6 +96,22 @@ public partial class Products : System.Web.UI.Page
                     ddlCategories.DataBind();
                     ddlCategories.Items.Insert(0, new ListItem("Select a category...", ""));
                 }
+
+                //dropDownList.Items.Clear();
+
+                //dropDownList.SelectedIndex = -1;
+
+                //dropDownList.SelectedValue = null;
+
+                //dropDownList.ClearSelection();
+
+
+                //dataTable dt = SomeMethodThatIsNotImportantToYou();
+
+                //dropDownList.DataSource = dt;
+                //dropDownList.DataTextField = "Text";
+                //dropDownList.DataValueField = "ID";
+                //dropDownList.DataBind();
             }
         }
     }
@@ -107,7 +123,7 @@ public partial class Products : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"INSERT INTO Products VALUES (@Name, @CatID, @Code, @Description, @Image, @Price, @Available, @Criticallevel, @Maximum, @DateManufactured, @DateExpired, @Status, @DateAdded, @DateModified)";
+            string query = @"INSERT INTO Products VALUES (@Name, @CatID, @Code, @Description, @Image, @Price, @Available, @Criticallevel, @Maximum, @UserID, @DateManufactured, @DateExpired, @Status, @DateAdded, @DateModified)";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -120,6 +136,7 @@ public partial class Products : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@Available", Server.HtmlEncode(Available.Text.Trim()));
                 cmd.Parameters.AddWithValue("@Criticallevel", Server.HtmlEncode(txtCritical.Text.Trim()));
                 cmd.Parameters.AddWithValue("@Maximum", Server.HtmlEncode(txtMax.Text.Trim()));
+                cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
                 cmd.Parameters.AddWithValue("@DateManufactured", Server.HtmlEncode(datestart.Text));
                 cmd.Parameters.AddWithValue("@DateExpired", Server.HtmlEncode(dateend.Text));
                 cmd.Parameters.AddWithValue("@Status", Server.HtmlEncode("Active"));
@@ -180,7 +197,7 @@ public partial class Products : System.Web.UI.Page
                     }
                     else
                     {
-                        Response.Redirect("Announcement.aspx");
+                        Response.Redirect("Products.aspx");
                     }
                 }
             }
@@ -195,7 +212,7 @@ public partial class Products : System.Web.UI.Page
             string query = @"UPDATE Products SET Name=@Name, CatID=@CatID, Code=@Code,
                 Description=@Description, Price=@Price, Image=@Image,
                 Criticallevel=@Criticallevel, Maximum=@Maximum, Available=@Available, DateManufactured=@DateManufactured,
-                DateExpired=@DateExpired, DateModified =@DateModified WHERE ProductID=@ProductID";
+                DateExpired=@DateExpired, DateModified=@DateModified WHERE ProductID=@ProductID";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@Name", Server.HtmlEncode(txtProductName.Text.Trim()));

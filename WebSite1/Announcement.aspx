@@ -14,11 +14,11 @@
         <!-- page content -->
         <form runat="server" class="form-horizontal">
             <asp:scriptmanager runat="server" />
-            <asp:updatepanel runat="server" id="Upd1">
-                <Triggers>  
+            <%--<asp:updatepanel runat="server" id="Upd1">--%>
+                <%--<Triggers>  
                     <asp:PostBackTrigger ControlID="btnAdd" />  
                 </Triggers>
-                    <contenttemplate>
+                    <contenttemplate>--%>
             <div class="card shadow-lg">
                 <div class="card-body">
                     <label runat="server" id="message"></label>
@@ -134,8 +134,8 @@
                     <br />
                 </div>
             </div>
-                         </contenttemplate>
-                </asp:updatepanel>
+                         <%--</contenttemplate>--%>
+                <%--</asp:updatepanel>--%>
         </form>
     </div>
     <br />
