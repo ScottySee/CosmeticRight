@@ -11,7 +11,10 @@ public partial class ViewFeedback : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-	GetFeedback();
+        if (!IsPostBack)
+        {
+            GetFeedback();
+        }
     }
 
     void GetFeedback()
@@ -20,6 +23,10 @@ public partial class ViewFeedback : System.Web.UI.Page
         {
             con.Open();
             string query = @"SELECT * FROM Feedback";
+
+            //@"SELECT f.FeedbackID, p.Name AS f.Product,  u.Lastname + ' ' + u.Firstname AS f.Username, f.Comment, f.Rating, f.Datefeedback FROM Feedback f
+            //                    INNER JOIN Products p ON p.Name = f.Product
+            //                    INNER JOIN Users u ON f.UserID = u.UserID";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {

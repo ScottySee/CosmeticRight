@@ -23,7 +23,7 @@ public partial class Cart : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"SELECT od.RefNo, p.ProductID, p.Image, p.Name, p.CatID, c.Category,
+            string query = @"SELECT od.RefNo, p.ProductID, p.Image, p.Product, p.CatID, c.Category,
                                 p.Price, od.Quantity, od.Amount FROM OrderDetails od
                                 INNER JOIN Products p ON od.ProductID = p.ProductID
 								INNER JOIN Categories c ON c.CatID = p.CatID

@@ -38,13 +38,13 @@
                                 <ItemTemplate>
                                     <div class="col-lg-4">
                                         <div class="card">
-                                            <img src='Images/Products/<%# Eval("Image") %>' class="card-img-top" width="239" height="180" style="object-fit: cover" alt='<%# Eval("Name") %>' />
+                                            <img src='Images/Products/<%# Eval("Image") %>' class="card-img-top" width="239" height="180" style="object-fit: cover" alt='<%# Eval("Product") %>' />
                                             <div class="card-header">
                                                 <a href='ProductDetail.aspx?ID=<%# Eval("ProductID") %>' style="text-decoration: none;">
                                             </div>
                                             <div class="card-body">
                                                 <asp:Literal ID="ltID" runat="server" Text='<%# Eval("ProductID") %>' Visible="false" />
-                                                <h3><%# Eval("Name") %></h3>
+                                                <h3><%# Eval("Product") %></h3>
                                                 <small>Code: <%# Eval("Code") %></small><br />
 
                                                 <small><em>Category:<asp:Label runat="server" ID="category" Text='<%# Eval("Category") %>'>  </asp:Label></em></small>

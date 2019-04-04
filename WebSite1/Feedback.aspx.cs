@@ -7,7 +7,10 @@ public partial class Feedback : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        GetProduct();
+        if (!IsPostBack)
+        {
+            GetProduct();
+        }
     }
 
     void GetProduct()
@@ -15,7 +18,7 @@ public partial class Feedback : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"SELECT ProductID, Name FROM Products WHERE Status!='Archived'";
+            string query = @"SELECT ProductID, Product FROM Products WHERE Status!='Archived'";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -23,7 +26,7 @@ public partial class Feedback : System.Web.UI.Page
                 {
                     ddlProduct.DataSource = data;
                     ddlProduct.BackColor = System.Drawing.Color.Black;
-                    ddlProduct.DataTextField = "Name";
+                    ddlProduct.DataTextField = "Product";
                     ddlProduct.DataValueField = "ProductID";
                     ddlProduct.DataBind();
                     ddlProduct.Items.Insert(0, new ListItem("Select a product...", ""));

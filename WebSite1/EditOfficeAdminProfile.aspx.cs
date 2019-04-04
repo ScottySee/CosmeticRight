@@ -15,10 +15,33 @@ public partial class EditOfficeAdminProfile : System.Web.UI.Page
             if (!IsPostBack)
             {
                 GetData(Convert.ToInt16(Session["UserID"]));
+                GetCity();
             }
         }
         else
             Response.Redirect("Login.aspx");
+    }
+
+    void GetCity()
+    {
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        {
+            con.Open();
+            string query = @"SELECT CityID, City FROM City";
+
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                using (SqlDataReader data = cmd.ExecuteReader())
+                {
+                    ddlCity.DataSource = data;
+                    ddlCity.BackColor = System.Drawing.Color.Black;
+                    ddlCity.DataTextField = "City";
+                    ddlCity.DataValueField = "CityID";
+                    ddlCity.DataBind();
+                    ddlCity.Items.Insert(0, new ListItem("Select a city...", ""));
+                }
+            }
+        }
     }
 
     void GetData(int ID)
@@ -45,7 +68,7 @@ public partial class EditOfficeAdminProfile : System.Web.UI.Page
                             buildingno.Text = data["BuildingNo"].ToString();
                             street.Text = data["Street"].ToString();
                             municipality.Text = data["Municipality"].ToString();
-                            city.Text = data["City"].ToString();
+                            ddlCity.Text = data["CityID"].ToString();
                             landline.Text = data["Landline"].ToString();
                             mobile.Text = data["Mobile"].ToString();
                             email.Text = data["Email"].ToString();
@@ -61,7 +84,7 @@ public partial class EditOfficeAdminProfile : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"UPDATE Users SET FirstName=@FirstName, LastName=@LastName, Gender=@Gender, BuildingNo=@BuildingNo, Street=@Street, Municipality=@Municipality, City=@City, Landline=@Landline, Mobile=@Mobile, Email=@Email, EmailCode=@EmailCode, DateModified=@DateModified
+            string query = @"UPDATE Users SET FirstName=@FirstName, LastName=@LastName, Gender=@Gender, BuildingNo=@BuildingNo, Street=@Street, Municipality=@Municipality, CityID=@CityID, Landline=@Landline, Mobile=@Mobile, Email=@Email, EmailCode=@EmailCode, DateModified=@DateModified
               WHERE UserID=@UserID";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
@@ -72,7 +95,7 @@ public partial class EditOfficeAdminProfile : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@BuildingNo", Server.HtmlEncode(buildingno.Text.Trim()));
                 cmd.Parameters.AddWithValue("@Street", Server.HtmlEncode(street.Text));
                 cmd.Parameters.AddWithValue("@Municipality", Server.HtmlEncode(municipality.Text.Trim()));
-                cmd.Parameters.AddWithValue("@City", Server.HtmlEncode(city.Text.Trim()));
+                cmd.Parameters.AddWithValue("@CityID", ddlCity.SelectedValue);
                 cmd.Parameters.AddWithValue("@Landline", Server.HtmlEncode(landline.Text.Trim()));
                 cmd.Parameters.AddWithValue("@Mobile", Server.HtmlEncode(mobile.Text.Trim()));
                 cmd.Parameters.AddWithValue("@Email", Server.HtmlEncode(email.Text.Trim()));

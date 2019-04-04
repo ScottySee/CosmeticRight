@@ -40,7 +40,7 @@ public partial class PrintDelivery : System.Web.UI.Page
 
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
-            string query = @"SELECT od.RefNo, p.ProductID, p.Image, p.Name,
+            string query = @"SELECT od.RefNo, p.ProductID, p.Image, p.Product,
                                 p.Price, od.Quantity, od.Amount, FORMAT (o.DateOrdered, 'MMM dd yyyy') as DateOrdered, 
 								CONCAT(u.Firstname, ' ' ,u.Lastname) as Customer,
 								CONCAT(u.BuildingNo, ' ', u.Street, ' ', u.Municipality, ' ', u.City) as Address,

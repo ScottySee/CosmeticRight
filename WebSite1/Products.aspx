@@ -13,12 +13,12 @@
         <!-- page content -->
         <form runat="server" classa="form-horizontal">
             <asp:ScriptManager runat="server" />
-            <asp:UpdatePanel runat="server" ID="Upd1">
+            <%--<asp:UpdatePanel runat="server" ID="Upd1">
                 <Triggers>
                     <asp:PostBackTrigger ControlID="btnAdd" />
-                    <%--<asp:AsyncPostBackTrigger ControlID="btnAdd" />--%>
+                    <%--<asp:AsyncPostBackTrigger ControlID="btnAdd" />
                 </Triggers>
-                <ContentTemplate>
+                <ContentTemplate>--%>
                     <div class="card shadow-lg">
                         <div class="card-body">
                             <label runat="server" id="message"></label>
@@ -86,7 +86,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="control-label">Available</label>
-                                        <asp:Label ID="lblunit" runat="server" required />
+                                        <%--<asp:Label ID="lblunit" runat="server" required />--%>
                                         <asp:TextBox ID="Available" TextMode="Number" runat="server" class="form-control" type="number" required />
                                     </div>
                                 </div>
@@ -105,13 +105,13 @@
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <label class="control-label">Date Manufactured:</label>
-                                        <asp:TextBox ID="datestart" runat="server" class="form-control" min="03-28-2019" max="12-31-2019" placeholder="From: MM/DD/YYYY" required />
+                                        <asp:TextBox TextMode="date" ID="datestart" runat="server" class="form-control" min="03-28-2019" max="12-31-2019" required />
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <label class="control-label">Date Expired:</label>
-                                        <asp:TextBox ID="dateend" runat="server" class="form-control" min="03-28-2019" max="12-31-2019" placeholder="To: MM/DD/YYYY" required />
+                                        <asp:TextBox TextMode="date" ID="dateend" runat="server" class="form-control" min="03-28-2019" max="12-31-2019" required />
                                     </div>
                                 </div>
                             </div>
@@ -126,7 +126,7 @@
                             </div>
                         </div>
                     </div>
-                    </div>
+                    
     <!-- Table row -->
                     <div class="card mt-5">
                         <div class="card-body">
@@ -170,7 +170,7 @@
                                                     <ItemTemplate>
                                                         <tr>
                                                             <td><%# Eval("ProductID") %></td>
-                                                            <td><%# Eval("Name") %></td>
+                                                            <td><%# Eval("Product") %></td>
                                                             <td><%# Eval("CatID") %></td>
                                                             <td><%# Eval("Available") %></td>
                                                             <td><%# Eval("Code") %></td>
@@ -212,9 +212,9 @@
                             </div>--%>
                         </div>
                     </div>
-                </ContentTemplate>
-
-            </asp:UpdatePanel>
+                <%--</ContentTemplate>
+                    
+            </asp:UpdatePanel>--%>
         </form>
         <!-- /.col -->
     </div>

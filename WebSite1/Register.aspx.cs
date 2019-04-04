@@ -14,7 +14,10 @@ public partial class Register : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        GetCity();
+        if (!IsPostBack)
+        {
+            GetCity();
+        }
     }
 
     void GetCity()
@@ -47,7 +50,7 @@ public partial class Register : System.Web.UI.Page
             {
                 con.Open();
                 string SQL = @"INSERT INTO Users VALUES (@UserType, @Firstname, @Lastname, @Gender,
-                         @BuildingNo, @Street, @Municipality, @City, @Landline, @Mobile,
+                         @BuildingNo, @Street, @Municipality, @CityID, @Landline, @Mobile,
                          @Email, @Password, @EmailCode, @DateAdded, @DateModified)";
                 using (SqlCommand cmd = new SqlCommand(SQL, con))
                 {
@@ -58,7 +61,7 @@ public partial class Register : System.Web.UI.Page
                     cmd.Parameters.AddWithValue("@BuildingNo", Server.HtmlEncode(buildingno.Text.Trim()));
                     cmd.Parameters.AddWithValue("@Street", Server.HtmlEncode(street.Text.Trim()));
                     cmd.Parameters.AddWithValue("@Municipality", Server.HtmlEncode(municipality.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@City", ddlCity.SelectedValue);
+                    cmd.Parameters.AddWithValue("@CityID", ddlCity.SelectedValue);
                     cmd.Parameters.AddWithValue("@Landline", Server.HtmlEncode(landline.Text.Trim()));
                     cmd.Parameters.AddWithValue("@Mobile", Server.HtmlEncode(mobile.Text.Trim()));
                     cmd.Parameters.AddWithValue("@Email", Server.HtmlEncode(email.Text.Trim()));
@@ -71,17 +74,6 @@ public partial class Register : System.Web.UI.Page
                     //start of Auditlog 
                     //Util.Log(Session["UserID"].ToString(), "The Member has created their account");
                     //end of auditlog
-
-                //    string message = "Hi, " + txtEmailAddress.Text + "<br/>" + "Thank you for registering on our website!<br/>"
-                //+ "<br/>" + "This email is send for congratulating you for successfully registering on our website!" + "<br/>" +
-                //"These are your ID & your Password " + "<br/>" +
-                //"Username:" + txtUsername.Text + "<br/>" + "Password:" + txtPassword.Text + "<br/>"
-                //+ "<br/>" + "If you have any question, please email us at asktheexcellent@gmail.com" + "<br/>" +
-                //"Thank You!"
-                //;
-
-                //    Util.SendEmail(txtEmailAddress.Text, "Registration", message);
-
 
                     //send email
                     using (MailMessage mm = new MailMessage("scottysee98@gmail.com", email.Text))

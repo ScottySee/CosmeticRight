@@ -102,7 +102,7 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"SELECT od.RefNo, p.ProductID, p.Image, p.Name, c.Category,
+            string query = @"SELECT od.RefNo, p.ProductID, p.Image, p.Product, c.Category,
                                 p.Price, od.Quantity, od.Amount FROM OrderDetails od
                                 INNER JOIN Products p ON od.ProductID = p.ProductID 
                                 INNER JOIN Categories c ON p.CatID = c.CatID

@@ -50,10 +50,10 @@ public partial class Products : System.Web.UI.Page
             }
             //DELETE ID CHECKING END
             GetProducts();
+            GetCategories();
         }
         //FOR VIEWING
         GetProducts();
-        GetCategories();
     }
 
     void GetProducts()
@@ -83,7 +83,7 @@ public partial class Products : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"SELECT CatID, Category FROM Category";
+            string query = @"SELECT CatID, Category FROM Categories";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -93,25 +93,10 @@ public partial class Products : System.Web.UI.Page
                     ddlCategories.BackColor = System.Drawing.Color.Black;
                     ddlCategories.DataTextField = "Category";
                     ddlCategories.DataValueField = "CatID";
+                    ddlCategories.SelectedValue = null;
                     ddlCategories.DataBind();
                     ddlCategories.Items.Insert(0, new ListItem("Select a category...", ""));
                 }
-
-                //dropDownList.Items.Clear();
-
-                //dropDownList.SelectedIndex = -1;
-
-                //dropDownList.SelectedValue = null;
-
-                //dropDownList.ClearSelection();
-
-
-                //dataTable dt = SomeMethodThatIsNotImportantToYou();
-
-                //dropDownList.DataSource = dt;
-                //dropDownList.DataTextField = "Text";
-                //dropDownList.DataValueField = "ID";
-                //dropDownList.DataBind();
             }
         }
     }
@@ -123,11 +108,11 @@ public partial class Products : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"INSERT INTO Products VALUES (@Name, @CatID, @Code, @Description, @Image, @Price, @Available, @Criticallevel, @Maximum, @UserID, @DateManufactured, @DateExpired, @Status, @DateAdded, @DateModified)";
+            string query = @"INSERT INTO Products VALUES (@Product, @CatID, @Code, @Description, @Image, @Price, @Available, @Criticallevel, @Maximum, @UserID, @DateManufactured, @DateExpired, @Status, @DateAdded, @DateModified)";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
-                cmd.Parameters.AddWithValue("@Name", Server.HtmlEncode(txtProductName.Text.Trim()));
+                cmd.Parameters.AddWithValue("@Product", Server.HtmlEncode(txtProductName.Text.Trim()));
                 cmd.Parameters.AddWithValue("@CatID", ddlCategories.SelectedValue);
                 cmd.Parameters.AddWithValue("@Code", Server.HtmlEncode(txtCode.Text.Trim()));
                 cmd.Parameters.AddWithValue("@Description", Server.HtmlEncode(txtDescription.Text.Trim()));
@@ -151,15 +136,15 @@ public partial class Products : System.Web.UI.Page
                 message.InnerText = "Product Successfully Added.";
 
                 //lahat ng textbox
-                txtProductName.Text = null;
-                txtCode.Text = null;
-                txtDescription.Text = null;
-                txtPrice.Text = null;
-                Available.Text = null;
-                txtCritical.Text = null;
-                txtMax.Text = null;
-                datestart.Text = null;
-                dateend.Text = null;
+                txtProductName.Text = "";
+                txtCode.Text = "";
+                txtDescription.Text = "";
+                txtPrice.Text = "";
+                Available.Text = "";
+                txtCritical.Text = "";
+                txtMax.Text = "";
+                datestart.Text = "";
+                dateend.Text = "";
             }
         }
     }
@@ -182,7 +167,7 @@ public partial class Products : System.Web.UI.Page
                         {
                             productID.Text = data["ProductID"].ToString();
                             Session["ProductID"] = data["ProductID"].ToString();
-                            txtProductName.Text = data["Name"].ToString();
+                            txtProductName.Text = data["Product"].ToString();
                             ddlCategories.SelectedValue = data["CatID"].ToString();
                             txtCode.Text = data["Code"].ToString();
                             Session["image"] = data["Image"].ToString();
@@ -209,13 +194,13 @@ public partial class Products : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"UPDATE Products SET Name=@Name, CatID=@CatID, Code=@Code,
+            string query = @"UPDATE Products SET Product=@Product, CatID=@CatID, Code=@Code,
                 Description=@Description, Price=@Price, Image=@Image,
                 Criticallevel=@Criticallevel, Maximum=@Maximum, Available=@Available, DateManufactured=@DateManufactured,
                 DateExpired=@DateExpired, DateModified=@DateModified WHERE ProductID=@ProductID";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
-                cmd.Parameters.AddWithValue("@Name", Server.HtmlEncode(txtProductName.Text.Trim()));
+                cmd.Parameters.AddWithValue("@Product", Server.HtmlEncode(txtProductName.Text.Trim()));
                 cmd.Parameters.AddWithValue("@CatID", ddlCategories.SelectedValue);
                 cmd.Parameters.AddWithValue("@Code", Server.HtmlEncode(txtCode.Text.Trim()));
                 cmd.Parameters.AddWithValue("@Description", Server.HtmlEncode(txtDescription.Text.Trim()));
@@ -250,15 +235,15 @@ public partial class Products : System.Web.UI.Page
 
                 message.InnerText = "Product Successfully Updated.";
 
-                txtProductName.Text = null;
-                txtCode.Text = null;
-                txtDescription.Text = null;
-                txtPrice.Text = null;
-                Available.Text = null;
-                txtCritical.Text = null;
-                txtMax.Text = null;
-                datestart.Text = null;
-                dateend.Text = null;
+                txtProductName.Text = "";
+                txtCode.Text = "";
+                txtDescription.Text = "";
+                txtPrice.Text = "";
+                Available.Text = "";
+                txtCritical.Text = "";
+                txtMax.Text = "";
+                datestart.Text = "";
+                dateend.Text = "";
             }
         }
     }
@@ -299,22 +284,22 @@ public partial class Products : System.Web.UI.Page
     //        GetProducts(txtKeyword.Text);
     //}
 
-    protected void ddlCategories_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        switch (ddlCategories.SelectedValue)
-        {
-            case "1":
-                lblunit.Text = "Kilogram";
-                break;
-            case "2":
-                lblunit.Text = "Liters";
-                break;
-            case "3":
-                lblunit.Text = "Pieces";
-                break;
-            default:
-                lblunit.Text = "";
-                break;
-        }
-    }
+    //protected void ddlCategories_SelectedIndexChanged(object sender, EventArgs e)
+    //{
+    //    switch (ddlCategories.SelectedValue)
+    //    {
+    //        case "1":
+    //            lblunit.Text = "Kilogram";
+    //            break;
+    //        case "2":
+    //            lblunit.Text = "Liters";
+    //            break;
+    //        case "3":
+    //            lblunit.Text = "Pieces";
+    //            break;
+    //        default:
+    //            lblunit.Text = "";
+    //            break;
+    //    }
+    //}
 }

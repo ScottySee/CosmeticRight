@@ -94,11 +94,12 @@
                                         <asp:TextBox runat="server" ID="municipality" Placeholder="Municipality" CssClass="form-control" MaxLength="50" autocomplete="off"></asp:TextBox>
                                     </div>
                                     <div class="card-title pull-left">
-                                        City
-                                    </div>
-                                    <div class="form-group">
-                                        <asp:TextBox runat="server" onkeypress="return lettersOnly(event)" ID="city" Placeholder="City" CssClass="form-control" MaxLength="50" autocomplete="off"></asp:TextBox>
-                                    </div>
+                                                City
+                                            </div>
+                                            <div style="color: red">*</div>
+                                            <div class="form-group">
+                                                <asp:DropDownList ID="ddlCity" runat="server" CssClass="form-control" required />
+                                            </div>
                                     <div class="card-title pull-left">
                                         Landline
                                     </div>

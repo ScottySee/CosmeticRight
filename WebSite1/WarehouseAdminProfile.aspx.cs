@@ -45,7 +45,7 @@ public partial class WarehouseAdminProfile : System.Web.UI.Page
                             buildingno.Text = data["BuildingNo"].ToString();
                             street.Text = data["Street"].ToString();
                             municipality.Text = data["Municipality"].ToString();
-                            city.Text = data["City"].ToString();
+                            city.Text = data["CityID"].ToString();
                             landline.Text = data["Landline"].ToString();
                             mobile.Text = data["Mobile"].ToString();
                             email.Text = data["Email"].ToString();

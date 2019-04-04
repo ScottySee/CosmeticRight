@@ -58,14 +58,14 @@ public partial class Categories : System.Web.UI.Page
         //@"Server=MSI\MSSQLSERVER2;Database=Test;Integrated Security=true";
         {
             con.Open();
-            string query = @"SELECT c.CatID, Category, u.Lastname + ' ' + u.Firstname AS Username, Status FROM Category                   c INNER JOIN Users u ON c.UserID = u.UserID WHERE Status != 'Archived'";
+            string query = @"SELECT c.CatID, Category, u.Lastname + ' ' + u.Firstname AS Username, Status FROM Categories                   c INNER JOIN Users u ON c.UserID = u.UserID WHERE Status != 'Archived'";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                 {
                     DataSet ds = new DataSet();
-                    da.Fill(ds, "Category");
+                    da.Fill(ds, "Categories");
                     lvCategories.DataSource = ds;
                     lvCategories.DataBind();
                 }
@@ -78,7 +78,7 @@ public partial class Categories : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"SELECT * FROM Category
+            string query = @"SELECT * FROM Categories
                                 WHERE Category LIKE @keyword";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
@@ -87,7 +87,7 @@ public partial class Categories : System.Web.UI.Page
                 using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                 {
                     DataSet ds = new DataSet();
-                    da.Fill(ds, "Category");
+                    da.Fill(ds, "Categories");
                     lvCategories.DataSource = ds;
                     lvCategories.DataBind();
                 }
@@ -100,7 +100,7 @@ public partial class Categories : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"INSERT INTO Category VALUES (@Category, @UserID, @Status, @DateAdded, @DateModified)";
+            string query = @"INSERT INTO Categories VALUES (@Category, @UserID, @Status, @DateAdded, @DateModified)";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -125,7 +125,7 @@ public partial class Categories : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"SELECT * FROM Category WHERE CatID=@CatID";
+            string query = @"SELECT * FROM Categories WHERE CatID=@CatID";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -154,7 +154,7 @@ public partial class Categories : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"UPDATE Category SET Category=@Category WHERE CatID=@CatID";
+            string query = @"UPDATE Categories SET Category=@Category WHERE CatID=@CatID";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@Category", Server.HtmlEncode(txtCategory.Text.Trim()));
@@ -177,7 +177,7 @@ public partial class Categories : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"UPDATE Category SET Status = 'Archived' WHERE CatID=@CatID";
+            string query = @"UPDATE Categories SET Status = 'Archived' WHERE CatID=@CatID";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {

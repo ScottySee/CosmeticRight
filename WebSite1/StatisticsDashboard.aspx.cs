@@ -69,7 +69,7 @@ public partial class StatisticsDashboard : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"SELECT ProductID, Name, Categories.Category, Criticallevel, Maximum FROM Products
+            string query = @"SELECT ProductID, Product, Categories.Category, Available, Criticallevel, Maximum FROM Products
                                 INNER JOIN Categories ON Products.CatID=Categories.CatID";
 
             using (SqlCommand cmd = new SqlCommand(query, con))

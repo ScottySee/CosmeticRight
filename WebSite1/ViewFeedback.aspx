@@ -26,6 +26,8 @@
                                     <thead>
                                         <tr>
                                             <th>Feedback ID</th>
+                                            <th>Product</th>
+                                            <th>User</th>
                                             <th>Comment</th>
                                             <th>Rating</th>
                                             <th>Datefeedback</th>
@@ -36,6 +38,8 @@
                                             <ItemTemplate>
                                                 <tr class="bg-default">
                                                     <td><%# Eval("FeedbackID") %></td>
+                                                    <td><%# Eval("Product") %></td>
+                                                    <td><%# Eval("UserID") %></td>
                                                     <td><%# Eval("Comment") %></td>
                                                     <td><%# Eval("Rating") %> out of 5</td>
                                                     <td><%# Eval("Datefeedback") %></td>

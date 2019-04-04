@@ -64,7 +64,7 @@
                                                     <td><%# Eval("BuildingNo") %></td>
                                                     <td><%# Eval("Street") %></td>
                                                     <td><%# Eval("Municipality") %></td>
-                                                    <td><%# Eval("City") %></td>
+                                                    <td><%# Eval("CityID") %></td>
                                                     <td><%# Eval("Landline") %></td>
                                                     <td><%# Eval("Mobile") %></td>
                                                     <td><%# Eval("Email") %></td>
@@ -139,9 +139,9 @@
                                             <th>ID</th>
                                             <th>Product Name</th>
                                             <th>Category</th>
+                                            <th>Available</th>
                                             <th>Critical Level</th>
                                             <th>Maximum</th>
-                                       
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -150,8 +150,9 @@
                                             <ItemTemplate>
                                                 <tr class="bg-default">
                                                     <td><%# Eval("ProductID") %></td>
-                                                    <td><%# Eval("Name") %></td>
+                                                    <td><%# Eval("Product") %></td>
                                                     <td><%# Eval("Category") %></td>
+                                                    <td><%# Eval("Available") %></td>
                                                     <td><%# Eval("Criticallevel") %></td>
                                                     <td><%# Eval("Maximum") %></td>
                                                    <%--  <td><%# Eval("Count") %></td>--%>

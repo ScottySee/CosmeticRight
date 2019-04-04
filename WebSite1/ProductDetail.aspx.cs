@@ -39,7 +39,7 @@ public partial class ProductDetail : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"SELECT p.Name, p.Code, p.Image, p.Description, p.CatID,
+            string query = @"SELECT p.Product, p.Code, p.Image, p.Description, p.CatID,
                             c.Category, p.Price FROM Products p
                             INNER JOIN Categories c ON p.CatID = c.CatID
                             WHERE p.ProductID=@ProductID";
@@ -52,7 +52,7 @@ public partial class ProductDetail : System.Web.UI.Page
                     {
                         while (dr.Read())
                         {
-                            ltName.Text = dr["Name"].ToString();
+                            ltName.Text = dr["Product"].ToString();
                             ltCode.Text = dr["Code"].ToString();
                             imgProduct.ImageUrl = "~/Images/Products/" + dr["Image"].ToString();
                             ltDesc.Text = Server.HtmlDecode(dr["Description"].ToString());

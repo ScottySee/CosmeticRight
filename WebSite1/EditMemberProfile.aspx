@@ -70,11 +70,12 @@
                                             <asp:TextBox runat="server" ID="municipality" placeholder="Barangay" CssClass="form-control"></asp:TextBox>
                                         </div>
                                         <div class="card-title pull-left">
-                                            City
-                                        </div>
-                                        <div class="form-group">
-                                            <asp:TextBox runat="server" ID="city" placeholder="City" CssClass="form-control"></asp:TextBox>
-                                        </div>
+                                                City
+                                            </div>
+                                            <div style="color: red">*</div>
+                                            <div class="form-group">
+                                                <asp:DropDownList ID="ddlCity" runat="server" CssClass="form-control" required />
+                                            </div>
                                         <div class="card-title pull-left">
                                             Landline
                                         </div>
