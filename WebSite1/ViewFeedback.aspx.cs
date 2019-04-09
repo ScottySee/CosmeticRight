@@ -14,19 +14,38 @@ public partial class ViewFeedback : System.Web.UI.Page
         if (!IsPostBack)
         {
             GetFeedback();
+            //GetProduct();
         }
     }
+
+    //void GetProduct()
+    //{
+    //    using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+    //    {
+    //        con.Open();
+    //        string query = @"SELECT Product FROM Products WHERE Status!='Archived'";
+
+    //        using (SqlCommand cmd = new SqlCommand(query, con))
+    //        {
+    //            using (SqlDataReader data = cmd.ExecuteReader())
+    //            {
+    //                DataSet ds = new DataSet();
+    //                data.Fill(ds, "Products");
+    //                lvFeedback.DataSource = ds;
+    //                lvFeedback.DataBind();
+    //            }
+    //        }
+    //    }
+    //}
 
     void GetFeedback()
     {
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"SELECT * FROM Feedback";
-
-            //@"SELECT f.FeedbackID, p.Name AS f.Product,  u.Lastname + ' ' + u.Firstname AS f.Username, f.Comment, f.Rating, f.Datefeedback FROM Feedback f
-            //                    INNER JOIN Products p ON p.Name = f.Product
-            //                    INNER JOIN Users u ON f.UserID = u.UserID";
+            string query = @"SELECT FeedbackID , Product, u.Lastname + ' ' + u.Firstname AS CustomerName,
+                               f.Comment, f.Rating, f.Datefeedback FROM Feedback f
+                               INNER JOIN Users u ON f.UserID = u.UserID";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {

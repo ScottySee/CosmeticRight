@@ -223,8 +223,8 @@ public partial class Products : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@Available", Server.HtmlEncode(Available.Text.Trim()));
                 cmd.Parameters.AddWithValue("@Criticallevel", Server.HtmlEncode(txtCritical.Text.Trim()));
                 cmd.Parameters.AddWithValue("@Maximum", Server.HtmlEncode(txtMax.Text.Trim()));
-                cmd.Parameters.AddWithValue("@DateManufactured", Server.HtmlEncode(datestart.Text.Trim()));
-                cmd.Parameters.AddWithValue("@DateExpired", Server.HtmlEncode(dateend.Text.Trim()));
+                cmd.Parameters.AddWithValue("@DateManufactured", Server.HtmlEncode(datestart.Text));
+                cmd.Parameters.AddWithValue("@DateExpired", Server.HtmlEncode(dateend.Text));
                 cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
                 cmd.Parameters.AddWithValue("@ProductID", Session["ProductID"].ToString());
                 cmd.ExecuteNonQuery();

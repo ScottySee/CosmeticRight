@@ -45,10 +45,10 @@
                                             <ItemTemplate>
                                                 <tr>
                                                     <td>
-                                                        <img runat="server" src='<%# string.Concat("~/Images/Products/", Eval("Image")) %>' width="120" alt='<%# Eval("Name") %>' />
+                                                        <img runat="server" src='<%# string.Concat("~/Images/Products/", Eval("Image")) %>' width="120" alt='<%# Eval("Product") %>' />
                                                     </td>
                                                     <td>
-                                                        <h4><%# Eval("Name") %></h4>
+                                                        <h4><%# Eval("Product") %></h4>
                                                         <small>Category: <%# Eval("Category") %></small>
                                                     </td>
                                                     <td>Php<%# Eval("Price", "{0: #,##0.00}") %></td>
@@ -174,8 +174,8 @@
                                 <div class="form-group">
                                     <label class="control-label col-lg-4">City</label>
                                     <div class="col-lg-8">
-                                        <asp:Label ID="txtCity" runat="server" class="form-control" />
-                                    </div>
+                                    <asp:DropDownList ID="ddlCity" runat="server" CssClass="form-control" required />
+                                </div>
                                 </div>
 
                                 <div class="form-group">

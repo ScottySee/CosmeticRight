@@ -18,7 +18,7 @@ public partial class Feedback : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"SELECT ProductID, Product FROM Products WHERE Status!='Archived'";
+            string query = @"SELECT Product FROM Products WHERE Status!='Archived'";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -27,7 +27,7 @@ public partial class Feedback : System.Web.UI.Page
                     ddlProduct.DataSource = data;
                     ddlProduct.BackColor = System.Drawing.Color.Black;
                     ddlProduct.DataTextField = "Product";
-                    ddlProduct.DataValueField = "ProductID";
+                    ddlProduct.DataValueField = "Product";
                     ddlProduct.DataBind();
                     ddlProduct.Items.Insert(0, new ListItem("Select a product...", ""));
                 }
@@ -45,7 +45,7 @@ public partial class Feedback : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"INSERT INTO Feedback Values(@Datefeedback, @UserID, @Product, @Rating, @Comment)";
+            string query = @"INSERT INTO Feedback Values(@Datefeedback, @UserID, @Product, @Rating, @Comment, @Status1)";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@Rating", star);
@@ -53,11 +53,14 @@ public partial class Feedback : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@Product", ddlProduct.SelectedValue);
                 cmd.Parameters.AddWithValue("@Datefeedback", DateTime.Now);
                 cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
+                cmd.Parameters.AddWithValue("@Status1", "Active");
                 cmd.ExecuteNonQuery();
 
                 //start of Auditlog 
                 Util.Log(Session["UserID"].ToString(), "The Member has sent a feedback");
                 //end of auditlog
+
+                message1.InnerText = "Feedback Successfully Sent.";
             }
         }
     }

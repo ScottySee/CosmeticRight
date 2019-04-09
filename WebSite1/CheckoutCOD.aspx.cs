@@ -15,6 +15,29 @@ public partial class CheckoutCOD : System.Web.UI.Page
             GetCart();
             GetOrderSummary();
             GetUserInfo();
+            GetCity();
+        }
+    }
+
+    void GetCity()
+    {
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        {
+            con.Open();
+            string query = @"SELECT CityID, City FROM City";
+
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                using (SqlDataReader data = cmd.ExecuteReader())
+                {
+                    ddlCity.DataSource = data;
+                    ddlCity.BackColor = System.Drawing.Color.Black;
+                    ddlCity.DataTextField = "City";
+                    ddlCity.DataValueField = "CityID";
+                    ddlCity.DataBind();
+                    ddlCity.Items.Insert(0, new ListItem("Select a city...", ""));
+                }
+            }
         }
     }
 
@@ -77,7 +100,7 @@ public partial class CheckoutCOD : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"SELECT FirstName, LastName, BuildingNo, Street, Municipality, City, Landline, Mobile FROM Users WHERE UserID=@UserID";
+            string query = @"SELECT FirstName, LastName, BuildingNo, Street, Municipality, CityID, Landline, Mobile FROM Users WHERE UserID=@UserID";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
@@ -91,7 +114,7 @@ public partial class CheckoutCOD : System.Web.UI.Page
                         txtbuilding.Text = dr["BuildingNo"].ToString();
                         txtStreet.Text = dr["Street"].ToString();
                         txtMunicipality.Text = dr["Municipality"].ToString();
-                        txtCity.Text = dr["City"].ToString();
+                        ddlCity.Text = dr["CityID"].ToString();
                         txtPhone.Text = dr["Landline"].ToString();
                         txtMobile.Text = dr["Mobile"].ToString();
                     }
@@ -108,7 +131,7 @@ public partial class CheckoutCOD : System.Web.UI.Page
         {
             con.Open();
             string query = @"UPDATE Users SET FirstName=@FirstName, LastName=@LastName, BuildingNo=@BuildingNo, Street=@Street, Municipality=@Municipality,
-            City=@City, Landline=@Landline, Mobile=@Mobile, DateModified=@DateModified WHERE UserID=@UserID";
+            CityID=@CityID, Landline=@Landline, Mobile=@Mobile, DateModified=@DateModified WHERE UserID=@UserID";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -117,7 +140,7 @@ public partial class CheckoutCOD : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@BuildingNo", Server.HtmlEncode(txtbuilding.Text.Trim()));
                 cmd.Parameters.AddWithValue("@Street", Server.HtmlEncode(txtStreet.Text.Trim()));
                 cmd.Parameters.AddWithValue("@Municipality", Server.HtmlEncode(txtMunicipality.Text.Trim()));
-                cmd.Parameters.AddWithValue("@City", Server.HtmlEncode(txtCity.Text.Trim()));
+                cmd.Parameters.AddWithValue("@CityID", ddlCity.SelectedValue);
                 cmd.Parameters.AddWithValue("@Landline", Server.HtmlEncode(txtPhone.Text.Trim()));
                 cmd.Parameters.AddWithValue("@Mobile", Server.HtmlEncode(txtMobile.Text.Trim()));
                 cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
@@ -174,18 +197,6 @@ public partial class CheckoutCOD : System.Web.UI.Page
         #region Step #4: Insert ProductCount Record 
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
-            //con.Open();
-            //string query = @"INSERT INTO Deliveries VALUES (@OrderNo, @Deadline,
-            //@DateDelivered, @Status)";
-            //using (SqlCommand cmd = new SqlCommand(query, con))
-            //{
-            //    cmd.Parameters.AddWithValue("@OrderNo ", orderNo);
-            //    cmd.Parameters.AddWithValue("@Deadline ", DateTime.Now.AddDays(7));
-            //    cmd.Parameters.AddWithValue("@DateDelivered ", DBNull.Value);
-            //    cmd.Parameters.AddWithValue("@Status ", "Pending");
-            //    cmd.ExecuteNonQuery();
-            //}
-
             //con.Open();
             //string query = @"INSERT INTO ProductCount VALUES (@ProductID, @Count)";
             //using (SqlCommand cmd = new SqlCommand(query, con))

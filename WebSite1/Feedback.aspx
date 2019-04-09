@@ -14,13 +14,13 @@
         <div class="page-header header-filter">
             <div class="content">
                 <div class="container">
-                    <h1>Feedback</h1>
+                    <h1>Product Feedback</h1>
                     <div class="row justify-content-center">
                         <!--First column-->
                         <div class="col-md-6">
                             <div class="card">
+                                <label runat="server" id="message1"></label>
                                 <div class="card-body">
-
                                     <label class="control-label">Rating</label>
                                     <asp:ScriptManager runat="server"></asp:ScriptManager>
 

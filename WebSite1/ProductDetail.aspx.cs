@@ -25,11 +25,34 @@ public partial class ProductDetail : System.Web.UI.Page
                 if (!IsPostBack)
                 {
                     GetData(productID);
+                    GetFeedback();
                 }
             }
             else
             {
                 Response.Redirect("ProductDisplay.aspx");
+            }
+        }
+    }
+
+    void GetFeedback()
+    {
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        {
+            con.Open();
+            string query = @"SELECT FeedbackID , Product, u.Lastname + ' ' + u.Firstname AS CustomerName,
+                               f.Comment, f.Rating FROM Feedback f
+                               INNER JOIN Users u ON f.UserID = u.UserID";
+
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                {
+                    DataSet ds = new DataSet();
+                    da.Fill(ds, "Feedback");
+                    lvFeedback.DataSource = ds;
+                    lvFeedback.DataBind();
+                }
             }
         }
     }
@@ -69,14 +92,5 @@ public partial class ProductDetail : System.Web.UI.Page
                 }
             }
         }
-    }
-
-    protected void btnAddToCart_Click(object sender, EventArgs e)
-    {
-        Util.AddToCart(Request.QueryString["ID"], ddlCategories.SelectedValue);
-
-        //start of Auditlog 
-        Util.Log(Session["UserID"].ToString(), "The Member has added product to cart");
-        //end of auditlog
     }
 }

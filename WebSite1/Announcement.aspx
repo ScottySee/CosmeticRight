@@ -13,9 +13,9 @@
     <div class="container mt--7">
         <!-- page content -->
         <form runat="server" class="form-horizontal">
-            <asp:scriptmanager runat="server" />
+            <asp:ScriptManager runat="server" />
             <%--<asp:updatepanel runat="server" id="Upd1">--%>
-                <%--<Triggers>  
+            <%--<Triggers>  
                     <asp:PostBackTrigger ControlID="btnAdd" />  
                 </Triggers>
                     <contenttemplate>--%>
@@ -39,18 +39,18 @@
                         <div class="col-lg-6">
 
                             <label class="control-label">Images</label><br />
-                         <%--   <label for="body_fileUpload1" class="btn btn-success">--%>
+                            <%--   <label for="body_fileUpload1" class="btn btn-success">--%>
                                 Upload Image Here
-                                        <asp:FileUpload  CssClass="btn btn alert-info"  ID="fileUpload1"  runat="server" />
+                                        <asp:FileUpload CssClass="btn btn alert-info" ID="fileUpload1" runat="server" />
                             <asp:regularexpressionvalidator id="RegularExpressionValidator1" runat="server" errormessage="Only .jpg , .png or .jpeg files are allowed." validationexpression="^(([a-zA-Z]:)|(\\{2}\w+)\$?)(\\(\w[\w].*))+(.jpg|.png|.jpeg)$" controltovalidate="fileUpload1" xmlns:asp="#unknown">
                         </asp:regularexpressionvalidator>
                             <%--</label>--%>
                         </div>
 
-                        <div class="col-lg-3">
+                        <%--<div class="col-lg-3">
                             <div class="form-group">
                                 <label class="control-label">Date Start:</label>
-                                <%--<input type="text" id="dateControl" runat="server">--%>
+                                <%--<input type="text" id="dateControl" runat="server">
                                 <asp:TextBox ID="datestart" runat="server" class="form-control" placeholder="mm/dd/yyyy" />
                             </div>
                         </div>
@@ -58,6 +58,18 @@
                             <div class="form-group">
                                 <label class="control-label">Date End:</label>
                                 <asp:TextBox ID="dateend" runat="server" class="form-control" placeholder="mm/dd/yyyy" />
+                            </div>
+                        </div>--%>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="control-label">Date Start:</label>
+                                <asp:TextBox TextMode="date" ID="datestart" runat="server" class="form-control" min="03-28-2019" max="12-31-2019" required />
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="control-label">Date End:</label>
+                                <asp:TextBox TextMode="date" ID="dateend" runat="server" class="form-control" min="03-28-2019" max="12-31-2019" required />
                             </div>
                         </div>
                         <div class="col-lg-12">
@@ -101,7 +113,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <asp:listview id="lvAnnouncements" runat="server">
+                                        <asp:ListView ID="lvAnnouncements" runat="server">
                                             <ItemTemplate>
                                                 <tr class="bg-default">
                                                     <td><%# Eval("AnnouncementID") %></td>
@@ -125,7 +137,7 @@
                                                     </td>
                                                 </tr>
                                             </EmptyDataTemplate>
-                                        </asp:listview>
+                                        </asp:ListView>
                                     </tbody>
                                 </table>
                             </div>
@@ -134,8 +146,8 @@
                     <br />
                 </div>
             </div>
-                         <%--</contenttemplate>--%>
-                <%--</asp:updatepanel>--%>
+            <%--</contenttemplate>--%>
+            <%--</asp:updatepanel>--%>
         </form>
     </div>
     <br />
@@ -155,12 +167,12 @@
         });
     </script>
 
-<%--    <script>
+    <%--    <script>
 $(document).ready(function () {
  $("#dateControl").datepicker();
 });
     </script>--%>
-    
+
 
     <%--<script type="text/javascript">
         $(document).ready(function () {

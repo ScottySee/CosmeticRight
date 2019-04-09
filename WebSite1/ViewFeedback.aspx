@@ -39,7 +39,7 @@
                                                 <tr class="bg-default">
                                                     <td><%# Eval("FeedbackID") %></td>
                                                     <td><%# Eval("Product") %></td>
-                                                    <td><%# Eval("UserID") %></td>
+                                                    <td><%# Eval("CustomerName") %></td>
                                                     <td><%# Eval("Comment") %></td>
                                                     <td><%# Eval("Rating") %> out of 5</td>
                                                     <td><%# Eval("Datefeedback") %></td>
