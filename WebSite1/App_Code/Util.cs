@@ -70,21 +70,6 @@ public class Util
     //    return count;
     //}
 
-    //public static void SendEmail(string email, string subject, string message)
-    //{
-    //    MailMessage emailMessage = new MailMessage();
-    //    emailMessage.From = new MailAddress("asktheexcellent@gmail.com", "Admin");
-    //    emailMessage.To.Add(new MailAddress(email));
-    //    emailMessage.Subject = subject;
-    //    emailMessage.Body = message;
-    //    emailMessage.IsBodyHtml = true;
-    //    emailMessage.Priority = MailPriority.Normal;
-    //    SmtpClient MailClient = new SmtpClient("smtp.gmail.com", 587);
-    //    MailClient.EnableSsl = true;
-    //    MailClient.Credentials = new System.Net.NetworkCredential("asktheexcellent@gmail.com", "ask12345");
-    //    MailClient.Send(emailMessage);
-    //}
-
     public static double GetPrice(string ID)
     {
         using (SqlConnection con = new SqlConnection(GetConnection()))
