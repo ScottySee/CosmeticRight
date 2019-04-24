@@ -23,7 +23,7 @@ public partial class ViewAnnouncement1 : System.Web.UI.Page
         {
             con.Open();
             string query = @"SELECT AnnouncementID, Image, AnnouncementName,
-                                AnnouncementDetail FROM Announcements";
+                                AnnouncementDetail, DateStart, DateEnd FROM Announcements";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -44,7 +44,7 @@ public partial class ViewAnnouncement1 : System.Web.UI.Page
         {
             con.Open();
             string query = @"SELECT AnnouncementID, Image, AnnouncementName,
-                                AnnouncementDetail FROM Announcements
+                                AnnouncementDetail, DateStart, DateEnd FROM Announcements
                                 WHERE AnnouncementName LIKE @keyword";
 
             using (SqlCommand cmd = new SqlCommand(query, con))

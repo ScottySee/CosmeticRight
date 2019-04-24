@@ -47,8 +47,11 @@
                                                 <h3><%# Eval("Product") %></h3>
                                                 <small>Code: <%# Eval("Code") %></small><br />
 
-                                                <small><em>Category:<asp:Label runat="server" ID="category" Text='<%# Eval("Category") %>'>  </asp:Label></em></small>
+                                                <small><em>Category: <asp:Label runat="server" ID="category" Text='<%# Eval("Category") %>'>  </asp:Label></em></small>
                                                 <br />
+                                                <p>
+                                                    Available: <%# Eval("Available") %>
+                                                </p>
                                                 <p>
                                                     Php <%# Eval("Price", "{0: #,##0.00}") %>
                                                 </p>

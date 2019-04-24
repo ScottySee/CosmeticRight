@@ -51,7 +51,7 @@
                                         <div class="card-body">
                                             <asp:Literal ID="ltID" runat="server" Text='<%# Eval("AnnouncementID") %>' Visible="false" />
                                             <h2><%# Eval("AnnouncementName") %></h2>
-                                            <h4><%# Eval("AnnouncementDetail") %></h4>
+                                            <h4><%# Eval("DateStart", "{0:MMM dd, yyyy}") %> - <%# Eval("DateEnd", "{0:MMM dd, yyyy}") %></h4>
 
                                             <%--<asp:LinkButton ID="btnAddToCart" runat="server" class="btn btn-success btn-block" CommandName="addtocart">
                                                     <i class="fa fa-shopping-cart"></i> Add To Cart

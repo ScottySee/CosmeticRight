@@ -23,6 +23,9 @@
                 <asp:Literal ID="ltDesc" runat="server" />
                 <hr />
                 <br />
+                <h3>Duration</h3>
+                <asp:Literal ID="ltdatestart" runat="server" /> - <asp:Literal ID="ltdateend" runat="server" />
+                <br />
             </div>
         </div>
 <%--    </form>--%>

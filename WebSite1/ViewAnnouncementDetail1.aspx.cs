@@ -36,8 +36,8 @@ public partial class ViewAnnouncementDetail1 : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"SELECT AnnouncementID, Image, AnnouncementName,
-                                AnnouncementDetail FROM Announcements WHERE AnnouncementID=@AnnouncementID";
+            string query = @"SELECT AnnouncementID, Image, AnnouncementName, AnnouncementDetail, DateStart, DateEnd
+                                 FROM Announcements WHERE AnnouncementID=@AnnouncementID";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@AnnouncementID", ID);
@@ -50,6 +50,8 @@ public partial class ViewAnnouncementDetail1 : System.Web.UI.Page
                             ltName.Text = dr["AnnouncementName"].ToString();
                             imgAnnouncement.ImageUrl = "~/Images/Announcement/" + dr["Image"].ToString();
                             ltDesc.Text = dr["AnnouncementDetail"].ToString();
+                            ltdatestart.Text = Convert.ToDateTime(dr["DateStart"]).ToString("MM/dd/yyyy");
+                            ltdateend.Text = Convert.ToDateTime(dr["DateEnd"]).ToString("MM/dd/yyyy");
                         }
                     }
                     else

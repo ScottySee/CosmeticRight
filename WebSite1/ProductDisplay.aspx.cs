@@ -52,7 +52,7 @@ public partial class ProductDisplay : System.Web.UI.Page
         {
             con.Open();
             string query = @"SELECT p.ProductID, p.Image, p.Product,
-                                p.Code, p.Price, c.Category FROM Products p
+                                p.Code, p.Price, c.Category, p.Available FROM Products p
                                 INNER JOIN Categories c ON p.CatID = c.CatID";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
@@ -74,7 +74,7 @@ public partial class ProductDisplay : System.Web.UI.Page
         {
             con.Open();
             string query = @"SELECT p.ProductID, p.Image, p.Product,
-                                p.Code, p.Price, c.Category FROM Products p
+                                p.Code, p.Price, c.Category, p.Available FROM Products p
                                 INNER JOIN Categories c ON p.CatID = c.CatID
 								WHERE p.CatID = @Code";
 

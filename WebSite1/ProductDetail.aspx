@@ -38,9 +38,14 @@
                 <asp:Literal ID="ltPrice" runat="server" />
                     <br />
                     <br />
+                    <strong>Manufactured Date: </strong>
+                    <asp:Literal ID="datemaufactured" runat="server" />
+                    <br />
+                    <strong>Expiration Date: </strong>
+                    <asp:Literal ID="dateexpired" runat="server" />
                 </div>
             </div>
-            <div class="col-lg-3">
+            <%--<div class="col-lg-3">
                 <div class="card-body">
                     <div class="container">
                         <div class="text-white">
@@ -85,7 +90,7 @@
                     </div>
                     <br />
                 </div>
-            </div>
+            </div>--%>
         </div>
     </form>
 </asp:Content>
