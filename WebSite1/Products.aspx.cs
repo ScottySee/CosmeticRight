@@ -100,7 +100,7 @@ public partial class Products : System.Web.UI.Page
             }
         }
     }
-    // di pa sure kung tama. para yan sa validation kung may parehas na code
+    
     public bool CodeIsExisting(string code)
     {
         bool existing = true;
@@ -127,7 +127,7 @@ public partial class Products : System.Web.UI.Page
             using (SqlConnection con = new SqlConnection(Util.GetConnection()))
             {
                 con.Open();
-                string query = @"INSERT INTO Products VALUES (@Product, @CatID, @Code, @Description, @Image, @Price, @Available, @Criticallevel, @Maximum, @UserID, @DateManufactured, @DateExpired, @Status, @DateAdded, @DateModified)";
+                string query = @"INSERT INTO Products VALUES (@Product, @CatID, @Code, @Description, @Image, @Price, @Criticallevel, @Maximum, @UserID, @Status, @DateAdded, @DateModified)";
 
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
@@ -137,12 +137,9 @@ public partial class Products : System.Web.UI.Page
                     cmd.Parameters.AddWithValue("@Description", Server.HtmlEncode(txtDescription.Text.Trim()));
                     cmd.Parameters.AddWithValue("@Image", fileUpload1.FileName);
                     cmd.Parameters.AddWithValue("@Price", Server.HtmlEncode(txtPrice.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@Available", Server.HtmlEncode(Available.Text.Trim()));
                     cmd.Parameters.AddWithValue("@Criticallevel", Server.HtmlEncode(txtCritical.Text.Trim()));
                     cmd.Parameters.AddWithValue("@Maximum", Server.HtmlEncode(txtMax.Text.Trim()));
                     cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
-                    cmd.Parameters.AddWithValue("@DateManufactured", Server.HtmlEncode(datestart.Text));
-                    cmd.Parameters.AddWithValue("@DateExpired", Server.HtmlEncode(dateend.Text));
                     cmd.Parameters.AddWithValue("@Status", Server.HtmlEncode("Active"));
                     cmd.Parameters.AddWithValue("@DateAdded", DateTime.Now);
                     cmd.Parameters.AddWithValue("@DateModified", DBNull.Value);
@@ -159,11 +156,8 @@ public partial class Products : System.Web.UI.Page
                     txtCode.Text = "";
                     txtDescription.Text = "";
                     txtPrice.Text = "";
-                    Available.Text = "";
                     txtCritical.Text = "";
                     txtMax.Text = "";
-                    datestart.Text = "";
-                    dateend.Text = "";
                 }
             }
        
@@ -197,12 +191,9 @@ public partial class Products : System.Web.UI.Page
                             txtCode.Text = data["Code"].ToString();
                             Session["image"] = data["Image"].ToString();
                             txtDescription.Text = data["Description"].ToString();
-                            Available.Text = data["Available"].ToString();
                             txtPrice.Text = data["Price"].ToString();
                             txtCritical.Text = data["Criticallevel"].ToString();
                             txtMax.Text = data["Maximum"].ToString();
-                            datestart.Text = Convert.ToDateTime(data["DateManufactured"]).ToString("MM/dd/yyyy");
-                            dateend.Text = Convert.ToDateTime(data["DateExpired"]).ToString("MM/dd/yyyy");
                         }
                     }
                     else
@@ -221,8 +212,8 @@ public partial class Products : System.Web.UI.Page
             con.Open();
             string query = @"UPDATE Products SET Product=@Product, CatID=@CatID, Code=@Code,
                 Description=@Description, Price=@Price, Image=@Image,
-                Criticallevel=@Criticallevel, Maximum=@Maximum, Available=@Available, DateManufactured=@DateManufactured,
-                DateExpired=@DateExpired, DateModified=@DateModified WHERE ProductID=@ProductID";
+                Criticallevel=@Criticallevel, Maximum=@Maximum, DateModified=@DateModified
+                WHERE ProductID=@ProductID";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@Product", Server.HtmlEncode(txtProductName.Text.Trim()));
@@ -245,11 +236,8 @@ public partial class Products : System.Web.UI.Page
                     Session.Remove("image");
                 }
                 cmd.Parameters.AddWithValue("@Price", Server.HtmlEncode(txtPrice.Text.Trim()));
-                cmd.Parameters.AddWithValue("@Available", Server.HtmlEncode(Available.Text.Trim()));
                 cmd.Parameters.AddWithValue("@Criticallevel", Server.HtmlEncode(txtCritical.Text.Trim()));
                 cmd.Parameters.AddWithValue("@Maximum", Server.HtmlEncode(txtMax.Text.Trim()));
-                cmd.Parameters.AddWithValue("@DateManufactured", Server.HtmlEncode(datestart.Text));
-                cmd.Parameters.AddWithValue("@DateExpired", Server.HtmlEncode(dateend.Text));
                 cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
                 cmd.Parameters.AddWithValue("@ProductID", Session["ProductID"].ToString());
                 cmd.ExecuteNonQuery();
@@ -264,11 +252,8 @@ public partial class Products : System.Web.UI.Page
                 txtCode.Text = "";
                 txtDescription.Text = "";
                 txtPrice.Text = "";
-                Available.Text = "";
                 txtCritical.Text = "";
                 txtMax.Text = "";
-                datestart.Text = "";
-                dateend.Text = "";
             }
         }
     }

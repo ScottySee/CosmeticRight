@@ -37,12 +37,9 @@
                     <strong>Price: </strong>Php
                 <asp:Literal ID="ltPrice" runat="server" />
                     <br />
+                    <strong>Available: </strong>
+                <asp:Literal ID="ltAvaialble" runat="server" />
                     <br />
-                    <strong>Manufactured Date: </strong>
-                    <asp:Literal ID="datemaufactured" runat="server" />
-                    <br />
-                    <strong>Expiration Date: </strong>
-                    <asp:Literal ID="dateexpired" runat="server" />
                 </div>
             </div>
             <%--<div class="col-lg-3">

@@ -46,14 +46,20 @@
                                             <small>Category: <%# Eval("Category") %></small>
                                         </td>
                                         <td>Php<%# Eval("Price", "{0: #,##0.00}") %></td>
-                                        <td><%# Eval("Quantity") %></td>
+                                        <td>
+                                            <asp:TextBox ID="txtQty" runat="server"
+                                        class="form-control" type="number"
+                                        min="3" max="2000" Text='<%# Eval("Quantity") %>'
+                                        required />
+
+                                        </td>
                                         <td>Php<%# Eval("Amount", "{0: #,##0.00}") %></td>
                                         <td>
-                                            <%--<asp:LinkButton ID="btnUpdate" runat="server"
-                                                class="btn btn-xs btn-info" CommandName="updateqty"
+                                            <asp:LinkButton ID="btnUpdate" runat="server"
+                                                class="btn btn-sm btn-info" CommandName="updateqty"
                                                 ToolTip="Update quantity">
                                         <i class="fa fa-refresh"></i>&nbsp;Update
-                                            </asp:LinkButton>--%>
+                                            </asp:LinkButton>
                                             <asp:LinkButton ID="btnDelete" runat="server"
                                                 class="btn btn-sm btn-danger" CommandName="deleteitem"
                                                 ToolTip="Remove an Item">

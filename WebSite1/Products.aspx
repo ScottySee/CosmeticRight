@@ -85,13 +85,6 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label class="control-label">Available</label>
-                                        <%--<asp:Label ID="lblunit" runat="server" required />--%>
-                                        <asp:TextBox ID="Available" TextMode="Number" runat="server" class="form-control" type="number" required />
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
                                         <label class="control-label">Critical Level</label>
                                         <asp:TextBox ID="txtCritical" runat="server" class="form-control" type="number" min="1" max="100" required />
                                     </div>
@@ -100,18 +93,6 @@
                                     <div class="form-group">
                                         <label class="control-label">Maximum</label>
                                         <asp:TextBox ID="txtMax" runat="server" class="form-control" type="number" min="100" max="1000" required />
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="form-group">
-                                        <label class="control-label">Date Manufactured:</label>
-                                        <asp:TextBox TextMode="date" ID="datestart" runat="server" class="form-control" min="03-28-2019" max="12-31-2019" required />
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="form-group">
-                                        <label class="control-label">Date Expired:</label>
-                                        <asp:TextBox TextMode="date" ID="dateend" runat="server" class="form-control" min="03-28-2019" max="12-31-2019" required />
                                     </div>
                                 </div>
                             </div>
@@ -154,12 +135,9 @@
                                                     <th>Product ID</th>
                                                     <th>Product Name</th>
                                                     <th>Category</th>
-                                                    <th>Available</th>
                                                     <th>Code</th>
                                                     <th>Price</th>
                                                     <th>Image</th>
-                                                    <th>Date Manufactured</th>
-                                                    <th>Date Expired</th>
                                                     <th>Status</th>
                                                     <th>Actions</th>
                                                 </tr>
@@ -172,23 +150,17 @@
                                                             <td><%# Eval("ProductID") %></td>
                                                             <td><%# Eval("Product") %></td>
                                                             <td><%# Eval("CatID") %></td>
-                                                            <td><%# Eval("Available") %></td>
                                                             <td><%# Eval("Code") %></td>
                                                             <td><%# Eval("Price") %></td>
 
                                                             <td>
                                                                 <img src='/Images/Products/<%# Eval("Image") %>' class="img-fluid" width="100" /></td>
-                                                            <td><%# Eval("DateManufactured", "{0:MMM dd, yyyy}") %></td>
-                                                            <td><%# Eval("DateExpired", "{0:MMM dd, yyyy}") %></td>
                                                             <td><%# Eval("Status") %></td>
                                                             <td>
                                                                 <a href='Products.aspx?EditID=<%# Eval("ProductID") %>' class="btn btn-info btn-sm"><i class="fa fa-edit"></i>Edit</a>&nbsp;
                                                
                                                                 <a href='products.aspx?DeleteID=<%# Eval("ProductID") %>' class="btn btn-danger btn-sm" onclick="return confirm('Do you want to archive this item?')"><i class="fa fa-trash"></i>Archive</a>&nbsp;
                                             </td>
-
-
-
                                                         </tr>
                                                     </ItemTemplate>
                                                     <EmptyDataTemplate>

@@ -138,6 +138,41 @@ public class Util
 
             }
         }
+
+        // eto yung part na magchecheck muna siguro kung kasya ba yung inventory. so parang if pagkaclick ng add to cart dapat ichcecheck muna sa inventory kung kasya, if hindi kasya magdidisplay ng "Lack of products". parang ganun.
+        //using (SqlConnection con = new SqlConnection(GetConnection()))
+        //{
+        //    con.Open();
+        //    string query = "";
+        //    bool existingProduct = IsExisting(ID);
+
+        //    if (existingProduct)
+        //    {
+        //        query = @"UPDATE OrderDetails SET Quantity = Quantity + @Quantity,
+        //            Amount = Amount + @Amount WHERE OrderNo IS NULL AND
+        //            UserID=@UserID AND ProductID=@ProductID";
+        //    }
+        //    else
+        //    {
+        //        query = @"INSERT INTO OrderDetails (UserID,
+        //            ProductID, Quantity, Amount) VALUES (@UserID,
+        //            @ProductID, @Quantity, @Amount)";
+        //    }
+
+        //    using (SqlCommand cmd = new SqlCommand(query, con))
+        //    {
+        //        string UserID = HttpContext.Current.Session["UserID"].ToString();
+        //        //cmd.Parameters.AddWithValue("@OrderNo", null);
+        //        cmd.Parameters.AddWithValue("@UserID", UserID);
+        //        // HttpContext.Current.Session["userid"].ToString()
+        //        cmd.Parameters.AddWithValue("@ProductID", ID);
+        //        cmd.Parameters.AddWithValue("@Quantity", quantity);
+        //        cmd.Parameters.AddWithValue("@Amount",
+        //            int.Parse(quantity) * GetPrice(ID));
+        //        cmd.ExecuteNonQuery();
+
+        //    }
+        //}
     }
 
     public static void Log(string UserID, string activity)

@@ -100,7 +100,6 @@
                         </a>
                     </li>
 
-                    <%--ASK SIR JAKE ABOUT THIS--%>
                     <%--NAKA LOGIN ANG USER THIS CODE BELOW WILL WORK--%>
                     <%if (Session["UserID"] != null)
                         {  %>

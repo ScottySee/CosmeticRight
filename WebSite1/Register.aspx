@@ -100,60 +100,72 @@
                                             <div class="form-group">
                                                 <asp:DropDownList ID="ddlCity" runat="server" CssClass="form-control" required />
                                             </div>
-                                        
-                                        <div class="card-title pull-left">
-                                            Landline
-                                        </div>
-                                        <div class="form-group">
-                                            <%--  <asp:RequiredFieldValidator runat="server" ControlToValidate="landline" ErrorMessage="Required" CssClass="text-danger">
+
+                                            <div class="card-title pull-left">
+                                                Landline
+                                            </div>
+                                            <div class="form-group">
+                                                <%--  <asp:RequiredFieldValidator runat="server" ControlToValidate="landline" ErrorMessage="Required" CssClass="text-danger">
 
                                         </asp:RequiredFieldValidator>
                                         <asp:RegularExpressionValidator ControlToValidate="landline" runat="server" ValidationExpression=""></asp:RegularExpressionValidator>\--%>
-                                            <asp:TextBox runat="server" ID="landline" Placeholder="Phone" CssClass="form-control" MaxLength="12" onkeypress="return numbersOnly(event)" autocomplete="off"></asp:TextBox>
-                                        </div>
+                                                <asp:TextBox runat="server" ID="landline" Placeholder="Phone" CssClass="form-control" MaxLength="12" onkeypress="return numbersOnly(event)" autocomplete="off"></asp:TextBox>
+                                            </div>
 
+                                        </div>
+                                        <!--Third Column-->
+                                        <div class="col-md-4">
+                                            <div class="card-title pull-left">
+                                                Mobile Number
+                                            </div>
+                                            <div style="color: red">*</div>
+                                            <div class="form-group">
+                                                <asp:TextBox runat="server" ID="mobile" onkeypress="return numbersOnly(event)" Placeholder="Mobile" CssClass="form-control" MaxLength="12" required autocomplete="off"></asp:TextBox>
+                                            </div>
+                                            <div class="card-title pull-left">
+                                                Email
+                                            </div>
+                                            <div style="color: red">*</div>
+                                            <div class="form-group">
+                                                <asp:TextBox runat="server" ID="email" Placeholder="Email" CssClass="form-control" type="email" MaxLength="80" required autocomplete="off"></asp:TextBox>
+                                            </div>
+                                            <div class="card-title pull-left">
+                                                Password
+                                            </div>
+                                            <div style="color: red">*</div>
+                                            <div class="form-group">
+                                                <asp:TextBox runat="server" ID="password" Placeholder="Password" CssClass="form-control" TextMode="Password" MaxLength="20" required autocomplete="off"></asp:TextBox>
+                                            </div>
+                                            <div class="card-title pull-left">
+                                                Confirm Password
+                                            </div>
+                                            <div style="color: red">*</div>
+                                            <div class="form-group">
+                                                <asp:TextBox runat="server" ID="cpassword" Placeholder="Password" CssClass="form-control" TextMode="Password" MaxLength="20" required autocomplete="off"></asp:TextBox>
+                                            </div>
+                                            <div class="form-group">
+                                                <asp:TextBox runat="server" ID="TextBox1" Placeholder="Password" CssClass="form-control" TextMode="Password" MaxLength="20" required autocomplete="off"></asp:TextBox>
+                                            </div>
+
+                                            <div class="form-group text-white">
+                                                <div class="col-lg-12">
+                                                    <label>
+                                                        <asp:CheckBox ID="cboTerms" runat="server" required />
+                                                        I have agreed to the <a href="TermsAndCondition.aspx">Terms & Conditions.</a>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <!--Third Column-->
-                                    <div class="col-md-4">
-                                        <div class="card-title pull-left">
-                                            Mobile Number
-                                        </div>
-                                        <div style="color: red">*</div>
-                                        <div class="form-group">
-                                            <asp:TextBox runat="server" ID="mobile" onkeypress="return numbersOnly(event)" Placeholder="Mobile" CssClass="form-control" MaxLength="12" required autocomplete="off"></asp:TextBox>
-                                        </div>
-                                        <div class="card-title pull-left">
-                                            Email
-                                        </div>
-                                        <div style="color: red">*</div>
-                                        <div class="form-group">
-                                            <asp:TextBox runat="server" ID="email" Placeholder="Email" CssClass="form-control" type="email" MaxLength="80" required autocomplete="off"></asp:TextBox>
-                                        </div>
-                                        <div class="card-title pull-left">
-                                            Password
-                                        </div>
-                                        <div style="color: red">*</div>
-                                        <div class="form-group">
-                                            <asp:TextBox runat="server" ID="password" Placeholder="Password" CssClass="form-control" TextMode="Password" MaxLength="20" required autocomplete="off"></asp:TextBox>
-                                        </div>
-                                        <div class="card-title pull-left">
-                                            Confirm Password
-                                        </div>
-                                        <div style="color: red">*</div>
-                                        <div class="form-group">
-                                            <asp:TextBox runat="server" ID="cpassword" Placeholder="Password" CssClass="form-control" TextMode="Password" MaxLength="20" required autocomplete="off"></asp:TextBox>
-                                        </div>
-                                    </div>
+                                    <span class="pull-right">
+                                        <asp:Button ID="btnRegister" runat="server" Text="Register" class="btn btn-block btn-success submit btn-block" OnClick="btnRegister_Click" />
+                                    </span>
                                 </div>
-                                <span class="pull-right">
-                                    <asp:Button ID="btnRegister" runat="server" Text="Register" class="btn btn-block btn-success submit btn-block" OnClick="btnRegister_Click" />
-                                </span>
                             </div>
+                            <%--<a href="javascript:void(0)" class="btn btn-danger btn-round btn-lg">Register</a>--%>
                         </div>
-                        <%--<a href="javascript:void(0)" class="btn btn-danger btn-round btn-lg">Register</a>--%>
                     </div>
                 </div>
-            </div>
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>

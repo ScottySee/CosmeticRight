@@ -48,24 +48,28 @@ public partial class ProductDisplay : System.Web.UI.Page
 
     void GetProducts()
     {
-        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
-            con.Open();
-            string query = @"SELECT p.ProductID, p.Image, p.Product,
-                                p.Code, p.Price, c.Category, p.Available FROM Products p
-                                INNER JOIN Categories c ON p.CatID = c.CatID";
-
-            using (SqlCommand cmd = new SqlCommand(query, con))
+            using (SqlConnection con = new SqlConnection(Util.GetConnection()))
             {
-                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                con.Open();
+                string query = @"SELECT p.ProductID, p.Image, p.Product,
+                                p.Code, p.Price, c.Category, pi.Quantity FROM Products p
+                                INNER JOIN Categories c ON p.CatID = c.CatID
+                                INNER JOIN ProductInventory pi ON p.Product = pi.Product";
+
+                using (SqlCommand cmd = new SqlCommand(query, con))
                 {
-                    DataSet ds = new DataSet();
-                    da.Fill(ds, "Products");
-                    lvProducts.DataSource = ds;
-                    lvProducts.DataBind();
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        DataSet ds = new DataSet();
+                        da.Fill(ds, "Products");
+                        lvProducts.DataSource = ds;
+                        lvProducts.DataBind();
+                    }
                 }
             }
         }
+        
     }
 
     void GetSpecificProduct(string code)
@@ -74,8 +78,9 @@ public partial class ProductDisplay : System.Web.UI.Page
         {
             con.Open();
             string query = @"SELECT p.ProductID, p.Image, p.Product,
-                                p.Code, p.Price, c.Category, p.Available FROM Products p
+                                 p.Code, p.Price, c.Category, pi.Quantity FROM Products p
                                 INNER JOIN Categories c ON p.CatID = c.CatID
+                                INNER JOIN ProductInventory pi ON p.Product = pi.Product
 								WHERE p.CatID = @Code";
 
             using (SqlCommand cmd = new SqlCommand(query, con))

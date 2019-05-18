@@ -149,10 +149,11 @@
     <asp:ContentPlaceHolder ID="scripts" runat="server">
     </asp:ContentPlaceHolder>
 
-
+<%--    <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+    <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
 
     <script src="Scripts/fusioncharts.js"></script>
-    <script src="Scripts/fusioncharts.charts.js"></script>
+    <script src="Scripts/fusioncharts.charts.js"></script>--%>
 
     <%--  <script>
 

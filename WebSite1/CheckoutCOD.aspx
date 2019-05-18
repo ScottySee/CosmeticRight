@@ -16,27 +16,32 @@
                 <div class="col-lg-8">
                     <table class="table table-hover">
                         <thead>
-                            <th colspan="2">Item Name</th>
+                            <th>Item Name</th>
                             <th>Price</th>
                             <th>Quantity</th>
                             <th>Amount</th>
                         </thead>
                         <tbody>
-                            <asp:listview id="lvCart" runat="server">
+                            <asp:ListView ID="lvCart" runat="server">
                                 <ItemTemplate>
                                     <tr>
                                         <td>
                                             <img src='../Images/Products/<%# Eval("Image") %>'
                                                 width="120" alt='<%# Eval("Product") %>' />
-                                        </td>
-                                        <td>
+                                            <%--</td>
+                                        <td>--%>
                                             <h4><%# Eval("Product") %></h4>
                                             <small>Category: <%# Eval("Category") %></small>
                                         </td>
                                         <td>Php<%# Eval("Price", "{0: #,##0.00}") %>
                                         </td>
                                         <td>
+                                            <%-- document.getElementById("test").innerText;--%>
+
                                             <%# Eval("Quantity") %>
+                                            <%-- <asp:label ID="txtquantity" runat="server" Text='<%# Bind("Quantity") %>'/>--%>
+                                            <%--   <asp:Textbox ID="txtquantity1" runat="server" hidden Text='<%# Bind("Quantity") %>'/>--%>
+                                            
                                         </td>
                                         <td>Php<%# Eval("Amount", "{0: #,##0.00}") %>
                                         </td>
@@ -50,36 +55,39 @@
                                         </td>
                                     </tr>
                                 </EmptyDataTemplate>
-                            </asp:listview>
+                            </asp:ListView>
                         </tbody>
                     </table>
                     <br />
                     <hr />
+
+
+
                     <h3>Billing and Delivery Details</h3>
                     <div class="row text-white mb-5">
                         <div class="col-6">
                             <div class="form-group">
                                 <label class="control-label col-lg-4">First Name</label>
                                 <div class="col-lg-8">
-                                    <asp:textbox id="txtFN" runat="server" class="form-control" maxlength="80" required />
+                                    <asp:TextBox ID="txtFN" runat="server" class="form-control" MaxLength="80" required />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-lg-4">Last Name</label>
                                 <div class="col-lg-8">
-                                    <asp:textbox id="txtLN" runat="server" class="form-control" maxlength="50" required />
+                                    <asp:TextBox ID="txtLN" runat="server" class="form-control" MaxLength="50" required />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-lg-4">Unit/Building No.</label>
                                 <div class="col-lg-8">
-                                    <asp:textbox id="txtbuilding" runat="server" class="form-control" maxlength="50" required />
+                                    <asp:TextBox ID="txtbuilding" runat="server" class="form-control" MaxLength="50" required />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-lg-4">Street</label>
                                 <div class="col-lg-8">
-                                    <asp:textbox id="txtStreet" runat="server" class="form-control" maxlength="50" required />
+                                    <asp:TextBox ID="txtStreet" runat="server" class="form-control" MaxLength="50" required />
                                 </div>
                             </div>
                         </div>
@@ -87,7 +95,7 @@
                             <div class="form-group">
                                 <label class="control-label col-lg-4">Municipality</label>
                                 <div class="col-lg-8">
-                                    <asp:textbox id="txtMunicipality" runat="server" class="form-control" maxlength="100" required />
+                                    <asp:TextBox ID="txtMunicipality" runat="server" class="form-control" MaxLength="100" required />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -99,13 +107,13 @@
                             <div class="form-group">
                                 <label class="control-label col-lg-4">Phone</label>
                                 <div class="col-lg-8">
-                                    <asp:textbox id="txtPhone" runat="server" class="form-control" maxlength="12" />
+                                    <asp:TextBox ID="txtPhone" runat="server" class="form-control" MaxLength="12" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-lg-4">Mobile</label>
                                 <div class="col-lg-8">
-                                    <asp:textbox id="txtMobile" runat="server" class="form-control" maxlength="12" />
+                                    <asp:TextBox ID="txtMobile" runat="server" class="form-control" MaxLength="12" />
                                 </div>
                             </div>
                         </div>
@@ -119,19 +127,19 @@
                             <tbody>
                                 <tr>
                                     <td>Gross Amount</td>
-                                    <td align="right">Php<asp:literal id="ltGross" runat="server" />
+                                    <td align="right">Php<asp:Literal ID="ltGross" runat="server" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>VAT (12%)</td>
                                     <td align="right">
-                                        <asp:literal id="ltVAT" runat="server" />
+                                        <asp:Literal ID="ltVAT" runat="server" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Total Amount</td>
                                     <td align="right">
-                                        <h3>Php<asp:literal id="ltTotal" runat="server" /></h3>
+                                        <h3>Php<asp:Literal ID="ltTotal" runat="server" /></h3>
                                     </td>
                                 </tr>
                             </tbody>
@@ -160,25 +168,21 @@
                         </a>
                     </li>--%>
                         <div class="form-group text-white">
-                            <div class="col-lg-12">
                                 <label>
-                                    <asp:checkbox id="cboTerms" runat="server" required />
-                                    I have agreed to the <a href="TermsAndCondition.aspx">Terms & Conditions.</a>
+                                    Once you select "Order Now", you have agreed to the <a href="TermsAndCondition.aspx">Terms & Conditions.</a>
                                 </label>
-                            </div>
                         </div>
-                        <asp:linkbutton id="btnCheckout" runat="server"
-                            cssclass="btn btn-success btn-lg btn-block"
-                            onclientclick='return confirm("Are you sure?");'
-                            onclick="btnCheckout_Click">
+                        <asp:LinkButton ID="btnCheckout" runat="server"
+                            CssClass="btn btn-success btn-lg btn-block"
+                            OnClientClick='return confirm("Are you sure?");'
+                            OnClick="btnCheckout_Click">
                              Order Now
-                        </asp:linkbutton>
+                        </asp:LinkButton>
                         <%--PAYPAL--%>
 
                         <%
                             string code = Guid.NewGuid().ToString();
                             Session["Code"] = code;
-
                         %>
 
                         <input type="hidden" name="cmd" value="_xclick" />
@@ -189,9 +193,9 @@
                         <input type="hidden" name="amount" value="<%= Session["total"].ToString() %>" />
                         <input type="hidden" name="return" value="http://localhost:58759/Thanks.aspx?code=<%=code%>" />
                         <%--<input type="submit" class="btn btn-lg btn-success btn-block" value="Paypal" />--%>
-                        
-                        <asp:imagebutton id="btnPayNow" runat="server" target="_blank" imageurl="~/Images/Logo/paypal.png"
-                            postbackurl="https://www.sandbox.paypal.com/cgi-bin/webscr" />
+
+                        <asp:ImageButton ID="btnPayNow" runat="server" target="_blank" ImageUrl="~/Images/Logo/paypal.png"
+                            PostBackUrl="https://www.sandbox.paypal.com/cgi-bin/webscr" />
 
                         <br />
                         <br />
@@ -203,6 +207,19 @@
 
         </div>
     </form>
+
+
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scripts" runat="Server">
+    <%--<script>
+        $(document).ready(function () {
+            document.getElementById("tdid").textContent
+
+            var tdElem = document.getElementById("tdid");
+            var tdText = tdElem.innerText | tdElem.textContent;
+        });
+    </script>--%>
 </asp:Content>
+
+
+

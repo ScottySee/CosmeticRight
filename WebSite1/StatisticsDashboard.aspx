@@ -105,12 +105,13 @@
                             </div>--%>
                 </div>
             </div>
-            </ContentTemplate>
+      
+       <%--     </ContentTemplate>
                 <triggers>
                     <asp:PostBackTrigger ControlID="btnAdd" />
-                    <%--<asp:AsyncPostBackTrigger ControlID="btnAdd" />--%>
+                    <asp:AsyncPostBackTrigger ControlID="btnAdd" />
                 </triggers>
-            </asp:UpdatePanel>
+            </asp:UpdatePanel>--%>
 
             <!-- Table row -->
             <div class="card mt-5">
@@ -139,7 +140,7 @@
                                             <th>ID</th>
                                             <th>Product Name</th>
                                             <th>Category</th>
-                                            <th>Available</th>
+                            <%--                <th>Available</th>--%>
                                             <th>Critical Level</th>
                                             <th>Maximum</th>
                                         </tr>
@@ -152,7 +153,7 @@
                                                     <td><%# Eval("ProductID") %></td>
                                                     <td><%# Eval("Product") %></td>
                                                     <td><%# Eval("Category") %></td>
-                                                    <td><%# Eval("Available") %></td>
+                                           <%--         <td><%# Eval("Available") %></td>--%>
                                                     <td><%# Eval("Criticallevel") %></td>
                                                     <td><%# Eval("Maximum") %></td>
                                                    <%--  <td><%# Eval("Count") %></td>--%>

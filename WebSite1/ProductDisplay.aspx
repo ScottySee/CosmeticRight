@@ -50,15 +50,14 @@
                                                 <small><em>Category: <asp:Label runat="server" ID="category" Text='<%# Eval("Category") %>'>  </asp:Label></em></small>
                                                 <br />
                                                 <p>
-                                                    Available: <%# Eval("Available") %>
-                                                </p>
-                                                <p>
                                                     Php <%# Eval("Price", "{0: #,##0.00}") %>
                                                 </p>
-                                                <asp:LinkButton ID="btnAddToCart" runat="server" class="btn btn-success btn-block" CommandName="addtocart">
+                                                <p>
+                                                    Avaialble: <%# Eval("Quantity") %>
+                                                </p>
+                                                 <asp:LinkButton ID="btnAddToCart" runat="server" class="btn btn-success btn-block" CommandName="addtocart">
                                                     <i class="fa fa-shopping-cart"></i> Add To Cart
                                                 </asp:LinkButton>
-                                                </a>
                                             </div>
                                         </div>
                                         <br />

@@ -63,8 +63,9 @@ public partial class ProductDetail : System.Web.UI.Page
         {
             con.Open();
             string query = @"SELECT p.Product, p.Code, p.Image, p.Description, p.CatID,
-                            c.Category, p.Price, p.DateManufactured, p.DateExpired FROM Products p
+                            c.Category, p.Price, pi.Quantity FROM Products p
                             INNER JOIN Categories c ON p.CatID = c.CatID
+                            INNER JOIN ProductInventory pi ON p.Product = pi.Product
                             WHERE p.ProductID=@ProductID";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -83,8 +84,7 @@ public partial class ProductDetail : System.Web.UI.Page
                             hlCategory.NavigateUrl = "~/ProductDisplay.aspx?c=" + dr["CatID"].ToString();
                             double price = double.Parse(dr["Price"].ToString());
                             ltPrice.Text = price.ToString("#,##0.00");
-                            datemaufactured.Text = Convert.ToDateTime(dr["DateManufactured"]).ToString("MM/dd/yyyy");
-                            dateexpired.Text = Convert.ToDateTime(dr["DateExpired"]).ToString("MM/dd/yyyy");
+                            ltAvaialble.Text = dr["Quantity"].ToString();
                         }
                     }
                     else

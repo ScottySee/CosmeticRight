@@ -169,13 +169,12 @@ public partial class CheckoutCOD : System.Web.UI.Page
                 orderNo = (int)cmd.ExecuteScalar();
 
             }
-
+            
         }
 
         #endregion
 
         #region Step #3: Update Cart Items
-
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
@@ -194,22 +193,44 @@ public partial class CheckoutCOD : System.Web.UI.Page
         }
         #endregion
 
-        #region Step #4: Insert ProductCount Record 
-        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
-        {
-            //con.Open();
-            //string query = @"INSERT INTO ProductCount VALUES (@ProductID, @Count)";
-            //using (SqlCommand cmd = new SqlCommand(query, con))
-            //{
-            //    cmd.Parameters.AddWithValue("@OrderNo ", orderNo);
-            //    cmd.Parameters.AddWithValue("@Count ", );
-            //    cmd.ExecuteNonQuery();
-            //}
+        //string quantity = "";
+        //using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        //{
+        //    con.Open();
+        //    string query = @" SELECT Quantity FROM OrderDetails WHERE ProductID=14";
 
-        }
+        //    using (SqlCommand cmd = new SqlCommand(query, con))
+        //    {
+        //        //cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
+        //        using (SqlDataReader dr = cmd.ExecuteReader())
+        //        {
+        //            if (dr.HasRows)
+        //            {
+        //                quantity = dr["Quantity"].ToString();
+        //            }
+        //            else
+        //                Response.Redirect("CheckoutCOD.aspx");
+        //        }
+        //        cmd.ExecuteNonQuery();
+        //    }
+        //}
 
+        #region Step #4: Minus Inventory Record 
+
+        //using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        //{
+        //    con.Open();
+        //    string query = @"UPDATE ProductInventory SET Quantity = Quantity - @Quantity WHERE Product=@Product";
+        //    using (SqlCommand cmd = new SqlCommand(query, con))
+        //    {
+        //        cmd.Parameters.AddWithValue("@Quantity", quantity);
+        //        cmd.ExecuteNonQuery();
+        //    }
+        //}
         #endregion
 
         Response.Redirect("Orders.aspx");
     }
+
+   
 }

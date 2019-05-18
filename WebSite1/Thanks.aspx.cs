@@ -44,6 +44,18 @@ public partial class Thanks : System.Web.UI.Page
                     cmd.ExecuteNonQuery();
 
                 }
+
+                //dagdag ng isa pa para sa minus ng inventory?
+
+                //con.Open();
+                //string query3 = @"ProductInventory SET Quantity = Quantity - @Quantity WHERE UserID=@UserID AND Product=@Product";
+
+                //using (SqlCommand cmd = new SqlCommand(query3, con))
+                //{
+                //    cmd.Parameters.AddWithValue("@Quantity", quantity);
+                //    cmd.ExecuteNonQuery();
+
+                //}
             }
             else
             {
@@ -54,7 +66,5 @@ public partial class Thanks : System.Web.UI.Page
         {
 
         }
-
-
     }
 }
