@@ -21,7 +21,7 @@
                     <contenttemplate>--%>
             <div class="card shadow-lg">
                 <div class="card-body">
-                    <label runat="server" id="message"></label>
+                    <label runat="server" class="text-danger" id="message"></label>
                     <!-- Main Content -->
                     <div class="row">
                         <div class="col-lg-2">
@@ -42,7 +42,7 @@
                             <%--   <label for="body_fileUpload1" class="btn btn-success">--%>
                                 Upload Image Here
                                         <asp:FileUpload CssClass="btn btn alert-info" ID="fileUpload1" runat="server" />
-                            <asp:regularexpressionvalidator id="RegularExpressionValidator1" runat="server" errormessage="Only .jpg , .png or .jpeg files are allowed." validationexpression="^(([a-zA-Z]:)|(\\{2}\w+)\$?)(\\(\w[\w].*))+(.jpg|.png|.jpeg)$" controltovalidate="fileUpload1" xmlns:asp="#unknown">
+                            <asp:regularexpressionvalidator id="RegularExpressionValidator1" runat="server" errormessage="Only .jpg , .png or .jpeg files are allowed." validationexpression=".*((\.jpg)|(\.jpeg)|(\.png))" controltovalidate="fileUpload1" xmlns:asp="#unknown">
                         </asp:regularexpressionvalidator>
                             <%--</label>--%>
                         </div>

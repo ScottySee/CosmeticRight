@@ -10,8 +10,13 @@ public partial class Thanks : System.Web.UI.Page
 {
     SqlConnection con = new SqlConnection(Util.GetConnection());
     SqlCommand cmd;
+    public static string[] quantity = new string[100];
+    public static string[] ProductID = new string[100];
+
     protected void Page_Load(object sender, EventArgs e)
     {
+        quantity = Session["Quantity"] as string[];
+        ProductID = Session["ProductID"] as string[];
         if (Session["Code"] != null & Request.QueryString["code"] != null)
         {
             if (Session["Code"].ToString() == Request.QueryString["code"].ToString())
@@ -46,16 +51,23 @@ public partial class Thanks : System.Web.UI.Page
                 }
 
                 //dagdag ng isa pa para sa minus ng inventory?
-
-                //con.Open();
-                //string query3 = @"ProductInventory SET Quantity = Quantity - @Quantity WHERE UserID=@UserID AND Product=@Product";
-
-                //using (SqlCommand cmd = new SqlCommand(query3, con))
-                //{
-                //    cmd.Parameters.AddWithValue("@Quantity", quantity);
-                //    cmd.ExecuteNonQuery();
-
-                //}
+                int count = 0;
+                foreach (var item in quantity)
+                {
+                    if (item != null)
+                    {
+                        con.Close();
+                        con.Open();
+                        string query3 = @"UPDATE ProductInventory SET Quantity = Quantity - @Quantity WHERE ProductID=@ProductID";
+                        using (SqlCommand cmd = new SqlCommand(query3, con))
+                        {
+                            cmd.Parameters.AddWithValue("@Quantity", item);
+                            cmd.Parameters.AddWithValue("@ProductID", ProductID[count]);
+                            cmd.ExecuteNonQuery();
+                            count++;
+                        }
+                    }
+                }
             }
             else
             {

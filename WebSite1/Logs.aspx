@@ -22,7 +22,7 @@
                         <table id="dtLogs" class="table table-hover">
                             <thead>
                                 <th>#</th>
-                                <th>User ID</th>
+                                <th>User</th>
                                 <th>Log Time</th>
                                 <th>Activity</th>
                                 <th></th>

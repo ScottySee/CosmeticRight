@@ -25,6 +25,7 @@ public partial class OrderDetails : System.Web.UI.Page
                     GetOrderSummary(orderNo);
                     GetOrderInfo(orderNo);
                     GetCustomerInfo(orderNo);
+                    GetCity();
 
                 }
             }
@@ -33,6 +34,28 @@ public partial class OrderDetails : System.Web.UI.Page
         }
         else
             Response.Redirect("Orders.aspx");
+    }
+
+    void GetCity()
+    {
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        {
+            con.Open();
+            string query = @"SELECT CityID, City FROM City";
+
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                using (SqlDataReader data = cmd.ExecuteReader())
+                {
+                    ddlCity.DataSource = data;
+                    ddlCity.BackColor = System.Drawing.Color.Black;
+                    ddlCity.DataTextField = "City";
+                    ddlCity.DataValueField = "CityID";
+                    ddlCity.DataBind();
+                    ddlCity.Items.Insert(0, new ListItem("Select a city...", ""));
+                }
+            }
+        }
     }
 
     void GetOrderInfo(int ID)
@@ -76,7 +99,7 @@ public partial class OrderDetails : System.Web.UI.Page
         {
             con.Open();
             string query = @"SELECT TOP 1 u.Firstname, u.Lastname, u.BuildingNo,
-                                u.Street, u.Municipality, u.City, u.Landline,  
+                                u.Street, u.Municipality, u.CityID, u.Landline,  
                                 u.Mobile FROM OrderDetails od
                                     INNER JOIN Users u ON od.UserID= u.UserID
                                       WHERE od.OrderNo=@OrderNo";
@@ -92,7 +115,7 @@ public partial class OrderDetails : System.Web.UI.Page
                         txtbuilding.Text = data["BuildingNo"].ToString();
                         txtStreet.Text = data["Street"].ToString();
                         txtMunicipality.Text = data["Municipality"].ToString();
-                        txtCity.Text = data["City"].ToString();
+                        ddlCity.Text = data["CityID"].ToString();
                         txtPhone.Text = data["Landline"].ToString();
                         txtMobile.Text = data["Mobile"].ToString();
                     }

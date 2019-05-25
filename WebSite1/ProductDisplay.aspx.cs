@@ -55,7 +55,7 @@ public partial class ProductDisplay : System.Web.UI.Page
                 string query = @"SELECT p.ProductID, p.Image, p.Product,
                                 p.Code, p.Price, c.Category, pi.Quantity FROM Products p
                                 INNER JOIN Categories c ON p.CatID = c.CatID
-                                INNER JOIN ProductInventory pi ON p.Product = pi.Product";
+                                INNER JOIN ProductInventory pi ON p.ProductID = pi.ProductID";
 
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
@@ -80,7 +80,7 @@ public partial class ProductDisplay : System.Web.UI.Page
             string query = @"SELECT p.ProductID, p.Image, p.Product,
                                  p.Code, p.Price, c.Category, pi.Quantity FROM Products p
                                 INNER JOIN Categories c ON p.CatID = c.CatID
-                                INNER JOIN ProductInventory pi ON p.Product = pi.Product
+                                INNER JOIN ProductInventory pi ON p.ProductID = pi.ProductID
 								WHERE p.CatID = @Code";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
@@ -110,7 +110,7 @@ public partial class ProductDisplay : System.Web.UI.Page
             }else if (category.Text == "Lotion")
             {
                 QTY = "3";
-            }else if (category.Text == "Toners")
+            }else if (category.Text == "Toner")
             {
                 QTY = "3";
             }

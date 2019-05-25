@@ -56,7 +56,7 @@
                     <div class="col-lg-4">
                         <div class="input-group">
                             <asp:Button ID="btnAdd" runat="server" class="btn btn-lg btn-success" Text="Add Inventory" OnClick="AddInventory" />
-                            <asp:Button ID="btnMinus" runat="server" class="btn btn-lg btn-success" Text="Minus Inventory" OnClick="MinusInventory" />
+                            <%--<asp:Button ID="btnMinus" runat="server" hidden class="btn btn-lg btn-success" Text="Minus Inventory" OnClick="MinusInventory" />--%>
                             <%--<asp:Button ID="btnCancel" runat="server" hidden class="btn btn-lg btn-danger" Text="Cancel" OnClick="btnCancel_Click" />--%>
                         </div>
                     </div>

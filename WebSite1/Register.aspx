@@ -20,8 +20,6 @@
             else
                 return true;
         }
-
-
     </script>
     <asp:ScriptManager runat="server" ID="script1" />
     <asp:UpdatePanel runat="server" ID="Upd1">
@@ -143,15 +141,11 @@
                                             <div class="form-group">
                                                 <asp:TextBox runat="server" ID="cpassword" Placeholder="Password" CssClass="form-control" TextMode="Password" MaxLength="20" required autocomplete="off"></asp:TextBox>
                                             </div>
-                                            <div class="form-group">
-                                                <asp:TextBox runat="server" ID="TextBox1" Placeholder="Password" CssClass="form-control" TextMode="Password" MaxLength="20" required autocomplete="off"></asp:TextBox>
-                                            </div>
 
                                             <div class="form-group text-white">
                                                 <div class="col-lg-12">
                                                     <label>
-                                                        <asp:CheckBox ID="cboTerms" runat="server" required />
-                                                        I have agreed to the <a href="TermsAndCondition.aspx">Terms & Conditions.</a>
+                                                        Once you register, you have agreed to the <a href="TermsAndCondition.aspx">Terms & Conditions.</a>
                                                     </label>
                                                 </div>
                                             </div>

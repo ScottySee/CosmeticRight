@@ -15,6 +15,7 @@
             <asp:ScriptManager runat="server" />
             <div class="card shadow-lg">
                 <div class="card-body">
+                    <label runat="server" class="text-danger" id="message"></label>
                     <!-- Main Content -->
                     <div class="row">
                         <div class="col-lg-2">
@@ -27,6 +28,13 @@
                             <div class="form-group">
                                 <label class="control-label">Category</label>
                                 <asp:TextBox ID="txtCategory" runat="server" class="form-control" MaxLength="50" placeholder="Enter Category" required />
+
+                                <%--<asp:regularexpressionvalidator id="rev" runat="server" controltovalidate="txtCategory" xmlns:asp="#unknown">
+    ErrorMessage="Spaces are not allowed!" ValidationExpression="^[^\s]+$" />
+                                </asp:regularexpressionvalidator>--%>
+
+                                <%--<asp:regularexpressionvalidator id="RegularExpressionValidator1" runat="server" errormessage="Only .jpg , .png or .jpeg files are allowed." validationexpression=".*((\.jpg)|(\.jpeg)|(\.png))" controltovalidate="fileUpload1" xmlns:asp="#unknown">
+                        </asp:regularexpressionvalidator>--%>
                             </div>
                         </div>
                     </div>
@@ -100,13 +108,13 @@
 
     <%-- for data tables --%>
     <script>
-        $(document).ready(function () {
-            $('#dtcategories').DataTable({
-                dom: 'Bfrtip',
-                buttons: [
-                ]
+            $(document).ready(function () {
+                $('#dtcategories').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                    ]
+                });
             });
-        });
     </script>
 
     <%-- <!-- Data tables Scripts -->

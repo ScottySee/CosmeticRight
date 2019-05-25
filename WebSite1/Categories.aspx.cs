@@ -97,27 +97,35 @@ public partial class Categories : System.Web.UI.Page
 
     protected void AddCategory(object sender, EventArgs e)
     {
-        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        if (txtCategory.Text.Trim().Length > 0)
         {
-            con.Open();
-            string query = @"INSERT INTO Categories VALUES (@Category, @UserID, @Status, @DateAdded, @DateModified)";
-
-            using (SqlCommand cmd = new SqlCommand(query, con))
+            using (SqlConnection con = new SqlConnection(Util.GetConnection()))
             {
-                cmd.Parameters.AddWithValue("@Category", Server.HtmlEncode(txtCategory.Text.Trim()));
-                cmd.Parameters.AddWithValue("@UserID", Server.HtmlEncode("2"));
-                cmd.Parameters.AddWithValue("@Status", Server.HtmlEncode("Active"));
-                cmd.Parameters.AddWithValue("@DateAdded", DateTime.Now);
-                cmd.Parameters.AddWithValue("@DateModified", DBNull.Value);
-                cmd.ExecuteNonQuery();
+                con.Open();
+                string query = @"INSERT INTO Categories VALUES (@Category, @UserID, @Status, @DateAdded, @DateModified)";
 
-                //start of Auditlog 
-                Util.Log(Session["UserID"].ToString(), "The office admin has added a category");
-                //end of auditlog
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@Category", Server.HtmlEncode(txtCategory.Text.Trim()));
+                    cmd.Parameters.AddWithValue("@UserID", Server.HtmlEncode("2"));
+                    cmd.Parameters.AddWithValue("@Status", Server.HtmlEncode("Active"));
+                    cmd.Parameters.AddWithValue("@DateAdded", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@DateModified", DBNull.Value);
+                    cmd.ExecuteNonQuery();
 
-                Response.Redirect("Categories.aspx");
+                    //start of Auditlog 
+                    Util.Log(Session["UserID"].ToString(), "The office admin has added a category");
+                    //end of auditlog
+
+                    Response.Redirect("Categories.aspx");
+                }
             }
         }
+        else
+        {
+            message.InnerText = "Category Name cannot be empty";
+        }
+        
     }
 
     protected void EditCategory(int ID)
@@ -181,7 +189,7 @@ public partial class Categories : System.Web.UI.Page
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
-                cmd.Parameters.AddWithValue("@CattID", ID);
+                cmd.Parameters.AddWithValue("@CatID", ID);
                 cmd.ExecuteNonQuery();
 
                 //start of Auditlog 

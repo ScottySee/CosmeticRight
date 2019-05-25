@@ -101,37 +101,45 @@ public partial class Announcement : System.Web.UI.Page
     {
         string fileName = Path.GetFileName(fileUpload1.FileName);
         fileUpload1.PostedFile.SaveAs(Server.MapPath("~/Images/Announcement/") + fileName);
-        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        if (txtannouncement.Text.Trim().Length > 0)
         {
-            con.Open();
-            string query = @"INSERT INTO Announcements VALUES (@AnnouncementName, @AnnouncementDetail, @Image, @DateStart, @DateEnd, @UserID, @Status, @DateAdded, @DateModified)";
-
-            using (SqlCommand cmd = new SqlCommand(query, con))
+            using (SqlConnection con = new SqlConnection(Util.GetConnection()))
             {
-                cmd.Parameters.AddWithValue("@AnnouncementName", Server.HtmlEncode(txtannouncement.Text.Trim()));
-                cmd.Parameters.AddWithValue("@AnnouncementDetail", Server.HtmlEncode(txtdetails.Text.Trim()));
-                cmd.Parameters.AddWithValue("@Image", fileUpload1.FileName);
-                cmd.Parameters.AddWithValue("@DateStart", Server.HtmlEncode(datestart.Text.Trim()));
-                cmd.Parameters.AddWithValue("@DateEnd", Server.HtmlEncode(dateend.Text.Trim()));
-                cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
-                cmd.Parameters.AddWithValue("@Status", Server.HtmlEncode("Active"));
-                cmd.Parameters.AddWithValue("@DateAdded", DateTime.Now);
-                cmd.Parameters.AddWithValue("@DateModified", DBNull.Value);
-                cmd.ExecuteNonQuery();
+                con.Open();
+                string query = @"INSERT INTO Announcements VALUES (@AnnouncementName, @AnnouncementDetail, @Image, @DateStart, @DateEnd, @UserID, @Status, @DateAdded, @DateModified)";
 
-                //start of Auditlog 
-                Util.Log(Session["UserID"].ToString(), "The office admin has added an announcement");
-                //end of auditlog
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@AnnouncementName", Server.HtmlEncode(txtannouncement.Text.Trim()));
+                    cmd.Parameters.AddWithValue("@AnnouncementDetail", Server.HtmlEncode(txtdetails.Text.Trim()));
+                    cmd.Parameters.AddWithValue("@Image", fileUpload1.FileName);
+                    cmd.Parameters.AddWithValue("@DateStart", Server.HtmlEncode(datestart.Text.Trim()));
+                    cmd.Parameters.AddWithValue("@DateEnd", Server.HtmlEncode(dateend.Text.Trim()));
+                    cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
+                    cmd.Parameters.AddWithValue("@Status", Server.HtmlEncode("Active"));
+                    cmd.Parameters.AddWithValue("@DateAdded", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@DateModified", DBNull.Value);
+                    cmd.ExecuteNonQuery();
 
-                message.InnerText = "Announcement Successfully Added.";
+                    //start of Auditlog 
+                    Util.Log(Session["UserID"].ToString(), "The office admin has added an announcement");
+                    //end of auditlog
 
-                //lahat ng textbox
-                txtannouncement.Text = null;
-                txtdetails.Text = null;
-                datestart.Text = null;
-                dateend.Text = null;
+                    message.InnerText = "Announcement Successfully Added.";
+
+                    //lahat ng textbox
+                    txtannouncement.Text = null;
+                    txtdetails.Text = null;
+                    datestart.Text = null;
+                    dateend.Text = null;
+                }
             }
         }
+        else
+        {
+            message.InnerText = "Announcement Name cannot be empty";
+        }
+        
     }
 
     protected void EditAnnouncement(int ID)

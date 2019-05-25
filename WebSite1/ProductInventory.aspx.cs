@@ -152,35 +152,35 @@ public partial class ProductInventory : System.Web.UI.Page
         #endregion
     }
 
-    protected void MinusInventory(object sender, EventArgs e)
-    {
-        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
-        {
-            con.Open();
-            string query = @"UPDATE ProductInventory SET Quantity = Quantity - @Quantity, DateModified=@DateModified WHERE UserID=@UserID AND Product=@Product";
+    //protected void MinusInventory(object sender, EventArgs e)
+    //{
+    //    using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+    //    {
+    //        con.Open();
+    //        string query = @"UPDATE ProductInventory SET Quantity = Quantity - @Quantity, DateModified=@DateModified WHERE UserID=@UserID AND Product=@Product";
 
-            using (SqlCommand cmd = new SqlCommand(query, con))
-            {
-                cmd.Parameters.AddWithValue("@Product", ddlProduct.SelectedValue);
-                cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
-                cmd.Parameters.AddWithValue("@Quantity", Server.HtmlEncode(txtavailable.Text.Trim()));
-                cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
-                cmd.ExecuteNonQuery();
+    //        using (SqlCommand cmd = new SqlCommand(query, con))
+    //        {
+    //            cmd.Parameters.AddWithValue("@Product", ddlProduct.SelectedValue);
+    //            cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
+    //            cmd.Parameters.AddWithValue("@Quantity", Server.HtmlEncode(txtavailable.Text.Trim()));
+    //            cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
+    //            cmd.ExecuteNonQuery();
 
-                //start of Auditlog 
-                Util.Log(Session["UserID"].ToString(), "The warhouse admin has updated the inventory");
-                //end of auditlog
+    //            //start of Auditlog 
+    //            Util.Log(Session["UserID"].ToString(), "The warhouse admin has updated the inventory");
+    //            //end of auditlog
 
-                message1.InnerText = "Inventory Successfully Updated.";
+    //            message1.InnerText = "Inventory Successfully Updated.";
 
-                //lahat ng textbox
-                ddlProduct.Text = "";
-                txtavailable.Text = "";
-                datestart.Text = "";
-                dateend.Text = "";
+    //            //lahat ng textbox
+    //            ddlProduct.Text = "";
+    //            txtavailable.Text = "";
+    //            datestart.Text = "";
+    //            dateend.Text = "";
 
-                Response.Redirect("ProductInventory.aspx");
-            }
-        }
-    }
+    //            Response.Redirect("ProductInventory.aspx");
+    //        }
+    //    }
+    //}
 }

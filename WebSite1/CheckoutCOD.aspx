@@ -38,8 +38,8 @@
                                         <td>
                                             <%-- document.getElementById("test").innerText;--%>
 
-                                            <%# Eval("Quantity") %>
-                                            <%-- <asp:label ID="txtquantity" runat="server" Text='<%# Bind("Quantity") %>'/>--%>
+                                          <%--  <%# Eval("Quantity") %>--%>
+                                             <asp:label ID="txtquantity"  runat="server" Text='<%# Bind("Quantity") %>'/>
                                             <%--   <asp:Textbox ID="txtquantity1" runat="server" hidden Text='<%# Bind("Quantity") %>'/>--%>
                                             
                                         </td>
@@ -167,11 +167,11 @@
                             Terms & Conditons. 
                         </a>
                     </li>--%>
-                        <div class="form-group text-white">
+                        <%--<div class="form-group text-white">
                                 <label>
                                     Once you select "Order Now", you have agreed to the <a href="TermsAndCondition.aspx">Terms & Conditions.</a>
                                 </label>
-                        </div>
+                        </div>--%>
                         <asp:LinkButton ID="btnCheckout" runat="server"
                             CssClass="btn btn-success btn-lg btn-block"
                             OnClientClick='return confirm("Are you sure?");'

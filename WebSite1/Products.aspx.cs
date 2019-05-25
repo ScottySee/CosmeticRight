@@ -122,45 +122,52 @@ public partial class Products : System.Web.UI.Page
 
         if (!CodeExisting)
         {
-            string fileName = Path.GetFileName(fileUpload1.FileName);
-            fileUpload1.PostedFile.SaveAs(Server.MapPath("~/Images/Products/") + fileName);
-            using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+            if(txtProductName.Text.Trim().Length > 0)
             {
-                con.Open();
-                string query = @"INSERT INTO Products VALUES (@Product, @CatID, @Code, @Description, @Image, @Price, @Criticallevel, @Maximum, @UserID, @Status, @DateAdded, @DateModified)";
-
-                using (SqlCommand cmd = new SqlCommand(query, con))
+                string fileName = Path.GetFileName(fileUpload1.FileName);
+                fileUpload1.PostedFile.SaveAs(Server.MapPath("~/Images/Products/") + fileName);
+                using (SqlConnection con = new SqlConnection(Util.GetConnection()))
                 {
-                    cmd.Parameters.AddWithValue("@Product", Server.HtmlEncode(txtProductName.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@CatID", ddlCategories.SelectedValue);
-                    cmd.Parameters.AddWithValue("@Code", Server.HtmlEncode(txtCode.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@Description", Server.HtmlEncode(txtDescription.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@Image", fileUpload1.FileName);
-                    cmd.Parameters.AddWithValue("@Price", Server.HtmlEncode(txtPrice.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@Criticallevel", Server.HtmlEncode(txtCritical.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@Maximum", Server.HtmlEncode(txtMax.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
-                    cmd.Parameters.AddWithValue("@Status", Server.HtmlEncode("Active"));
-                    cmd.Parameters.AddWithValue("@DateAdded", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@DateModified", DBNull.Value);
-                    cmd.ExecuteNonQuery();
+                    con.Open();
+                    string query = @"INSERT INTO Products VALUES (@Product, @CatID, @Code, @Description, @Image, @Price, @Criticallevel, @Maximum, @UserID, @Status, @DateAdded, @DateModified)";
 
-                    //start of Auditlog 
-                    Util.Log(Session["UserID"].ToString(), "The warehouse admin has added a product");
-                    //end of auditlog
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@Product", Server.HtmlEncode(txtProductName.Text.Trim()));
+                        cmd.Parameters.AddWithValue("@CatID", ddlCategories.SelectedValue);
+                        cmd.Parameters.AddWithValue("@Code", Server.HtmlEncode(txtCode.Text.Trim()));
+                        cmd.Parameters.AddWithValue("@Description", Server.HtmlEncode(txtDescription.Text.Trim()));
+                        cmd.Parameters.AddWithValue("@Image", fileUpload1.FileName);
+                        cmd.Parameters.AddWithValue("@Price", Server.HtmlEncode(txtPrice.Text.Trim()));
+                        cmd.Parameters.AddWithValue("@Criticallevel", Server.HtmlEncode(txtCritical.Text.Trim()));
+                        cmd.Parameters.AddWithValue("@Maximum", Server.HtmlEncode(txtMax.Text.Trim()));
+                        cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
+                        cmd.Parameters.AddWithValue("@Status", Server.HtmlEncode("Active"));
+                        cmd.Parameters.AddWithValue("@DateAdded", DateTime.Now);
+                        cmd.Parameters.AddWithValue("@DateModified", DBNull.Value);
+                        cmd.ExecuteNonQuery();
 
-                    message.InnerText = "Product Successfully Added.";
+                        //start of Auditlog 
+                        Util.Log(Session["UserID"].ToString(), "The warehouse admin has added a product");
+                        //end of auditlog
 
-                    //lahat ng textbox
-                    txtProductName.Text = "";
-                    txtCode.Text = "";
-                    txtDescription.Text = "";
-                    txtPrice.Text = "";
-                    txtCritical.Text = "";
-                    txtMax.Text = "";
+                        message.InnerText = "Product Successfully Added.";
+
+                        //lahat ng textbox
+                        txtProductName.Text = "";
+                        txtCode.Text = "";
+                        txtDescription.Text = "";
+                        txtPrice.Text = "";
+                        txtCritical.Text = "";
+                        txtMax.Text = "";
+                    }
                 }
             }
-       
+            else
+            {
+               
+                message.InnerText = "Product Name cannot be empty";
+            }
         }
 	    else
 	    {
