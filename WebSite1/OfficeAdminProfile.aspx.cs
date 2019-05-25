@@ -26,7 +26,10 @@ public partial class OfficeAdminProfile : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"SELECT * FROM Users WHERE UserID=@UserID";
+            string query = @"SELECT u.UserID, u.UserType, u.Firstname, u.Lastname, u.Gender, u.BuildingNo, u.Street, u.Municipality, 
+                                c.City AS City, u.Landline, u.Mobile, u.Email FROM Users u
+                                INNER JOIN City c ON u.CityID=c.CityID
+                                WHERE UserID=@UserID";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -45,7 +48,7 @@ public partial class OfficeAdminProfile : System.Web.UI.Page
                             buildingno.Text = data["BuildingNo"].ToString();
                             street.Text = data["Street"].ToString();
                             municipality.Text = data["Municipality"].ToString();
-                            city.Text = data["CityID"].ToString();
+                            city.Text = data["City"].ToString();
                             landline.Text = data["Landline"].ToString();
                             mobile.Text = data["Mobile"].ToString();
                             email.Text = data["Email"].ToString();

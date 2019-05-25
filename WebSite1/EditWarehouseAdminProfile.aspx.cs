@@ -84,7 +84,7 @@ public partial class EditWarehouseAdminProfile : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"UPDATE Users SET FirstName=@FirstName, LastName=@LastName, Gender=@Gender, BuildingNo=@BuildingNo, Street=@Street, Municipality=@Municipality, City=@City, Landline=@Landline, Mobile=@Mobile, Email=@Email, EmailCode=@EmailCode, DateModified=@DateModified
+            string query = @"UPDATE Users SET FirstName=@FirstName, LastName=@LastName, Gender=@Gender, BuildingNo=@BuildingNo, Street=@Street, Municipality=@Municipality, CityID=@CityID, Landline=@Landline, Mobile=@Mobile, Email=@Email, EmailCode=@EmailCode, DateModified=@DateModified
               WHERE UserID=@UserID";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
@@ -95,7 +95,7 @@ public partial class EditWarehouseAdminProfile : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@BuildingNo", Server.HtmlEncode(buildingno.Text.Trim()));
                 cmd.Parameters.AddWithValue("@Street", Server.HtmlEncode(street.Text));
                 cmd.Parameters.AddWithValue("@Municipality", Server.HtmlEncode(municipality.Text.Trim()));
-                cmd.Parameters.AddWithValue("@City", ddlCity.SelectedValue);
+                cmd.Parameters.AddWithValue("@CityID", ddlCity.SelectedValue);
                 cmd.Parameters.AddWithValue("@Landline", Server.HtmlEncode(landline.Text.Trim()));
                 cmd.Parameters.AddWithValue("@Mobile", Server.HtmlEncode(mobile.Text.Trim()));
                 cmd.Parameters.AddWithValue("@Email", Server.HtmlEncode(email.Text.Trim()));

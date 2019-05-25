@@ -24,7 +24,7 @@
                                 <div class="form-group">
                                     <asp:textbox runat="server" id="password" type="password" placeholder="Password" cssclass="form-control" maxlength="20"></asp:textbox>
                                 </div>
-
+                                <div class="g-recaptcha" data-sitekey="6LfAbqUUAAAAALSwsXhZ-dTJIsNujGLIsmLvB3Pa"></div>
                                 <div class="text-center">
                                     <asp:button id="btnLogin" runat="server" text="Login" class="btn btn-default submit btn-block" onclick="BtnLogin_Click" />
                                 </div>
@@ -40,13 +40,5 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scripts" runat="Server">
-    <script>
-        grecaptcha.ready(function () {
-            grecaptcha.execute('6Le2EosUAAAAAAB6E21zXgsTUoTvmoUpamPEBEXL', { action: 'login' })
-                .then(function (token) {
-                    // Verify the token on the server.
-                });
-        });
-    </script>
 </asp:Content>
 

@@ -250,7 +250,7 @@ public partial class CheckoutCOD : System.Web.UI.Page
                 {
                     con.Close();
                     con.Open();
-                    string query = @"UPDATE ProductInventory SET Quantity = Quantity - @Quantity WHERE ProductID=@ProductID";
+                    string query = @"UPDATE TOP (1) ProductInventory SET Quantity = Quantity - @Quantity WHERE ProductID = @ProductID AND ProductInventory.Quantity > (Select Criticallevel from Products where ProductID = @ProductID)";
                     using (SqlCommand cmd = new SqlCommand(query, con))
                     {
                         cmd.Parameters.AddWithValue("@Quantity", item);

@@ -23,7 +23,7 @@ public partial class ProductInventory : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"SELECT Product FROM Products WHERE Status!='Archived'";
+            string query = @"SELECT * FROM Products WHERE Status!='Archived'";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -32,7 +32,7 @@ public partial class ProductInventory : System.Web.UI.Page
                     ddlProduct.DataSource = data;
                     ddlProduct.BackColor = System.Drawing.Color.Black;
                     ddlProduct.DataTextField = "Product";
-                    ddlProduct.DataValueField = "Product";
+                    ddlProduct.DataValueField = "ProductID";
                     ddlProduct.DataBind();
                     ddlProduct.Items.Insert(0, new ListItem("Select a product...", ""));
                 }
@@ -81,10 +81,10 @@ public partial class ProductInventory : System.Web.UI.Page
     protected void AddInventory(object sender, EventArgs e)
     {
         #region Step #1: Add Inventory Record in ProductInventory table
-        bool ItemExisting = IsExisting(ddlProduct.SelectedValue);
+        //bool ItemExisting = IsExisting(ddlProduct.SelectedValue);
 
-        if (!ItemExisting)
-        {
+        //if (!ItemExisting)
+        //{
             using (SqlConnection con = new SqlConnection(Util.GetConnection()))
             {
                 con.Open();
@@ -116,40 +116,40 @@ public partial class ProductInventory : System.Web.UI.Page
                     Response.Redirect("ProductInventory.aspx");
                 }
             }
-        }
-        else
-        {
-            using (SqlConnection con = new SqlConnection(Util.GetConnection()))
-            {
-                con.Open();
-                string query = @"UPDATE ProductInventory SET Quantity = Quantity + @Quantity, DateManufactured=@DateManufactured,   DateExpired=@DateExpired, DateModified=@DateModified WHERE UserID=@UserID AND ProductID=@ProductID";
+        //}
+        //else
+        //{
+        //    using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        //    {
+        //        con.Open();
+        //        string query = @"UPDATE ProductInventory SET Quantity = Quantity + @Quantity, DateManufactured=@DateManufactured,   DateExpired=@DateExpired, DateModified=@DateModified WHERE UserID=@UserID AND ProductID=@ProductID";
 
-                using (SqlCommand cmd = new SqlCommand(query, con))
-                {
-                    cmd.Parameters.AddWithValue("@ProductID", ddlProduct.SelectedValue);
-                    cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
-                    cmd.Parameters.AddWithValue("@Quantity", Server.HtmlEncode(txtavailable.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@DateManufactured", Server.HtmlEncode(datestart.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@DateExpired", Server.HtmlEncode(dateend.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
-                    cmd.ExecuteNonQuery();
+        //        using (SqlCommand cmd = new SqlCommand(query, con))
+        //        {
+        //            cmd.Parameters.AddWithValue("@ProductID", ddlProduct.SelectedValue);
+        //            cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
+        //            cmd.Parameters.AddWithValue("@Quantity", Server.HtmlEncode(txtavailable.Text.Trim()));
+        //            cmd.Parameters.AddWithValue("@DateManufactured", Server.HtmlEncode(datestart.Text.Trim()));
+        //            cmd.Parameters.AddWithValue("@DateExpired", Server.HtmlEncode(dateend.Text.Trim()));
+        //            cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
+        //            cmd.ExecuteNonQuery();
 
-                    //start of Auditlog 
-                    Util.Log(Session["UserID"].ToString(), "The warhouse admin has updated the inventory");
-                    //end of auditlog
+        //            //start of Auditlog 
+        //            Util.Log(Session["UserID"].ToString(), "The warhouse admin has updated the inventory");
+        //            //end of auditlog
 
-                    message1.InnerText = "Inventory Successfully Updated.";
+        //            message1.InnerText = "Inventory Successfully Updated.";
 
-                    //lahat ng textbox
-                    ddlProduct.Text = "";
-                    txtavailable.Text = "";
-                    datestart.Text = "";
-                    dateend.Text = "";
+        //            //lahat ng textbox
+        //            ddlProduct.Text = "";
+        //            txtavailable.Text = "";
+        //            datestart.Text = "";
+        //            dateend.Text = "";
 
-                    Response.Redirect("ProductInventory.aspx");
-                }
-            }
-        }
+        //            Response.Redirect("ProductInventory.aspx");
+        //        }
+        //    }
+        //}
         #endregion
     }
 

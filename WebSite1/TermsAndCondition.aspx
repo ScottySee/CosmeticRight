@@ -17,7 +17,7 @@
                     <h1>Terms and Conditions</h1>
                     <br />
                     <h3>No Refunds and No Cancellation</h3>
-		            <p>All completed transactions are final, customers wouldn't be able to cancel or return a good once a purchase has been made. We're sorry for that.</p>
+		            <p>All completed transactions are final, customers wouldn't be able to cancel or return a good once a purchase has been made.</p>
                 </div>
             </div>
     </div>

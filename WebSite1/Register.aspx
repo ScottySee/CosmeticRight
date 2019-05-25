@@ -171,13 +171,5 @@
     </div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scripts" runat="Server">
-    <script>
-        grecaptcha.ready(function () {
-            grecaptcha.execute('6Le2EosUAAAAAAB6E21zXgsTUoTvmoUpamPEBEXL', { action: 'login' })
-                .then(function (token) {
-                    // Verify the token on the server.
-                });
-        });
-    </script>
 </asp:Content>
 

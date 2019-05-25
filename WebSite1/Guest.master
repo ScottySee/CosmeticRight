@@ -19,6 +19,7 @@
     <link href="bootstrap/assets/css/blk-design-system.css" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="bootstrap/assets/demo/demo.css" rel="stylesheet" />
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -123,8 +124,6 @@
 
     <asp:ContentPlaceHolder ID="scripts" runat="server">
     </asp:ContentPlaceHolder>
-
-    <script src='https://www.google.com/recaptcha/api.js?render=6Le2EosUAAAAAAB6E21zXgsTUoTvmoUpamPEBEXL'></script>
 
     <!--   Core JS Files   -->
     <script src="bootstrap/assets/js/core/jquery.min.js" type="text/javascript"></script>

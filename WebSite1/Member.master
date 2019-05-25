@@ -167,7 +167,6 @@
 
     <asp:ContentPlaceHolder ID="scripts" runat="server">
     </asp:ContentPlaceHolder>
-    <script src='https://www.google.com/recaptcha/api.js?render=6Le2EosUAAAAAAB6E21zXgsTUoTvmoUpamPEBEXL'></script>
     <!--   Core JS Files   -->
     <script src="bootstrap/assets/js/core/jquery.min.js" type="text/javascript"></script>
     <script src="bootstrap/assets/js/core/popper.min.js" type="text/javascript"></script>

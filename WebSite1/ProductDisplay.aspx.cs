@@ -52,10 +52,11 @@ public partial class ProductDisplay : System.Web.UI.Page
             using (SqlConnection con = new SqlConnection(Util.GetConnection()))
             {
                 con.Open();
-                string query = @"SELECT p.ProductID, p.Image, p.Product,
-                                p.Code, p.Price, c.Category, pi.Quantity FROM Products p
+                string query = @"SELECT distinct p.ProductID, p.Image, p.Product,
+                                p.Code, p.Price, c.Category, (Select Sum(Quantity) from ProductInventory where ProductID = pi.ProductID and Quantity > p.Criticallevel) as Quantity FROM Products p
                                 INNER JOIN Categories c ON p.CatID = c.CatID
-                                INNER JOIN ProductInventory pi ON p.ProductID = pi.ProductID";
+                                INNER JOIN ProductInventory pi ON p.ProductID = pi.ProductID
+								where pi.Quantity > p.Criticallevel";
 
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {

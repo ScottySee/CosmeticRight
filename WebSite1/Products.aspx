@@ -7,29 +7,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        function lettersOnly() {
-            var charCode = event.keyCode;
-
-            if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || charCode == 8 || charCode == 32 || charCode == 151)
-
-                return true;
-            else
-                return false;
-        }
-        function numbersOnly() {
-            var charCode = event.keyCode;
-
-            if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || charCode == 8 || charCode == 32 || charCode == 151)
-
-                return false;
-            else
-                return true;
-        }
-
-
-    </script>
 </asp:Content>
 <asp:Content ContentPlaceHolderID="body" runat="server">
     <div class="container mt--7">

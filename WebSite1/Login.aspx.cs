@@ -28,67 +28,72 @@ public partial class Login : System.Web.UI.Page
                 Response.Redirect("Member.aspx");
             }
         }
-        
+
     }
 
     protected void BtnLogin_Click(object sender, EventArgs e)
     {
-        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+      
+        if (Request.Form["g-recaptcha-response"] != "")
         {
-            con.Open();
-            string query = @"SELECT * FROM Users
-                                WHERE Email=@Email AND Password=@Password";
-            string query1 = @"INSERT INTO WebsiteVisit VALUES (@Date)";
-            using (SqlCommand cmd = new SqlCommand(query, con))
+            using (SqlConnection con = new SqlConnection(Util.GetConnection()))
             {
-                cmd.Parameters.AddWithValue("@Email", Server.HtmlEncode(email.Text.Trim()));
-                cmd.Parameters.AddWithValue("@Password", Util.CreateSHAHash(password.Text));
-                using (SqlDataReader data = cmd.ExecuteReader())
+                con.Open();
+                string query = @"SELECT * FROM Users
+                                WHERE Email=@Email AND Password=@Password";
+                string query1 = @"INSERT INTO WebsiteVisit VALUES (@Date)";
+                using (SqlCommand cmd = new SqlCommand(query, con))
                 {
-                    if (data.HasRows) //credentials are correct
+                    cmd.Parameters.AddWithValue("@Email", Server.HtmlEncode(email.Text.Trim()));
+                    cmd.Parameters.AddWithValue("@Password", Util.CreateSHAHash(password.Text));
+                    using (SqlDataReader data = cmd.ExecuteReader())
                     {
-                        while (data.Read())
+                        if (data.HasRows) //credentials are correct
                         {
-                            Session["UserID"] = data["UserID"].ToString();
-                            Session["UserType"] = data["UserType"].ToString();
+                            while (data.Read())
+                            {
+                                Session["UserID"] = data["UserID"].ToString();
+                                Session["UserType"] = data["UserType"].ToString();
 
-                            // eto yung para madistinguish kung anong type ang user
-                            if (data["UserType"].ToString() == "1") //OFFICE ADMIN
-                            {
-                                Util.Log(Session["UserID"].ToString(), "The office admin has logged in");
-                                Response.Redirect("OfficeAdminHome.aspx");
-                            }
-                            else if (data["UserType"].ToString() == "2") //WAREHOUSE ADMIN
-                            {
-                                Util.Log(Session["UserID"].ToString(), "The warehouse admin has logged in");
-                                Response.Redirect("WarehouseAdminHome.aspx");
-                            }
-                            else if (data["UserType"].ToString() == "3") // USER/MEMBER
-                            {
-                                Util.Log(Session["UserID"].ToString(), "The user has logged in");
-                                con.Close();
-                                con.Open();
-                                using (SqlCommand cmd1 = new SqlCommand(query1, con))
+                                // eto yung para madistinguish kung anong type ang user
+                                if (data["UserType"].ToString() == "1") //OFFICE ADMIN
                                 {
-                                    cmd1.Parameters.AddWithValue("@Date", DateTime.Now);
-                                    cmd1.ExecuteNonQuery();
+                                    Util.Log(Session["UserID"].ToString(), "The office admin has logged in");
+                                    Response.Redirect("OfficeAdminHome.aspx");
                                 }
-                                Response.Redirect("Member.aspx");
+                                else if (data["UserType"].ToString() == "2") //WAREHOUSE ADMIN
+                                {
+                                    Util.Log(Session["UserID"].ToString(), "The warehouse admin has logged in");
+                                    Response.Redirect("WarehouseAdminHome.aspx");
+                                }
+                                else if (data["UserType"].ToString() == "3") // USER/MEMBER
+                                {
+                                    Util.Log(Session["UserID"].ToString(), "The user has logged in");
+                                    con.Close();
+                                    con.Open();
+                                    using (SqlCommand cmd1 = new SqlCommand(query1, con))
+                                    {
+                                        cmd1.Parameters.AddWithValue("@Date", DateTime.Now);
+                                        cmd1.ExecuteNonQuery();
+                                    }
+                                    Response.Redirect("Member.aspx");
+                                }
                             }
+
+                            //start of Auditlog 
+                            Util.Log(Session["UserID"].ToString(), "The user has logged in");
+                            //end of auditlog
+
+                            Response.Redirect("Member.aspx");
                         }
-
-                        //start of Auditlog 
-                        Util.Log(Session["UserID"].ToString(), "The user has logged in");
-                        //end of auditlog
-
-                        Response.Redirect("Member.aspx");
-                    }
-                    else //did not match </3
-                    {
-                        error.Visible = true;
+                        else //did not match </3
+                        {
+                            error.Visible = true;
+                        }
                     }
                 }
             }
         }
+
     }
 }
