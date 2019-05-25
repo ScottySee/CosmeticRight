@@ -67,7 +67,7 @@
                                                 <asp:ListView ID="lvPrintOrders" runat="server">
                                                     <ItemTemplate>
                                                         <tr class="text-center">
-                                                            <td><h4><%# Eval("Name") %></h4></td>
+                                                            <td><h4><%# Eval("Product") %></h4></td>
                                                             <td><%# Eval("Quantity") %></td>
                                                             <td class="text-right">Php<%# Eval("Price", "{0: #,##0.00}") %>
                                                             </td>

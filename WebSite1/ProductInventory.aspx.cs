@@ -46,7 +46,8 @@ public partial class ProductInventory : System.Web.UI.Page
         //@"Server=MSI\MSSQLSERVER2;Database=Test;Integrated Security=true";
         {
             con.Open();
-            string query = @"SELECT * FROM ProductInventory";
+            string query = @"SELECT pi.InventoryID, p.Product AS Product, pi.UserID, pi.Quantity, pi.DateManufactured, pi.DateExpired,                      pi.DateAdded, pi.DateModified FROM ProductInventory pi
+                              INNER JOIN products p on p.ProductID=pi.ProductID";
 
             //SELECT COUNT(DISTINCT Country) FROM Customers;
 
@@ -68,10 +69,10 @@ public partial class ProductInventory : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"SELECT Product FROM ProductInventory WHERE Product=@Product";
+            string query = @"SELECT ProductID FROM ProductInventory WHERE ProductID=@ProductID";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
-                cmd.Parameters.AddWithValue("@Product", ddlProduct.SelectedValue);
+                cmd.Parameters.AddWithValue("@ProductID", ddlProduct.SelectedValue);
                 return cmd.ExecuteScalar() == null ? false : true;
             }
         }
@@ -87,11 +88,11 @@ public partial class ProductInventory : System.Web.UI.Page
             using (SqlConnection con = new SqlConnection(Util.GetConnection()))
             {
                 con.Open();
-                string query = @"INSERT INTO ProductInventory VALUES (@Product, @UserID, @Quantity, @DateManufactured, @DateExpired, @DateAdded, @DateModified)";
+                string query = @"INSERT INTO ProductInventory VALUES (@ProductID, @UserID, @Quantity, @DateManufactured, @DateExpired, @DateAdded, @DateModified)";
 
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
-                    cmd.Parameters.AddWithValue("@Product", ddlProduct.SelectedValue);
+                    cmd.Parameters.AddWithValue("@ProductID", ddlProduct.SelectedValue);
                     cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
                     cmd.Parameters.AddWithValue("@Quantity", Server.HtmlEncode(txtavailable.Text.Trim()));
                     cmd.Parameters.AddWithValue("@DateManufactured", Server.HtmlEncode(datestart.Text.Trim()));
@@ -121,11 +122,11 @@ public partial class ProductInventory : System.Web.UI.Page
             using (SqlConnection con = new SqlConnection(Util.GetConnection()))
             {
                 con.Open();
-                string query = @"UPDATE ProductInventory SET Quantity = Quantity + @Quantity, DateManufactured=@DateManufactured,   DateExpired=@DateExpired, DateModified=@DateModified WHERE UserID=@UserID AND Product=@Product";
+                string query = @"UPDATE ProductInventory SET Quantity = Quantity + @Quantity, DateManufactured=@DateManufactured,   DateExpired=@DateExpired, DateModified=@DateModified WHERE UserID=@UserID AND ProductID=@ProductID";
 
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
-                    cmd.Parameters.AddWithValue("@Product", ddlProduct.SelectedValue);
+                    cmd.Parameters.AddWithValue("@ProductID", ddlProduct.SelectedValue);
                     cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
                     cmd.Parameters.AddWithValue("@Quantity", Server.HtmlEncode(txtavailable.Text.Trim()));
                     cmd.Parameters.AddWithValue("@DateManufactured", Server.HtmlEncode(datestart.Text.Trim()));

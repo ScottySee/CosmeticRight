@@ -113,7 +113,7 @@
                                 </div>
                             </div>
                             <center>
-                        <asp:DataPager ID="dpOrders" runat="server" PageSize="10"
+                        <%--<asp:DataPager ID="dpOrders" runat="server" PageSize="10"
                             PagedControlID="lvOrders">
                             <Fields>
                                 <asp:NumericPagerField ButtonType="Button"
@@ -122,7 +122,7 @@
                                     NextPreviousButtonCssClass="btn btn-default"
                                     ButtonCount="5" />
                             </Fields>
-                        </asp:DataPager>
+                        </asp:DataPager>--%>
                     </center>
                             <br />
                             <%--<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">

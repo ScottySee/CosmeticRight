@@ -43,12 +43,13 @@ public partial class PrintDelivery : System.Web.UI.Page
             string query = @"SELECT od.RefNo, p.ProductID, p.Image, p.Product,
                                 p.Price, od.Quantity, od.Amount, FORMAT (o.DateOrdered, 'MMM dd yyyy') as DateOrdered, 
 								CONCAT(u.Firstname, ' ' ,u.Lastname) as Customer,
-								CONCAT(u.BuildingNo, ' ', u.Street, ' ', u.Municipality, ' ', u.City) as Address,
+								CONCAT(u.BuildingNo, ' ', u.Street, ' ', u.Municipality, ' ', c.City) as Address,
 								CONCAT(u.Landline, '/', u.Mobile) as Contact
 								FROM OrderDetails od
                                 INNER JOIN Products p ON od.ProductID = p.ProductID 
 								inner join Orders o ON o.OrderNo = od.OrderNo
 								inner join Users u on u.UserID = od.UserID 
+                                inner join City c on u.CityID = c.CityID
                                 WHERE od.OrderNo = @OrderNo";
 
             cmd = new SqlCommand(query, con);
