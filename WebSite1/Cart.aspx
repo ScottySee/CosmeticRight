@@ -27,6 +27,8 @@
                             <th>Actions</th>
                         </thead>
                         <a href="ProductDisplay.aspx">Back to Products</a>
+                        <br />
+                        <label runat="server" class="text-danger" id="message"></label>
                         <tbody>
                             <asp:listview id="lvCart" runat="server" onitemcommand="lvCart_ItemCommand">
                                 <ItemTemplate>
@@ -49,7 +51,7 @@
                                         <td>
                                             <asp:TextBox ID="txtQty" runat="server"
                                         class="form-control" type="number"
-                                        min="3" max="2000" Text='<%# Eval("Quantity") %>'
+                                        min="3" max="1000" Text='<%# Eval("Quantity") %>'
                                         required />
 
                                         </td>

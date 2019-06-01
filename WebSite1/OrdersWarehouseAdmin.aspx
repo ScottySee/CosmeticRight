@@ -44,7 +44,7 @@
                                         <asp:DropDownList ID="ddlStatus" runat="server"  class="form-control" required>
                                             <asp:ListItem Value="" style="color: black">---------------Select Status---------------</asp:ListItem>
                                             <asp:ListItem Value="Processing" style="color: black">Processing</asp:ListItem>
-                                            <asp:ListItem Value="Packing" style="color: black">Packing</asp:ListItem>
+                                            <asp:ListItem Value="Packaging" style="color: black">Packagiing</asp:ListItem>
                                             <asp:ListItem Value="For Delivery" style="color: black">For Delivery</asp:ListItem>
                                         </asp:DropDownList>
                                     </div>

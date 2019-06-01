@@ -53,7 +53,7 @@ public partial class ProductDisplay : System.Web.UI.Page
             {
                 con.Open();
                 string query = @"SELECT distinct p.ProductID, p.Image, p.Product,
-                                p.Code, p.Price, c.Category, (Select Sum(Quantity) from ProductInventory where ProductID = pi.ProductID and Quantity > p.Criticallevel) as Quantity FROM Products p
+                                p.Code, p.Price, c.Category, (Select Sum(Quantity) from ProductInventory where ProductID = pi.ProductID and Quantity > p.Criticallevel AND DateExpired > GETDATE() AND Status = 'Active') as Quantity FROM Products p
                                 INNER JOIN Categories c ON p.CatID = c.CatID
                                 INNER JOIN ProductInventory pi ON p.ProductID = pi.ProductID
 								where pi.Quantity > p.Criticallevel";

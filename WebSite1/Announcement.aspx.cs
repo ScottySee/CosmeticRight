@@ -21,7 +21,7 @@ public partial class Announcement : System.Web.UI.Page
             //EDITVIEW START
             if (Request.QueryString["EditID"] != null)
             {
-               
+
                 bool validAnnouncement = int.TryParse(Request.QueryString["EditID"].ToString(), out editID);
 
                 if (validAnnouncement)
@@ -96,50 +96,86 @@ public partial class Announcement : System.Web.UI.Page
     //        }
     //    }
     //}
+    private bool CompareArray(byte[] a1, byte[] a2)
+    {
+        if (a1.Length != a2.Length)
+            return false;
+        for (int i = 0; i < a1.Length; i++)
+        {
+            if (a1[i] != a2[i])
+                return false;
+        }
+        return true;
+    }
 
     protected void AddAnnouncement(object sender, EventArgs e)
     {
+        Dictionary<string, byte[]> imageHeader = new Dictionary<string, byte[]>();
+        imageHeader.Add("JPG", new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 });
+        imageHeader.Add("JPEG", new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 });
+        imageHeader.Add("PNG", new byte[] { 0x89, 0x50, 0x4E, 0x47 });
+
+        byte[] header;
+        string fileExt;
+        fileExt = fileUpload1.FileName.Substring(fileUpload1.FileName.LastIndexOf('.') + 1).ToUpper();
+
         string fileName = Path.GetFileName(fileUpload1.FileName);
         fileUpload1.PostedFile.SaveAs(Server.MapPath("~/Images/Announcement/") + fileName);
-        if (txtannouncement.Text.Trim().Length > 0)
+
+        //string checkimage2 = MimeTypeChecker.MimeTypeChecker.GetExtension(Path.GetExtension(fileUpload1.FileName));
+
+        byte[] tmp = imageHeader[fileExt];
+        header = new byte[tmp.Length];
+        fileUpload1.FileContent.Read(header, 0, header.Length);
+
+        if (CompareArray(tmp, header))
         {
-            using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+            if (txtannouncement.Text.Trim().Length > 0)
             {
-                con.Open();
-                string query = @"INSERT INTO Announcements VALUES (@AnnouncementName, @AnnouncementDetail, @Image, @DateStart, @DateEnd, @UserID, @Status, @DateAdded, @DateModified)";
-
-                using (SqlCommand cmd = new SqlCommand(query, con))
+                using (SqlConnection con = new SqlConnection(Util.GetConnection()))
                 {
-                    cmd.Parameters.AddWithValue("@AnnouncementName", Server.HtmlEncode(txtannouncement.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@AnnouncementDetail", Server.HtmlEncode(txtdetails.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@Image", fileUpload1.FileName);
-                    cmd.Parameters.AddWithValue("@DateStart", Server.HtmlEncode(datestart.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@DateEnd", Server.HtmlEncode(dateend.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
-                    cmd.Parameters.AddWithValue("@Status", Server.HtmlEncode("Active"));
-                    cmd.Parameters.AddWithValue("@DateAdded", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@DateModified", DBNull.Value);
-                    cmd.ExecuteNonQuery();
+                    con.Open();
+                    string query = @"INSERT INTO Announcements VALUES (@AnnouncementName, @AnnouncementDetail, @Image, @DateStart, @DateEnd, @UserID, @Status, @DateAdded, @DateModified)";
 
-                    //start of Auditlog 
-                    Util.Log(Session["UserID"].ToString(), "The office admin has added an announcement");
-                    //end of auditlog
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@AnnouncementName", Server.HtmlEncode(txtannouncement.Text.Trim()));
+                        cmd.Parameters.AddWithValue("@AnnouncementDetail", Server.HtmlEncode(txtdetails.Text.Trim()));
 
-                    message.InnerText = "Announcement Successfully Added.";
+                        cmd.Parameters.AddWithValue("@Image", fileUpload1.FileName);
+                        cmd.Parameters.AddWithValue("@DateStart", Server.HtmlEncode(datestart.Text.Trim()));
+                        cmd.Parameters.AddWithValue("@DateEnd", Server.HtmlEncode(dateend.Text.Trim()));
+                        cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
+                        cmd.Parameters.AddWithValue("@Status", Server.HtmlEncode("Active"));
+                        cmd.Parameters.AddWithValue("@DateAdded", DateTime.Now);
+                        cmd.Parameters.AddWithValue("@DateModified", DBNull.Value);
 
-                    //lahat ng textbox
-                    txtannouncement.Text = null;
-                    txtdetails.Text = null;
-                    datestart.Text = null;
-                    dateend.Text = null;
+
+                        cmd.ExecuteNonQuery();
+
+                        //start of Auditlog 
+                        Util.Log(Session["UserID"].ToString(), "The office admin has added an announcement");
+                        //end of auditlog
+
+                        message.InnerText = "Announcement Successfully Added.";
+
+                        //lahat ng textbox
+                        txtannouncement.Text = null;
+                        txtdetails.Text = null;
+                        datestart.Text = null;
+                        dateend.Text = null;
+                    }
                 }
+            }
+            else
+            {
+                message.InnerText = "Announcement Name cannot be empty.";
             }
         }
         else
         {
-            message.InnerText = "Announcement Name cannot be empty";
+            message.InnerText = "Image has invalid format.";
         }
-        
     }
 
     protected void EditAnnouncement(int ID)
@@ -177,70 +213,96 @@ public partial class Announcement : System.Web.UI.Page
     }
     protected void SaveAnnouncement(object sender, EventArgs e)
     {
-        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        Dictionary<string, byte[]> imageHeader = new Dictionary<string, byte[]>();
+        imageHeader.Add("JPG", new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 });
+        imageHeader.Add("JPEG", new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 });
+        imageHeader.Add("PNG", new byte[] { 0x89, 0x50, 0x4E, 0x47 });
+
+        byte[] header;
+        string fileExt;
+        fileExt = fileUpload1.FileName.Substring(fileUpload1.FileName.LastIndexOf('.') + 1).ToUpper();
+
+        byte[] tmp = imageHeader[fileExt];
+        header = new byte[tmp.Length];
+        fileUpload1.FileContent.Read(header, 0, header.Length);
+
+        if (CompareArray(tmp, header))
         {
-
-            con.Open();
-            string query = @"UPDATE Announcements SET AnnouncementName=@AnnouncementName, Image=@Image, DateStart=@DateStart, DateEnd=@DateEnd, AnnouncementDetail=@AnnouncementDetail, DateModified=@DateModified WHERE AnnouncementID=@AnnouncementID";
-            using (SqlCommand cmd = new SqlCommand(query, con))
+            if (txtannouncement.Text.Trim().Length > 0)
             {
-                cmd.Parameters.AddWithValue("@AnnouncementName", Server.HtmlEncode(txtannouncement.Text.Trim()));
-                cmd.Parameters.AddWithValue("@AnnouncementDetail", Server.HtmlEncode(txtdetails.Text.Trim()));
-                if (fileUpload1.HasFile)
+                using (SqlConnection con = new SqlConnection(Util.GetConnection()))
                 {
-                    string filename = Path.GetFileName(fileUpload1.FileName);
-                    cmd.Parameters.AddWithValue("@Image", filename);
-                    fileUpload1.PostedFile.SaveAs(Server.MapPath("~/Images/Announcement/") + filename);
+                    con.Open();
+                    string query = @"UPDATE Announcements SET AnnouncementName=@AnnouncementName, Image=@Image, DateStart=@DateStart, DateEnd=@DateEnd, AnnouncementDetail=@AnnouncementDetail, DateModified=@DateModified WHERE AnnouncementID=@AnnouncementID";
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@AnnouncementName", Server.HtmlEncode(txtannouncement.Text.Trim()));
+                        cmd.Parameters.AddWithValue("@AnnouncementDetail", Server.HtmlEncode(txtdetails.Text.Trim()));
+                        if (fileUpload1.HasFile)
+                        {
+                            string filename = Path.GetFileName(fileUpload1.FileName);
+                            cmd.Parameters.AddWithValue("@Image", filename);
+                            fileUpload1.PostedFile.SaveAs(Server.MapPath("~/Images/Announcement/") + filename);
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@Image", Session["image"].ToString());
+                            Session.Remove("image");
+                        }
+                        cmd.Parameters.AddWithValue("@DateStart", Server.HtmlEncode(datestart.Text));
+                        cmd.Parameters.AddWithValue("@DateEnd", Server.HtmlEncode(dateend.Text));
+                        cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
+                        cmd.Parameters.AddWithValue("@AnnouncementID", Session["AnnouncementID"].ToString());
+
+                        cmd.ExecuteNonQuery();
+
+                        //start of Auditlog 
+                        Util.Log(Session["UserID"].ToString(), "The office admin has updated an announcement");
+                        //end of auditlog
+
+                        message.InnerText = "Announcement Successfully Updated.";
+
+                        txtannouncement.Text = null;
+                        txtdetails.Text = null;
+                        datestart.Text = null;
+                        dateend.Text = null;
+                    }
                 }
-                else
-                {
-                    cmd.Parameters.AddWithValue("@Image", Session["image"].ToString());
-                    Session.Remove("image");
-                }
-                cmd.Parameters.AddWithValue("@DateStart", Server.HtmlEncode(datestart.Text));
-                cmd.Parameters.AddWithValue("@DateEnd", Server.HtmlEncode(dateend.Text));
-                cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
-                cmd.Parameters.AddWithValue("@AnnouncementID", Session["AnnouncementID"].ToString());
-
-                cmd.ExecuteNonQuery();
-
-                //start of Auditlog 
-                Util.Log(Session["UserID"].ToString(), "The office admin has updated an announcement");
-                //end of auditlog
-
-                message.InnerText = "Announcement Successfully Updated.";
-
-                txtannouncement.Text = null;
-                txtdetails.Text = null;
-                datestart.Text = null;
-                dateend.Text = null;
             }
+            else
+            {
+                message.InnerText = "Announcement Name cannot be empty";
+            }
+        }
+        else
+        {
+            message.InnerText = "Image has invalid format";
         }
     }
 
-    void DeleteRecord(int ID)
-    {
-        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        void DeleteRecord(int ID)
         {
-            con.Open();
-            string query = @"UPDATE Announcements SET Status = 'Archived' WHERE AnnouncementID=@AnnouncementID";
-
-            using (SqlCommand cmd = new SqlCommand(query, con))
+            using (SqlConnection con = new SqlConnection(Util.GetConnection()))
             {
-                cmd.Parameters.AddWithValue("@AnnouncementID", ID);
-                cmd.ExecuteNonQuery();
+                con.Open();
+                string query = @"UPDATE Announcements SET Status = 'Archived' WHERE AnnouncementID=@AnnouncementID";
 
-                //start of Auditlog 
-                Util.Log(Session["UserID"].ToString(), "The office admin has archived an announcement");
-                //end of auditlog
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@AnnouncementID", ID);
+                    cmd.ExecuteNonQuery();
 
-                Response.Redirect("Announcement.aspx");
+                    //start of Auditlog 
+                    Util.Log(Session["UserID"].ToString(), "The office admin has archived an announcement");
+                    //end of auditlog
+
+                    Response.Redirect("Announcement.aspx");
+                }
             }
         }
-    }
 
-    protected void btnCancel_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("Announcement.aspx");
+        protected void btnCancel_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Announcement.aspx");
+        }
     }
-}

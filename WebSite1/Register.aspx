@@ -144,8 +144,8 @@
 
                                             <div class="form-group text-white">
                                                 <div class="col-lg-12">
-                                                    <label>
-                                                        Once you register, you have agreed to the <a href="TermsAndCondition.aspx">Terms & Conditions.</a>
+                                                        <asp:CheckBox ID="Terms" runat="server" />
+                                                        I have agreed to the <a href="TermsAndCondition.aspx">Terms & Conditions.</a>
                                                     </label>
                                                 </div>
                                             </div>

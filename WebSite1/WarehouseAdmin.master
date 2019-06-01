@@ -94,6 +94,10 @@
     <div class="wrapper bg-info">
         <asp:ContentPlaceHolder ID="header" runat="server"></asp:ContentPlaceHolder>
         <div class="main">
+            <div class="container">
+                 <div class="text-white alert alert-danger" runat="server" id="CriticalMessage"></div>
+            </div>
+           
             <asp:ContentPlaceHolder ID="body" runat="server">
             </asp:ContentPlaceHolder>
         </div>

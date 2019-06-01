@@ -56,7 +56,7 @@
                     <div class="col-lg-4">
                         <div class="input-group">
                             <asp:Button ID="btnAdd" runat="server" class="btn btn-lg btn-success" Text="Add Inventory" OnClick="AddInventory" />
-                            <%--<asp:Button ID="btnMinus" runat="server" hidden class="btn btn-lg btn-success" Text="Minus Inventory" OnClick="MinusInventory" />--%>
+                            <%--<asp:Button ID="UpdateStatus" runat="server" class="btn btn-lg btn-success" Text="Update Status" OnClick="UpdateStatus_Click" />--%>
                             <%--<asp:Button ID="btnCancel" runat="server" hidden class="btn btn-lg btn-danger" Text="Cancel" OnClick="btnCancel_Click" />--%>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
                                             <th>Date Manufactured</th>
                                             <th>Date Expired</th>
                                             <th>Date Added</th>
-                                            <th>Date Modified</th>
+                                            <th>Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -94,7 +94,7 @@
                                                     <td><%# Eval("DateManufactured", "{0:MMM dd, yyyy}") %></td>
                                                     <td><%# Eval("DateExpired", "{0:MMM dd, yyyy}") %>
                                                     <td><%# Eval("DateAdded") %></td>
-                                                    <td><%# Eval("DateModified") %></td>
+                                                    <td><%# Convert.ToDateTime(Eval("DateExpired", "{0:MMM dd, yyyy}")) < DateTime.Now ? "Expired" : Eval("Status") %></td>
                                                     <%--<td>
                                                         <a href='ProductInventory.aspx?EditID=<%# Eval("ID") %>' class="btn btn-info btn-sm"><i class="fa fa-edit"></i>Edit</a>&nbsp;
                                                                 <a href='ProductInventory.aspx?DeleteID=<%# Eval("ID") %>' class="btn btn-danger btn-sm" onclick="return confirm('Do you want to archive this item?')"><i class="fa fa-trash"></i>Archive</a>&nbsp;

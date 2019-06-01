@@ -123,7 +123,7 @@
                                                         <img src='/Images/Announcement/<%# Eval("Image") %>' class="img-fluid" width="100" /></td>
                                                     <td><%# Eval("DateStart", "{0:MMM dd, yyyy}")  %></td>
                                                     <td><%# Eval("DateEnd", "{0:MMM dd, yyyy}") %></td>
-                                                    <td><%# Eval("Status") %></td>
+                                                    <td><%# Convert.ToDateTime(Eval("DateEnd", "{0:MMM dd, yyyy}")) < DateTime.Now ? "Expired" : Eval("Status") %></td>
                                                     <td>
                                                         <a href='Announcement.aspx?EditID=<%# Eval("AnnouncementID") %>' class="btn btn-info btn-sm"><i class="fa fa-edit"></i>Edit</a>&nbsp;
                                                                 <a href='Announcement.aspx?DeleteID=<%# Eval("AnnouncementID") %>' class="btn btn-danger btn-sm" onclick="return confirm('Do you want to archive this item?')"><i class="fa fa-trash"></i>Archive</a>&nbsp;

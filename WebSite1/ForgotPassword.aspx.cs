@@ -23,7 +23,7 @@ public partial class ForgotPassword : System.Web.UI.Page
             string query = @"SELECT * FROM Users WHERE Email=@Email";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
-                cmd.Parameters.AddWithValue("@Email", email.Text);
+                cmd.Parameters.AddWithValue("@Email", Server.HtmlEncode(email.Text.Trim()));
                 using (SqlDataReader data = cmd.ExecuteReader())
                 {
                     if (data.HasRows) //credentials are correct

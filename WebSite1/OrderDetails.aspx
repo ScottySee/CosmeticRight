@@ -58,12 +58,12 @@
                         <h4 class="text-center">Order Summary</h4>
                         <table class="table">
                             <tbody>
-                                <%--<tr>
+                                <tr>
                                     <td>Status</td>
                                     <td align="right">
                                         <asp:Literal ID="ltStatus" runat="server" />
                                     </td>
-                                </tr>--%>
+                                </tr>
                                 <tr>
                                     <td>Payment Method</td>
                                     <td align="right">
@@ -101,18 +101,12 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <%--<asp:LinkButton ID="btnAccept" runat="server"
-                            CssClass="btn btn-success btn-lg btn-block"
-                            OnClientClick='return confirm("Accept order?");'
-                            OnClick="btnAccept_Click">
-                    <i class="fa fa-thumbs-up"></i> Accept
-                        </asp:LinkButton>
-                        <asp:LinkButton ID="btnReject" runat="server"
+                      
+                        <asp:LinkButton ID="btnCancel" runat="server"
                             CssClass="btn btn-danger btn-lg btn-block"
-                            OnClientClick='return confirm("Reject order?");'
-                            OnClick="btnReject_Click">
-                    <i class="fa fa-thumbs-down"></i> Reject
-                        </asp:LinkButton>--%>
+                            OnClientClick='return confirm("Cancel order?");' OnClick="btnCancel_Click">
+                    <i class="fa fa-thumbs-down"></i> Cancel
+                        </asp:LinkButton>
                         <a href="Orders.aspx" class="btn btn-default btn-block btn-lg">Back to Orders
                         </a>
                     </div>

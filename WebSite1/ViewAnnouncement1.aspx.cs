@@ -23,7 +23,8 @@ public partial class ViewAnnouncement1 : System.Web.UI.Page
         {
             con.Open();
             string query = @"SELECT AnnouncementID, Image, AnnouncementName,
-                                AnnouncementDetail, DateStart, DateEnd FROM Announcements";
+                                AnnouncementDetail, DateStart, DateEnd FROM Announcements
+                                where DateEnd > GETDATE() AND Status != 'Archived'";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -45,7 +46,7 @@ public partial class ViewAnnouncement1 : System.Web.UI.Page
             con.Open();
             string query = @"SELECT AnnouncementID, Image, AnnouncementName,
                                 AnnouncementDetail, DateStart, DateEnd FROM Announcements
-                                WHERE AnnouncementName LIKE @keyword";
+                                WHERE AnnouncementName LIKE @keyword AND DateEnd > GETDATE() AND Status != 'Archived'";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {

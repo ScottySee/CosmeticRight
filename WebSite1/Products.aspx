@@ -101,7 +101,7 @@
                             <div class="col-lg-4">
                                 <div class="input-group">
                                     <asp:Button ID="btnAdd" runat="server" class="btn btn-lg btn-success" Text="Add Product" OnClick="AddProduct" />
-                                    <asp:Button ID="btnEdit" runat="server" OnClientClick="return confirm('Save changes?')" class="btn btn-lg btn-success" Text="Update Product" OnClick="SaveProduct" />
+                                    <asp:Button ID="btnEdit" runat="server" class="btn btn-lg btn-success" Text="Update Product" OnClick="SaveProduct" />
                                     <asp:Button ID="btnCancel" runat="server" hidden class="btn btn-lg btn-danger" Text="Cancel" OnClick="btnCancel_Click" />
                                 </div>
                             </div>

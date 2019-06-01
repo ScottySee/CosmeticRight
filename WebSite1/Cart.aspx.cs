@@ -68,6 +68,21 @@ public partial class Cart : System.Web.UI.Page
         }
     }
 
+    public bool QuantityIsSufficient(string quantity)
+    {
+        bool existing = true;
+        SqlConnection con = new SqlConnection(Util.GetConnection());
+        con.Open();
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = con;
+        cmd.CommandText = @"SELECT Quantity FROM ProductInventory WHERE Quantity >= @Quantity";
+        cmd.Parameters.AddWithValue("@Quantity", quantity);
+        existing = cmd.ExecuteScalar() == null ? false : true;
+        con.Close();
+        con.Dispose();
+        return existing;
+    }
+
     protected void lvCart_ItemCommand(object sender, ListViewCommandEventArgs e)
     {
         Literal ltRefNo = (Literal)e.Item.FindControl("ltRefNo");
@@ -90,20 +105,31 @@ public partial class Cart : System.Web.UI.Page
         }
         else if (e.CommandName == "updateqty")
         {
-            using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+            bool QuantitySufficient = QuantityIsSufficient(txtQty.Text);
+
+            if (!QuantitySufficient)
             {
-                con.Open();
-                string query = @"UPDATE OrderDetails SET Quantity=@Quantity,
-                            Amount=@Amount WHERE RefNo=@RefNo";
-                using (SqlCommand cmd = new SqlCommand(query, con))
-                {
-                    cmd.Parameters.AddWithValue("@Quantity", txtQty.Text);
-                    cmd.Parameters.AddWithValue("Amount",
-                        int.Parse(txtQty.Text) * price);
-                    cmd.Parameters.AddWithValue("RefNo", ltRefNo.Text);
-                    cmd.ExecuteNonQuery();
-                }
+                message.InnerText = "Quantity is Insufficient.";
             }
+            else
+            {
+                using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+                {
+                    con.Open();
+                    string query = @"UPDATE OrderDetails SET Quantity=@Quantity,
+                            Amount=@Amount WHERE RefNo=@RefNo";
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@Quantity", txtQty.Text);
+                        cmd.Parameters.AddWithValue("Amount",
+                            int.Parse(txtQty.Text) * price);
+                        cmd.Parameters.AddWithValue("RefNo", ltRefNo.Text);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                message.InnerText = "";
+            }
+
         }
         GetCart();
         GetOrderSummary();

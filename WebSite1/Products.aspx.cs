@@ -83,7 +83,7 @@ public partial class Products : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"SELECT CatID, Category FROM Categories";
+            string query = @"SELECT CatID, Category FROM Categories WHERE Status!='Archived'";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -100,7 +100,7 @@ public partial class Products : System.Web.UI.Page
             }
         }
     }
-    
+
     public bool CodeIsExisting(string code)
     {
         bool existing = true;
@@ -116,63 +116,96 @@ public partial class Products : System.Web.UI.Page
         return existing;
     }
 
+    private bool CompareArray(byte[] a1, byte[] a2)
+    {
+        if (a1.Length != a2.Length)
+            return false;
+        for (int i = 0; i < a1.Length; i++)
+        {
+            if (a1[i] != a2[i])
+                return false;
+        }
+        return true;
+    }
+
     protected void AddProduct(object sender, EventArgs e)
     {
+        Dictionary<string, byte[]> imageHeader = new Dictionary<string, byte[]>();
+        imageHeader.Add("JPG", new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 });
+        imageHeader.Add("JPEG", new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 });
+        imageHeader.Add("PNG", new byte[] { 0x89, 0x50, 0x4E, 0x47 });
+
+        byte[] header;
+        string fileExt;
+        fileExt = fileUpload1.FileName.Substring(fileUpload1.FileName.LastIndexOf('.') + 1).ToUpper();
+
+        string fileName = Path.GetFileName(fileUpload1.FileName);
+        fileUpload1.PostedFile.SaveAs(Server.MapPath("~/Images/Products/") + fileName);
+
+        byte[] tmp = imageHeader[fileExt];
+        header = new byte[tmp.Length];
+        fileUpload1.FileContent.Read(header, 0, header.Length);
+
         bool CodeExisting = CodeIsExisting(txtCode.Text);
 
-        if (!CodeExisting)
+        if (CompareArray(tmp, header))
         {
-            if(txtProductName.Text.Trim().Length > 0)
+            if (!CodeExisting)
             {
-                string fileName = Path.GetFileName(fileUpload1.FileName);
-                fileUpload1.PostedFile.SaveAs(Server.MapPath("~/Images/Products/") + fileName);
-                using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+                if (txtProductName.Text.Trim().Length > 0)
                 {
-                    con.Open();
-                    string query = @"INSERT INTO Products VALUES (@Product, @CatID, @Code, @Description, @Image, @Price, @Criticallevel, @Maximum, @UserID, @Status, @DateAdded, @DateModified)";
-
-                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    using (SqlConnection con = new SqlConnection(Util.GetConnection()))
                     {
-                        cmd.Parameters.AddWithValue("@Product", Server.HtmlEncode(txtProductName.Text.Trim()));
-                        cmd.Parameters.AddWithValue("@CatID", ddlCategories.SelectedValue);
-                        cmd.Parameters.AddWithValue("@Code", Server.HtmlEncode(txtCode.Text.Trim()));
-                        cmd.Parameters.AddWithValue("@Description", Server.HtmlEncode(txtDescription.Text.Trim()));
-                        cmd.Parameters.AddWithValue("@Image", fileUpload1.FileName);
-                        cmd.Parameters.AddWithValue("@Price", Server.HtmlEncode(txtPrice.Text.Trim()));
-                        cmd.Parameters.AddWithValue("@Criticallevel", Server.HtmlEncode(txtCritical.Text.Trim()));
-                        cmd.Parameters.AddWithValue("@Maximum", Server.HtmlEncode(txtMax.Text.Trim()));
-                        cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
-                        cmd.Parameters.AddWithValue("@Status", Server.HtmlEncode("Active"));
-                        cmd.Parameters.AddWithValue("@DateAdded", DateTime.Now);
-                        cmd.Parameters.AddWithValue("@DateModified", DBNull.Value);
-                        cmd.ExecuteNonQuery();
+                        con.Open();
+                        string query = @"INSERT INTO Products VALUES (@Product, @CatID, @Code, @Description, @Image, @Price, @Criticallevel, @Maximum, @UserID, @Status, @DateAdded, @DateModified)";
 
-                        //start of Auditlog 
-                        Util.Log(Session["UserID"].ToString(), "The warehouse admin has added a product");
-                        //end of auditlog
+                        using (SqlCommand cmd = new SqlCommand(query, con))
+                        {
+                            cmd.Parameters.AddWithValue("@Product", Server.HtmlEncode(txtProductName.Text.Trim()));
+                            cmd.Parameters.AddWithValue("@CatID", ddlCategories.SelectedValue);
+                            cmd.Parameters.AddWithValue("@Code", Server.HtmlEncode(txtCode.Text.Trim()));
+                            cmd.Parameters.AddWithValue("@Description", Server.HtmlEncode(txtDescription.Text.Trim()));
+                            cmd.Parameters.AddWithValue("@Image", fileUpload1.FileName);
+                            cmd.Parameters.AddWithValue("@Price", Server.HtmlEncode(txtPrice.Text.Trim()));
+                            cmd.Parameters.AddWithValue("@Criticallevel", Server.HtmlEncode(txtCritical.Text.Trim()));
+                            cmd.Parameters.AddWithValue("@Maximum", Server.HtmlEncode(txtMax.Text.Trim()));
+                            cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
+                            cmd.Parameters.AddWithValue("@Status", Server.HtmlEncode("Active"));
+                            cmd.Parameters.AddWithValue("@DateAdded", DateTime.Now);
+                            cmd.Parameters.AddWithValue("@DateModified", DBNull.Value);
+                            cmd.ExecuteNonQuery();
 
-                        message.InnerText = "Product Successfully Added.";
+                            //start of Auditlog 
+                            Util.Log(Session["UserID"].ToString(), "The warehouse admin has added a product");
+                            //end of auditlog
 
-                        //lahat ng textbox
-                        txtProductName.Text = "";
-                        txtCode.Text = "";
-                        txtDescription.Text = "";
-                        txtPrice.Text = "";
-                        txtCritical.Text = "";
-                        txtMax.Text = "";
+                            message.InnerText = "Product Successfully Added.";
+
+                            //lahat ng textbox
+                            txtProductName.Text = "";
+                            txtCode.Text = "";
+                            txtDescription.Text = "";
+                            txtPrice.Text = "";
+                            txtCritical.Text = "";
+                            txtMax.Text = "";
+                        }
                     }
+                }
+                else
+                {
+                    message.InnerText = "Product Name cannot be empty.";
                 }
             }
             else
             {
-               
-                message.InnerText = "Product Name cannot be empty";
+                message.InnerText = "Code have already existed.";
             }
         }
-	    else
-	    {
-	    message.InnerText = "Code have already existed.";
-	    }
+        else
+        {
+            message.InnerText = "Image has invalid format.";
+        }
+
     }
 
     protected void EditProduct(int ID)
@@ -214,54 +247,89 @@ public partial class Products : System.Web.UI.Page
 
     protected void SaveProduct(object sender, EventArgs e)
     {
-        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        Dictionary<string, byte[]> imageHeader = new Dictionary<string, byte[]>();
+        imageHeader.Add("JPG", new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 });
+        imageHeader.Add("JPEG", new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 });
+        imageHeader.Add("PNG", new byte[] { 0x89, 0x50, 0x4E, 0x47 });
+
+        byte[] header;
+        string fileExt;
+        fileExt = fileUpload1.FileName.Substring(fileUpload1.FileName.LastIndexOf('.') + 1).ToUpper();
+        byte[] tmp = imageHeader[fileExt];
+        header = new byte[tmp.Length];
+        fileUpload1.FileContent.Read(header, 0, header.Length);
+
+        bool CodeExisting = CodeIsExisting(txtCode.Text);
+
+        if (CompareArray(tmp, header))
         {
-            con.Open();
-            string query = @"UPDATE Products SET Product=@Product, CatID=@CatID, Code=@Code,
+            if (!CodeExisting)
+            {
+                if (txtProductName.Text.Trim().Length > 0)
+                {
+                    using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+                    {
+                        con.Open();
+                        string query = @"UPDATE Products SET Product=@Product, CatID=@CatID, Code=@Code,
                 Description=@Description, Price=@Price, Image=@Image,
                 Criticallevel=@Criticallevel, Maximum=@Maximum, DateModified=@DateModified
                 WHERE ProductID=@ProductID";
-            using (SqlCommand cmd = new SqlCommand(query, con))
-            {
-                cmd.Parameters.AddWithValue("@Product", Server.HtmlEncode(txtProductName.Text.Trim()));
-                cmd.Parameters.AddWithValue("@CatID", ddlCategories.SelectedValue);
-                cmd.Parameters.AddWithValue("@Code", Server.HtmlEncode(txtCode.Text.Trim()));
-                cmd.Parameters.AddWithValue("@Description", Server.HtmlEncode(txtDescription.Text.Trim()));
+                        using (SqlCommand cmd = new SqlCommand(query, con))
+                        {
+                            cmd.Parameters.AddWithValue("@Product", Server.HtmlEncode(txtProductName.Text.Trim()));
+                            cmd.Parameters.AddWithValue("@CatID", ddlCategories.SelectedValue);
+                            cmd.Parameters.AddWithValue("@Code", Server.HtmlEncode(txtCode.Text.Trim()));
+                            cmd.Parameters.AddWithValue("@Description", Server.HtmlEncode(txtDescription.Text.Trim()));
 
-                if (fileUpload1.HasFile)
-                {
-                    string fileExt = Path.GetFileName(fileUpload1.FileName);
-                    cmd.Parameters.AddWithValue("@Image", fileExt);
-                    //fileUpload1.SaveAs("~/Images/Announcement/" + fileExt);
-                    fileUpload1.PostedFile.SaveAs(Server.MapPath("~/Images/Products/") + fileExt);
+                            if (fileUpload1.HasFile)
+                            {
+                                string filename = Path.GetFileName(fileUpload1.FileName);
+                                cmd.Parameters.AddWithValue("@Image", filename);
+                                //fileUpload1.SaveAs("~/Images/Announcement/" + fileExt);
+                                fileUpload1.PostedFile.SaveAs(Server.MapPath("~/Images/Products/") + filename);
+                            }
+                            else
+                            {
+                                string filename = Path.GetFileName(fileUpload1.FileName);
+
+                                cmd.Parameters.AddWithValue("@Image", Session["image"].ToString());
+                                Session.Remove("image");
+                            }
+                            cmd.Parameters.AddWithValue("@Price", Server.HtmlEncode(txtPrice.Text.Trim()));
+                            cmd.Parameters.AddWithValue("@Criticallevel", Server.HtmlEncode(txtCritical.Text.Trim()));
+                            cmd.Parameters.AddWithValue("@Maximum", Server.HtmlEncode(txtMax.Text.Trim()));
+                            cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
+                            cmd.Parameters.AddWithValue("@ProductID", Session["ProductID"].ToString());
+                            cmd.ExecuteNonQuery();
+
+                            //start of Auditlog 
+                            Util.Log(Session["UserID"].ToString(), "The office admin has updated a product");
+                            //end of auditlog
+
+                            message.InnerText = "Product Successfully Updated.";
+
+                            txtProductName.Text = "";
+                            txtCode.Text = "";
+                            txtDescription.Text = "";
+                            txtPrice.Text = "";
+                            txtCritical.Text = "";
+                            txtMax.Text = "";
+                        }
+                    }
                 }
                 else
                 {
-                    string fileExt = Path.GetFileName(fileUpload1.FileName);
-
-                    cmd.Parameters.AddWithValue("@Image", Session["image"].ToString());
-                    Session.Remove("image");
+                    message.InnerText = "Product Name cannot be empty";
                 }
-                cmd.Parameters.AddWithValue("@Price", Server.HtmlEncode(txtPrice.Text.Trim()));
-                cmd.Parameters.AddWithValue("@Criticallevel", Server.HtmlEncode(txtCritical.Text.Trim()));
-                cmd.Parameters.AddWithValue("@Maximum", Server.HtmlEncode(txtMax.Text.Trim()));
-                cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
-                cmd.Parameters.AddWithValue("@ProductID", Session["ProductID"].ToString());
-                cmd.ExecuteNonQuery();
-
-                //start of Auditlog 
-                Util.Log(Session["UserID"].ToString(), "The office admin has updated a product");
-                //end of auditlog
-
-                message.InnerText = "Product Successfully Updated.";
-
-                txtProductName.Text = "";
-                txtCode.Text = "";
-                txtDescription.Text = "";
-                txtPrice.Text = "";
-                txtCritical.Text = "";
-                txtMax.Text = "";
             }
+            else
+            {
+                message.InnerText = "Code have already existed.";
+            }
+        }
+        else
+        {
+            message.InnerText = "Image has invalid format.";
         }
     }
 

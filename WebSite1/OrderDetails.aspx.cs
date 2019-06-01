@@ -26,7 +26,10 @@ public partial class OrderDetails : System.Web.UI.Page
                     GetOrderInfo(orderNo);
                     GetCustomerInfo(orderNo);
                     GetCity();
-
+                    if (ltStatus.Text == "Cancelled" || ltStatus.Text == "For Delivery")
+                    {
+                        btnCancel.Visible = false;
+                    }
                 }
             }
             else
@@ -63,7 +66,7 @@ public partial class OrderDetails : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"SELECT OrderNo, DateOrdered, PaymentMethod
+            string query = @"SELECT OrderNo, DateOrdered, PaymentMethod, Status
                             FROM Orders WHERE OrderNo=@OrderNo";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -75,7 +78,7 @@ public partial class OrderDetails : System.Web.UI.Page
                         while (data.Read())
                         {
                             ltOrderNo.Text = data["OrderNo"].ToString();
-                            ////ltStatus.Text = data["Status"].ToString();
+                            ltStatus.Text = data["Status"].ToString();
 
                             //btnAccept.Visible = ltStatus.Text == "Pending" ? true : false;
                             //btnReject.Visible = ltStatus.Text == "Pending" ? true : false;
@@ -144,8 +147,10 @@ public partial class OrderDetails : System.Web.UI.Page
             }
         }
     }
+
     void GetOrderSummary(int ID)
     {
+
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
@@ -204,4 +209,22 @@ public partial class OrderDetails : System.Web.UI.Page
     //        }
     //    }
     //}
+
+    protected void btnCancel_Click(object sender, EventArgs e)
+    {
+        
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        {
+            con.Open();
+            string query = @"UPDATE Orders SET Status=@Status
+                            WHERE OrderNo=@OrderNo";
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("@Status", "Cancelled");
+                cmd.Parameters.AddWithValue("OrderNo", ltOrderNo.Text);
+                cmd.ExecuteNonQuery();
+                Response.Redirect("Orders.aspx");
+            }
+        }
+    }
 }
