@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OfficeAdmin.master" AutoEventWireup="true" CodeFile="OfficeAdminProfile.aspx.cs" Inherits="OfficeAdminProfile" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OfficeAdmin.master" AutoEventWireup="true" CodeFile="OfficeAdminProfile.aspx.cs" ValidateRequest="false" Inherits="OfficeAdminProfile" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="header" Runat="Server">
     <form runat="server" class="form-horizontal">

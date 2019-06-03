@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Member.master" AutoEventWireup="true" CodeFile="Cart.aspx.cs" Inherits="Cart" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Member.master" AutoEventWireup="true" CodeFile="Cart.aspx.cs" ValidateRequest="false" Inherits="Cart" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="header" runat="Server">
     <div class="header bg-gradient-gray-dark pb-5 pt-5 pt-md-8">
@@ -28,6 +28,7 @@
                         </thead>
                         <a href="ProductDisplay.aspx">Back to Products</a>
                         <br />
+                        <%--<div class="text-white alert alert-danger" hidden runat="server" id="CriticalMessage"></div>--%>
                         <label runat="server" class="text-danger" id="message"></label>
                         <tbody>
                             <asp:listview id="lvCart" runat="server" onitemcommand="lvCart_ItemCommand">

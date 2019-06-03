@@ -31,9 +31,6 @@ public partial class Admin1 : System.Web.UI.MasterPage
                                 CriticalMessage.InnerText = "There are " + data["count"] + " Products below their critical levels.";
                             }
                         }
-
-
-
                     }
                 }
             }

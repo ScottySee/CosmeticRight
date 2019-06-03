@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WarehouseAdmin.master" AutoEventWireup="true" CodeFile="Products.aspx.cs" Inherits="Products" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WarehouseAdmin.master" AutoEventWireup="true" CodeFile="Products.aspx.cs" Inherits="Products" ValidateRequest="false" %>
 
 <asp:Content ContentPlaceHolderID="header" runat="server">
     <div class="header bg-gradient-gray-dark pb-5 pt-5 pt-md-8">

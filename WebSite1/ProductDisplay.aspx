@@ -32,6 +32,9 @@
                     </div>
                 </div>
                 <div class="col-lg-9">
+                    <div class="container">
+                        <div class="text-white alert alert-danger" hidden runat="server" id="CriticalMessage"></div>
+                    </div>
                     <div class="">
                         <div class="card-deck">
                             <asp:ListView ID="lvProducts" runat="server" OnItemCommand="lvProducts_ItemCommand">
@@ -47,7 +50,8 @@
                                                 <h3><%# Eval("Product") %></h3>
                                                 <small>Code: <%# Eval("Code") %></small><br />
 
-                                                <small><em>Category: <asp:Label runat="server" ID="category" Text='<%# Eval("Category") %>'>  </asp:Label></em></small>
+                                                <small><em>Category:
+                                                    <asp:Label runat="server" ID="category" Text='<%# Eval("Category") %>'>  </asp:Label></em></small>
                                                 <br />
                                                 <p>
                                                     Php <%# Eval("Price", "{0: #,##0.00}") %>
@@ -55,7 +59,7 @@
                                                 <p>
                                                     Avaialble: <%# Eval("Quantity") %>
                                                 </p>
-                                                 <asp:LinkButton ID="btnAddToCart" runat="server" class="btn btn-success btn-block" CommandName="addtocart">
+                                                <asp:LinkButton ID="btnAddToCart" runat="server" class="btn btn-success btn-block" CommandName="addtocart">
                                                     <i class="fa fa-shopping-cart"></i> Add To Cart
                                                 </asp:LinkButton>
                                             </div>

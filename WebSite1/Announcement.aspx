@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OfficeAdmin.master" AutoEventWireup="true" CodeFile="Announcement.aspx.cs" Inherits="Announcement" %>
+﻿<%@ Page Title="" Language="C#" ValidateRequest="false" MasterPageFile="~/OfficeAdmin.master" AutoEventWireup="true" CodeFile="Announcement.aspx.cs" Inherits="Announcement" %>
 
 
 <asp:Content ContentPlaceHolderID="header" runat="server">

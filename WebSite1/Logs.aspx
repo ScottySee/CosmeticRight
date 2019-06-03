@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OfficeAdmin.master" AutoEventWireup="true" CodeFile="Logs.aspx.cs" Inherits="Logs" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OfficeAdmin.master" AutoEventWireup="true" CodeFile="Logs.aspx.cs" Inherits="Logs"  %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="header" runat="Server">
     <div class="header bg-gradient-gray-dark pb-5 pt-5 pt-md-8">

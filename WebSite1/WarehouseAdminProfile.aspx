@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WarehouseAdmin.master" AutoEventWireup="true" CodeFile="WarehouseAdminProfile.aspx.cs" Inherits="WarehouseAdminProfile" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WarehouseAdmin.master" AutoEventWireup="true" CodeFile="WarehouseAdminProfile.aspx.cs" Inherits="WarehouseAdminProfile" ValidateRequest="false" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="header" Runat="Server">
     <form runat="server" class="form-horizontal">

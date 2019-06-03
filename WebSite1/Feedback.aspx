@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Member.master" AutoEventWireup="true" CodeFile="Feedback.aspx.cs" Inherits="Feedback" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Member.master" AutoEventWireup="true" CodeFile="Feedback.aspx.cs" Inherits="Feedback" ValidateRequest="false" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="header" runat="Server">

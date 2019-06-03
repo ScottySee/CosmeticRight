@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OfficeAdmin.master" AutoEventWireup="true" CodeFile="EditOfficeAdminProfile.aspx.cs" Inherits="EditOfficeAdminProfile" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OfficeAdmin.master" AutoEventWireup="true" CodeFile="EditOfficeAdminProfile.aspx.cs" ValidateRequest="false" Inherits="EditOfficeAdminProfile" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="header" Runat="Server">
       <script>

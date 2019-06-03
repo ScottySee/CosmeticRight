@@ -77,7 +77,6 @@ public partial class Products : System.Web.UI.Page
         }
     }
 
-    // eto yung para sa pagconnect sa database para sa category
     void GetCategories()
     {
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))

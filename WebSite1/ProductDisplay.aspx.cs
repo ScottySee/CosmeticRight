@@ -34,7 +34,7 @@ public partial class ProductDisplay : System.Web.UI.Page
             con.Open();
             string query = @"SELECT c.CatID, c.Category,
                                 (SELECT COUNT(ProductID) FROM Products WHERE CatID = c.CatID)
-                                AS TotalCount FROM Categories c ORDER BY Category";
+                                AS TotalCount FROM Categories c ORDER BY Category ";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 using (SqlDataReader data = cmd.ExecuteReader())
@@ -78,11 +78,23 @@ public partial class ProductDisplay : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"SELECT p.ProductID, p.Image, p.Product,
-                                 p.Code, p.Price, c.Category, pi.Quantity FROM Products p
-                                INNER JOIN Categories c ON p.CatID = c.CatID
-                                INNER JOIN ProductInventory pi ON p.ProductID = pi.ProductID
-								WHERE p.CatID = @Code";
+            string query = @"SELECT distinct p.ProductID, p.Image, p.Product,
+                                    p.Code, p.Price, c.Category, (Select Sum(Quantity) from ProductInventory where ProductID = pi.ProductID and Quantity > p.Criticallevel AND DateExpired > GETDATE() AND Status = 'Active') as Quantity FROM Products p
+                                    INNER JOIN Categories c ON p.CatID = c.CatID
+                                    INNER JOIN ProductInventory pi ON p.ProductID = pi.ProductID
+            where pi.Quantity > p.Criticallevel AND p.CatID = @Code";
+
+            //@"SELECT distinct p.ProductID, p.Image, p.Product,
+            //                        p.Code, p.Price, c.Category, (Select Sum(Quantity) from ProductInventory where ProductID = pi.ProductID and Quantity > p.Criticallevel AND DateExpired > GETDATE() AND Status = 'Active') as Quantity FROM Products p
+            //                        INNER JOIN Categories c ON p.CatID = c.CatID
+            //                        INNER JOIN ProductInventory pi ON p.ProductID = pi.ProductID
+            //where pi.Quantity > p.Criticallevel AND p.CatID = @Code";
+
+            //    @"SELECT p.ProductID, p.Image, p.Product,
+            //                         p.Code, p.Price, c.Category, pi.Quantity FROM Products p
+            //                        INNER JOIN Categories c ON p.CatID = c.CatID
+            //                        INNER JOIN ProductInventory pi ON p.ProductID = pi.ProductID
+            //WHERE p.CatID = @Code";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {

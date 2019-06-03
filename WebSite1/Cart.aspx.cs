@@ -76,6 +76,11 @@ public partial class Cart : System.Web.UI.Page
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
         cmd.CommandText = @"SELECT Quantity FROM ProductInventory WHERE Quantity >= @Quantity";
+
+        //string query = @"SELECT distinct (Select Sum(Quantity) from ProductInventory where ProductID = pi.ProductID and Quantity > p.Criticallevel AND DateExpired > GETDATE() AND Status = 'Active') as Quantity FROM Products p
+        //                        INNER JOIN ProductInventory pi ON p.ProductID = pi.ProductID
+								//where pi.Quantity > p.Criticallevel";
+
         cmd.Parameters.AddWithValue("@Quantity", quantity);
         existing = cmd.ExecuteScalar() == null ? false : true;
         con.Close();
@@ -128,7 +133,11 @@ public partial class Cart : System.Web.UI.Page
                     }
                 }
                 message.InnerText = "";
+                //CriticalMessage.Visible = false;
             }
+
+
+            
 
         }
         GetCart();
