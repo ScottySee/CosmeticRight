@@ -28,7 +28,7 @@
                         </thead>
                         <a href="ProductDisplay.aspx">Back to Products</a>
                         <br />
-                        <%--<div class="text-white alert alert-danger" hidden runat="server" id="CriticalMessage"></div>--%>
+                        <div class="text-white alert alert-danger" hidden runat="server" id="CriticalMessage"></div>
                         <label runat="server" class="text-danger" id="message"></label>
                         <tbody>
                             <asp:listview id="lvCart" runat="server" onitemcommand="lvCart_ItemCommand">

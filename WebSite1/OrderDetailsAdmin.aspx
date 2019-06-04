@@ -119,7 +119,7 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <%--<asp:LinkButton ID="btnAccept" runat="server"
+                                    <asp:LinkButton ID="btnAccept" runat="server"
                                         CssClass="btn btn-success btn-lg btn-block"
                                         OnClientClick='return confirm("Accept order?");'
                                         OnClick="btnAccept_Click">
@@ -130,7 +130,7 @@
                                         OnClientClick='return confirm("Reject order?");'
                                         OnClick="btnReject_Click">
                     <i class="fa fa-thumbs-down"></i> Reject
-                                    </asp:LinkButton>--%>
+                                    </asp:LinkButton>
                                     <a href="OrdersAdmin.aspx" class="btn btn-default btn-block btn-lg">Back to Orders
                                     </a>
                                 </div>

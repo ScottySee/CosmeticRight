@@ -86,13 +86,13 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="control-label">Critical Level</label>
-                                        <asp:TextBox ID="txtCritical" runat="server" class="form-control" type="number" min="1" max="100" required />
+                                        <asp:TextBox ID="txtCritical" runat="server" class="form-control" type="number" min="1" max="200" required />
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="control-label">Maximum</label>
-                                        <asp:TextBox ID="txtMax" runat="server" class="form-control" type="number" min="100" max="1000" required />
+                                        <asp:TextBox ID="txtMax" runat="server" class="form-control" type="number" min="201" max="1000" required />
                                     </div>
                                 </div>
                             </div>

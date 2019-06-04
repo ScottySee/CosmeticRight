@@ -73,8 +73,9 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
                         {
                             ltOrderNo.Text = data["OrderNo"].ToString();
                             ltStatus.Text = data["Status"].ToString();
-                            //btnAccept.Visible = ltStatus.Text == "Pending" ? true : false;
-                            //btnReject.Visible = ltStatus.Text == "Pending" ? true : false;
+
+                            btnAccept.Visible = ltStatus.Text == "Pending" ? true : false;
+                            btnReject.Visible = ltStatus.Text == "Pending" ? true : false;
 
                             ltDateOrdered.Text = data["DateOrdered"].ToString();
                             ltPaymentMethod.Text = data["PaymentMethod"].ToString();
@@ -157,6 +158,40 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
                 ltVAT.Text = (totalAmount * .12).ToString("#,##0.00");
                 //ltDelivery.Text = (totalAmount * .1).ToString("#,##0.00");
                 ltTotal.Text = (totalAmount * 1).ToString("#,##0.00");
+            }
+        }
+    }
+
+    protected void btnAccept_Click(object sender, EventArgs e)
+    {
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        {
+            con.Open();
+            string query = @"UPDATE Orders SET Status=@Status
+                WHERE OrderNo=@OrderNo";
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("Status", "Accepted");
+                cmd.Parameters.AddWithValue("OrderNo", ltOrderNo.Text);
+                cmd.ExecuteNonQuery();
+                Response.Redirect("OrderDetailsAdmin.aspx");
+            }
+        }
+    }
+
+    protected void btnReject_Click(object sender, EventArgs e)
+    {
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        {
+            con.Open();
+            string query = @"UPDATE Orders SET Status=@Status
+                WHERE OrderNo=@OrderNo";
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("Status", "Rejected");
+                cmd.Parameters.AddWithValue("OrderNo", ltOrderNo.Text);
+                cmd.ExecuteNonQuery();
+                Response.Redirect("OrderDetailsAdmin.aspx");
             }
         }
     }

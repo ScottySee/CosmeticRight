@@ -19,7 +19,7 @@ public partial class Admin1 : System.Web.UI.MasterPage
             using (SqlConnection con = new SqlConnection(Util.GetConnection()))
             {
                 con.Open();
-                string query = @"Select count(quantity) Count from ProductInventory pi, Products p where pi.ProductID = p.ProductID and pi.Quantity < p.Criticallevel";
+                string query = @"Select count(quantity) Count from ProductInventory pi, Products p where pi.ProductID = p.ProductID and pi.Quantity < p.Criticallevel and pi.Status != 'Archived'";
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
                     using (SqlDataReader data = cmd.ExecuteReader())
@@ -28,7 +28,25 @@ public partial class Admin1 : System.Web.UI.MasterPage
                         {
                             while (data.Read())
                             {
-                                CriticalMessage.InnerText = "There are " + data["count"] + " Products below their critical levels.";
+                                Products.InnerText = "There are " + data["count"] + " Products below their critical levels.";
+                            }
+                        }
+                    }
+                }
+            }
+            using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+            {
+                con.Open();
+                string query = @"Select count(OrderNo) Count from Orders o where o.Status = 'Accepted'";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    using (SqlDataReader data = cmd.ExecuteReader())
+                    {
+                        if (data.HasRows)
+                        {
+                            while (data.Read())
+                            {
+                                Orders.InnerText = "There are " + data["count"] + " Orders that are accepted.";
                             }
                         }
                     }

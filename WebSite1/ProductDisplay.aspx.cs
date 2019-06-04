@@ -53,10 +53,10 @@ public partial class ProductDisplay : System.Web.UI.Page
             {
                 con.Open();
                 string query = @"SELECT distinct p.ProductID, p.Image, p.Product,
-                                p.Code, p.Price, c.Category, (Select Sum(Quantity) from ProductInventory where ProductID = pi.ProductID and Quantity > p.Criticallevel AND DateExpired > GETDATE() AND Status = 'Active') as Quantity FROM Products p
-                                INNER JOIN Categories c ON p.CatID = c.CatID
-                                INNER JOIN ProductInventory pi ON p.ProductID = pi.ProductID
-								where pi.Quantity > p.Criticallevel";
+                                    p.Code, p.Price, c.Category, (Select Quantity from Inventory where ProductID = i.ProductID and Quantity > p.Criticallevel) as Quantity FROM Products p
+                                    INNER JOIN Categories c ON p.CatID = c.CatID
+                                    INNER JOIN Inventory i ON p.ProductID = i.ProductID
+                                    where i.Quantity > p.Criticallevel";
 
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
@@ -79,22 +79,10 @@ public partial class ProductDisplay : System.Web.UI.Page
         {
             con.Open();
             string query = @"SELECT distinct p.ProductID, p.Image, p.Product,
-                                    p.Code, p.Price, c.Category, (Select Sum(Quantity) from ProductInventory where ProductID = pi.ProductID and Quantity > p.Criticallevel AND DateExpired > GETDATE() AND Status = 'Active') as Quantity FROM Products p
-                                    INNER JOIN Categories c ON p.CatID = c.CatID
-                                    INNER JOIN ProductInventory pi ON p.ProductID = pi.ProductID
-            where pi.Quantity > p.Criticallevel AND p.CatID = @Code";
-
-            //@"SELECT distinct p.ProductID, p.Image, p.Product,
-            //                        p.Code, p.Price, c.Category, (Select Sum(Quantity) from ProductInventory where ProductID = pi.ProductID and Quantity > p.Criticallevel AND DateExpired > GETDATE() AND Status = 'Active') as Quantity FROM Products p
-            //                        INNER JOIN Categories c ON p.CatID = c.CatID
-            //                        INNER JOIN ProductInventory pi ON p.ProductID = pi.ProductID
-            //where pi.Quantity > p.Criticallevel AND p.CatID = @Code";
-
-            //    @"SELECT p.ProductID, p.Image, p.Product,
-            //                         p.Code, p.Price, c.Category, pi.Quantity FROM Products p
-            //                        INNER JOIN Categories c ON p.CatID = c.CatID
-            //                        INNER JOIN ProductInventory pi ON p.ProductID = pi.ProductID
-            //WHERE p.CatID = @Code";
+                                p.Code, p.Price, c.Category, (Select Quantity from Inventory where ProductID = i.ProductID and Quantity > p.Criticallevel) as Quantity FROM Products p
+                                INNER JOIN Categories c ON p.CatID = c.CatID
+                                INNER JOIN Inventory i ON p.ProductID = i.ProductID
+                                where i.Quantity > p.Criticallevel AND p.CatID = @Code";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {

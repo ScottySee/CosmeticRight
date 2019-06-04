@@ -75,7 +75,6 @@ public partial class CheckoutCOD : System.Web.UI.Page
                         int count = 0;
                         while (dr.Read())
                         {
-                            
                             quantity[count] = dr["Quantity"].ToString();
                             ProductID[count] = dr["ProductID"].ToString();
                             count++;
@@ -87,9 +86,7 @@ public partial class CheckoutCOD : System.Web.UI.Page
                     else
                         Response.Redirect("Cart.aspx");
                 }
-
             }
-
         }
     }
 
@@ -239,8 +236,6 @@ public partial class CheckoutCOD : System.Web.UI.Page
 
         #region Step #4: Minus Inventory Record 
 
-
-
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             int count = 0;
@@ -250,7 +245,7 @@ public partial class CheckoutCOD : System.Web.UI.Page
                 {
                     con.Close();
                     con.Open();
-                    string query = @"UPDATE TOP (1) ProductInventory SET Quantity = Quantity - @Quantity WHERE ProductID = @ProductID AND ProductInventory.Quantity > (Select Criticallevel from Products where ProductID = @ProductID)";
+                    string query = @"UPDATE Inventory SET Quantity = Quantity - @Quantity WHERE ProductID = @ProductID AND Inventory.Quantity > (Select Criticallevel from Products where ProductID = @ProductID)";
                     using (SqlCommand cmd = new SqlCommand(query, con))
                     {
                         cmd.Parameters.AddWithValue("@Quantity", item);

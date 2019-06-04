@@ -29,9 +29,9 @@
                 <div class="content">
                     <div class="container">
                         <div class="row">
-                            <div class="container">
-                                <asp:Label ID="Label2" CssClass="alert alert-success" Visible="false" runat="server" Text="Label"></asp:Label>
-                            </div>
+                            <%--<div class="container">
+                                <asp:Label ID="Label2" CssClass="alert alert-danger" Visible="false" runat="server" Text="Label"></asp:Label>
+                            </div>--%>
                             <!--First column-->
 
                             <div class="card card-register m-5">
@@ -40,6 +40,8 @@
                                     <h4 class="card-title">Register</h4>
                                     <br />
                                     <p>fields that are required. (*)</p>
+                                    <br>
+                                    <asp:Label ID="Label2" CssClass="alert alert-danger" Visible="false" runat="server" Text="Label"></asp:Label>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
@@ -144,8 +146,8 @@
 
                                             <div class="form-group text-white">
                                                 <div class="col-lg-12">
-                                                        <asp:CheckBox ID="Terms" runat="server" />
-                                                        I have agreed to the <a href="TermsAndCondition.aspx">Terms & Conditions.</a>
+                                                    <asp:CheckBox ID="Terms" runat="server" />
+                                                    I have agreed to the <a href="TermsAndCondition.aspx">Terms & Conditions.</a>
                                                     </label>
                                                 </div>
                                             </div>

@@ -18,7 +18,11 @@
                     <br />
                     <h3>Refunds and Cancellation</h3>
 		            <p>All completed transactions are final, if the customers wouldn't be able to cancel the order within 2 days after they have made the transaction.</p>
-			    <p>If the customers wants to cancel the order, it shoud been canceled within 2 days after the transaction. And if the customer chooses Paypal for the payment, refund is still applicable, but it will take 3-5 business days to complete.
+                    <br />
+			        <p>If the customers wants to cancel the order, it shoud been canceled within 2 days after the transaction. And if the customer chooses Paypal for the payment, refund is still applicable, but it will take 3-5 business days to complete.</p>
+                    <br />
+                    <%--<h3>Orders</h3>
+                    <p>If the customer have made the orders, and they didn't </p>--%>
                 </div>
             </div>
     </div>

@@ -75,18 +75,30 @@ public partial class Cart : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = @"SELECT Quantity FROM ProductInventory WHERE Quantity >= @Quantity";
-
-        //string query = @"SELECT distinct (Select Sum(Quantity) from ProductInventory where ProductID = pi.ProductID and Quantity > p.Criticallevel AND DateExpired > GETDATE() AND Status = 'Active') as Quantity FROM Products p
-        //                        INNER JOIN ProductInventory pi ON p.ProductID = pi.ProductID
-								//where pi.Quantity > p.Criticallevel";
-
+        cmd.CommandText = @"SELECT Quantity FROM Inventory WHERE Quantity >= @Quantity";
         cmd.Parameters.AddWithValue("@Quantity", quantity);
+        //cmd.Parameters.AddWithValue("@ProductID", Session["ProductID"].ToString());
         existing = cmd.ExecuteScalar() == null ? false : true;
         con.Close();
         con.Dispose();
         return existing;
     }
+
+    //    (Select Sum(Quantity) from ProductInventory where ProductID = pi.ProductID and Quantity > p.Criticallevel AND DateExpired > GETDATE() AND Status = 'Active')
+
+    //using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+    //    {
+    //        con.Open();
+    //        string query = @"SELECT Quantity FROM ProductInventory pi WHERE Quantity >= @Quantity AND ProductID=@ProductID";
+    //        using (SqlCommand cmd = new SqlCommand(query, con))
+    //        {
+    //            cmd.Parameters.AddWithValue("@Quantity", quantity);
+    //            cmd.Parameters.AddWithValue("@ProductID", ID);
+    //            cmd.ExecuteNonQuery();
+    //            return cmd.ExecuteScalar() == null ? false : true;
+    //        }
+    //    }
+    //}
 
     protected void lvCart_ItemCommand(object sender, ListViewCommandEventArgs e)
     {
@@ -133,12 +145,8 @@ public partial class Cart : System.Web.UI.Page
                     }
                 }
                 message.InnerText = "";
-                //CriticalMessage.Visible = false;
+                CriticalMessage.Visible = false;
             }
-
-
-            
-
         }
         GetCart();
         GetOrderSummary();

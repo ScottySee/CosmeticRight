@@ -72,7 +72,7 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-12 table">
-                                <table id="dtInventory" class="table table-striped">
+                                <table id="dtProductInventory" class="table table-striped">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -82,10 +82,11 @@
                                             <th>Date Expired</th>
                                             <th>Date Added</th>
                                             <th>Status</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <asp:ListView ID="lvInventory" runat="server">
+                                        <asp:ListView ID="lvProductInventory" runat="server">
                                             <ItemTemplate>
                                                 <tr class="bg-default">
                                                     <td><%# Eval("InventoryID") %></td>
@@ -96,8 +97,56 @@
                                                     <td><%# Eval("DateAdded") %></td>
                                                     <td><%# Convert.ToDateTime(Eval("DateExpired", "{0:MMM dd, yyyy}")) < DateTime.Now ? "Expired" : Eval("Status") %></td>
                                                     <%--<td>
-                                                        <a href='ProductInventory.aspx?EditID=<%# Eval("ID") %>' class="btn btn-info btn-sm"><i class="fa fa-edit"></i>Edit</a>&nbsp;
-                                                                <a href='ProductInventory.aspx?DeleteID=<%# Eval("ID") %>' class="btn btn-danger btn-sm" onclick="return confirm('Do you want to archive this item?')"><i class="fa fa-trash"></i>Archive</a>&nbsp;
+                                                        <a href='ProductInventory.aspx?EditID=<%# Eval("ID") %>' class="btn btn-info btn-sm"><i class="fa fa-edit"></i>Edit</a>&nbsp;--%>
+                                                                <td><a href='ProductInventory.aspx?DeleteID=<%# Eval("InventoryID") %>' class="btn btn-danger btn-sm" onclick="return confirm('Do you want to archive this item?')"><i class="fa fa-trash"></i>Archive</a>&nbsp;
+                                                            </td>
+                                                </tr>
+                                            </ItemTemplate>
+                                            <EmptyDataTemplate>
+                                                <tr>
+                                                    <td colspan="10">
+                                                        <h2 class="text-center">No records found.</h2>
+                                                    </td>
+                                                </tr>
+                                            </EmptyDataTemplate>
+                                        </asp:ListView>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            </div>
+
+            <!-- Table row -->
+            <div class="card mt-5">
+                <div class="card-body">
+                    <div class="container">
+                        <div class="text-white">
+                            <center><h1>Inventory</h1></center>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 table">
+                                <table id="dtInventory" class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Product</th>
+                                            <th>Quantity</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <asp:ListView ID="lvInventory" runat="server">
+                                            <ItemTemplate>
+                                                <tr class="bg-default">
+                                                    <td><%# Eval("ID") %></td>
+                                                    <td><%# Eval("ProductID") %></td>
+                                                    <td><%# Eval("Quantity") %></td>
+                                                    <%--<td>
+                                                        <a href='ProductInventory.aspx?EditID=<%# Eval("ID") %>' class="btn btn-info btn-sm"><i class="fa fa-edit"></i>Edit</a>&nbsp;--%>
+                                                                <%--<td><a href='ProductInventory.aspx?DeleteID=<%# Eval("InventoryID") %>' class="btn btn-danger btn-sm" onclick="return confirm('Do you want to archive this item?')"><i class="fa fa-trash"></i>Archive</a>&nbsp;
                                                             </td>--%>
                                                 </tr>
                                             </ItemTemplate>
@@ -128,7 +177,7 @@
     
     <script>
         $(document).ready(function () {
-            $('#dtInventory').DataTable({
+            $('#dtProductInventory').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
                     'print'
