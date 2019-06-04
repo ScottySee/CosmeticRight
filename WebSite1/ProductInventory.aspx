@@ -68,7 +68,7 @@
                 <div class="card-body">
                     <div class="container">
                         <div class="text-white">
-                            <center><h1>Inventory</h1></center>
+                            <center><h1>Inventory Record</h1></center>
                         </div>
                         <div class="row">
                             <div class="col-xs-12 table">
@@ -124,7 +124,7 @@
                 <div class="card-body">
                     <div class="container">
                         <div class="text-white">
-                            <center><h1>Inventory</h1></center>
+                            <center><h1>Total Inventory</h1></center>
                         </div>
                         <div class="row">
                             <div class="col-xs-12 table">
