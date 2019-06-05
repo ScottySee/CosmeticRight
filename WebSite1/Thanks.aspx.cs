@@ -58,7 +58,8 @@ public partial class Thanks : System.Web.UI.Page
                     {
                         con.Close();
                         con.Open();
-                        string query3 = @"UPDATE TOP (1) ProductInventory SET Quantity = Quantity - @Quantity WHERE ProductID = @ProductID AND ProductInventory.Quantity > (Select Criticallevel from Products where ProductID = @ProductID)";
+                        string query3 = @"UPDATE Inventory SET Quantity = Quantity - @Quantity WHERE ProductID = @ProductID AND Inventory.Quantity > (Select Criticallevel from Products where ProductID = @ProductID)";
+                        
                         using (SqlCommand cmd = new SqlCommand(query3, con))
                         {
                             cmd.Parameters.AddWithValue("@Quantity", item);

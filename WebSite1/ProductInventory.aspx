@@ -131,18 +131,15 @@
                                 <table id="dtInventory" class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
                                             <th>Product</th>
                                             <th>Quantity</th>
-                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <asp:ListView ID="lvInventory" runat="server">
                                             <ItemTemplate>
                                                 <tr class="bg-default">
-                                                    <td><%# Eval("ID") %></td>
-                                                    <td><%# Eval("ProductID") %></td>
+                                                    <td><%# Eval("Product") %></td>
                                                     <td><%# Eval("Quantity") %></td>
                                                     <%--<td>
                                                         <a href='ProductInventory.aspx?EditID=<%# Eval("ID") %>' class="btn btn-info btn-sm"><i class="fa fa-edit"></i>Edit</a>&nbsp;--%>

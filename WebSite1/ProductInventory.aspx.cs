@@ -92,8 +92,9 @@ public partial class ProductInventory : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"SELECT i.ID, i.ProductID, i.Quantity FROM Inventory i 
-                                INNER JOIN ProductInventory pi on pi.ProductID=i.ProductID WHERE pi.DateExpired > GETDATE()";
+            string query = @"SELECT DISTINCT p.Product As Product, i.Quantity FROM Inventory i 
+                                INNER JOIN ProductInventory pi on pi.ProductID=i.ProductID
+                                INNER JOIN products p on p.ProductID=i.ProductID WHERE pi.DateExpired > GETDATE()";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {

@@ -37,14 +37,11 @@
                             </div>
                         </div>
                         <div class="col-lg-6">
-
                             <label class="control-label">Images</label><br />
-                            <%--   <label for="body_fileUpload1" class="btn btn-success">--%>
                                 Upload Image Here
-                                        <asp:FileUpload CssClass="btn btn alert-info" ID="fileUpload1" runat="server" />
+                            <asp:FileUpload CssClass="btn btn alert-info" ID="fileUpload1" runat="server" />
                             <asp:regularexpressionvalidator id="RegularExpressionValidator1" runat="server" errormessage="Only .jpg , .png or .jpeg files are allowed." validationexpression=".*((\.jpg)|(\.jpeg)|(\.png))" controltovalidate="fileUpload1" xmlns:asp="#unknown">
-                        </asp:regularexpressionvalidator>
-                            <%--</label>--%>
+                            </asp:regularexpressionvalidator>
                         </div>
 
                         <%--<div class="col-lg-3">
