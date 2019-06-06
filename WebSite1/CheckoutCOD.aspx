@@ -28,8 +28,6 @@
                                         <td>
                                             <img src='../Images/Products/<%# Eval("Image") %>'
                                                 width="120" alt='<%# Eval("Product") %>' />
-                                            <%--</td>
-                                        <td>--%>
                                             <h4><%# Eval("Product") %></h4>
                                             <small>Category: <%# Eval("Category") %></small>
                                         </td>
@@ -60,9 +58,6 @@
                     </table>
                     <br />
                     <hr />
-
-
-
                     <h3>Billing and Delivery Details</h3>
                     <div class="row text-white mb-5">
                         <div class="col-6">
@@ -118,7 +113,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="col-lg-4">
                     <div class="well">
@@ -145,10 +139,8 @@
                             </tbody>
                         </table>
                         <div class="form-group text-primary">
-                            <small>
-                                <label class="control-label">*The default payment would be "Cash on Delivery".</label></small>
-                            <small>
-                                <label class="control-label">*The delivery duration would be 1-2 weeks after the order was received.</label></small>
+                            <small><label class="control-label">*The default payment would be "Cash on Delivery".</label></small>
+                            <small><label class="control-label">*The delivery duration would be 1-2 weeks after the order was received.</label></small>
                         </div>
                         <div class="form-group text-white">
                             Payment Method:
@@ -204,11 +196,8 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </form>
-
-
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scripts" runat="Server">
     <%--<script>

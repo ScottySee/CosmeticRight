@@ -212,28 +212,6 @@ public partial class CheckoutCOD : System.Web.UI.Page
         }
         #endregion
 
-        //string quantity = "";
-        //using (SqlConnection con = new SqlConnection(Util.GetConnection()))
-        //{
-        //    con.Open();
-        //    string query = @" SELECT Quantity FROM OrderDetails WHERE ProductID=14";
-
-        //    using (SqlCommand cmd = new SqlCommand(query, con))
-        //    {
-        //        //cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
-        //        using (SqlDataReader dr = cmd.ExecuteReader())
-        //        {
-        //            if (dr.HasRows)
-        //            {
-        //                quantity = dr["Quantity"].ToString();
-        //            }
-        //            else
-        //                Response.Redirect("CheckoutCOD.aspx");
-        //        }
-        //        cmd.ExecuteNonQuery();
-        //    }
-        //}
-
         #region Step #4: Minus Inventory Record 
 
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
