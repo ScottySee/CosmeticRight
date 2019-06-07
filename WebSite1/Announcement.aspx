@@ -43,20 +43,6 @@
                             <asp:regularexpressionvalidator id="RegularExpressionValidator1" runat="server" errormessage="Only .jpg , .png or .jpeg files are allowed." validationexpression=".*((\.jpg)|(\.jpeg)|(\.png))" controltovalidate="fileUpload1" xmlns:asp="#unknown">
                             </asp:regularexpressionvalidator>
                         </div>
-
-                        <%--<div class="col-lg-3">
-                            <div class="form-group">
-                                <label class="control-label">Date Start:</label>
-                                <%--<input type="text" id="dateControl" runat="server">
-                                <asp:TextBox ID="datestart" runat="server" class="form-control" placeholder="mm/dd/yyyy" />
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label class="control-label">Date End:</label>
-                                <asp:TextBox ID="dateend" runat="server" class="form-control" placeholder="mm/dd/yyyy" />
-                            </div>
-                        </div>--%>
                         <div class="col-lg-3">
                             <div class="form-group">
                                 <label class="control-label">Date Start:</label>
@@ -99,7 +85,7 @@
                                 <table id="dtannouncement" class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Announcement ID</th>
+                                            <th>#</th>
                                             <th>Announcement Name</th>
                                             <th>Announcement Detail</th>
                                             <th>Image</th>
@@ -140,11 +126,8 @@
                             </div>
                         </div>
                     </div>
-                    <br />
                 </div>
             </div>
-            <%--</contenttemplate>--%>
-            <%--</asp:updatepanel>--%>
         </form>
     </div>
     <br />
@@ -158,7 +141,7 @@
             $('#dtannouncement').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
-                    'print'
+                    'pdf'
                 ]
             });
         });

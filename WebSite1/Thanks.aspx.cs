@@ -30,7 +30,7 @@ public partial class Thanks : System.Web.UI.Page
                 {
                     cmd.Parameters.AddWithValue("@DateOrdered", DateTime.Now);
                     cmd.Parameters.AddWithValue("@PaymentMethod", "Paypal");
-                    cmd.Parameters.AddWithValue("@Status", "Paid");
+                    cmd.Parameters.AddWithValue("@Status", "Pending");
                     orderNo = (int)cmd.ExecuteScalar();
 
                 }

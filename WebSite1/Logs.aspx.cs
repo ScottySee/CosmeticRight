@@ -30,8 +30,8 @@ public partial class Logs : System.Web.UI.Page
                 {
                     DataSet ds = new DataSet();
                     da.Fill(ds, "Logs");
-                    lvOrders.DataSource = ds;
-                    lvOrders.DataBind();
+                    lvLogs.DataSource = ds;
+                    lvLogs.DataBind();
                 }
             }
         }

@@ -35,7 +35,7 @@
                         <div class="col-lg-3">
                             <div class="form-group">
                                 <label class="control-label">Quantity</label>
-                                <asp:TextBox ID="txtavailable" runat="server" class="form-control" type="number" min="1" Text="1" required/>
+                                <asp:TextBox ID="txtavailable" runat="server" class="form-control" type="number" min="1" Text="1" required />
                             </div>
                         </div>
                         <div class="col-lg-3">
@@ -72,18 +72,16 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-12 table">
-                                <table id="dtProductInventory" class="table table-striped">
+                                <table id="dtproductinventory" class="table table-striped">
                                     <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Product</th>
-                                            <th>Quantity</th>
-                                            <th>Date Manufactured</th>
-                                            <th>Date Expired</th>
-                                            <th>Date Added</th>
-                                            <th>Status</th>
-                                            <th></th>
-                                        </tr>
+                                        <th>#</th>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Date Manufactured</th>
+                                        <th>Date Expired</th>
+                                        <th>Date Added</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
                                     </thead>
                                     <tbody>
                                         <asp:ListView ID="lvProductInventory" runat="server">
@@ -98,8 +96,7 @@
                                                     <td><%# Convert.ToDateTime(Eval("DateExpired", "{0:MMM dd, yyyy}")) < DateTime.Now ? "Expired" : Eval("Status") %></td>
                                                     <%--<td>
                                                         <a href='ProductInventory.aspx?EditID=<%# Eval("ID") %>' class="btn btn-info btn-sm"><i class="fa fa-edit"></i>Edit</a>&nbsp;--%>
-                                                                <td><a href='ProductInventory.aspx?DeleteID=<%# Eval("InventoryID") %>' class="btn btn-danger btn-sm" onclick="return confirm('Do you want to archive this item?')"><i class="fa fa-trash"></i>Archive</a>&nbsp;
-                                                            </td>
+                                                    <td><a href='ProductInventory.aspx?DeleteID=<%# Eval("InventoryID") %>' class="btn btn-danger btn-sm" onclick="return confirm('Do you want to archive this item?')"><i class="fa fa-trash"></i>Archive</a>&nbsp;</td>
                                                 </tr>
                                             </ItemTemplate>
                                             <EmptyDataTemplate>
@@ -128,22 +125,22 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-12 table">
-                                <table id="dtInventory" class="table table-striped">
+                                <table id="dtinventory" class="table table-striped">
                                     <thead>
-                                        <tr>
-                                            <th>Product</th>
-                                            <th>Quantity</th>
-                                        </tr>
+                                        <th>#</th>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
                                     </thead>
                                     <tbody>
                                         <asp:ListView ID="lvInventory" runat="server">
                                             <ItemTemplate>
                                                 <tr class="bg-default">
+                                                    <td><%# Eval("ID") %></td>
                                                     <td><%# Eval("Product") %></td>
                                                     <td><%# Eval("Quantity") %></td>
                                                     <%--<td>
                                                         <a href='ProductInventory.aspx?EditID=<%# Eval("ID") %>' class="btn btn-info btn-sm"><i class="fa fa-edit"></i>Edit</a>&nbsp;--%>
-                                                                <%--<td><a href='ProductInventory.aspx?DeleteID=<%# Eval("InventoryID") %>' class="btn btn-danger btn-sm" onclick="return confirm('Do you want to archive this item?')"><i class="fa fa-trash"></i>Archive</a>&nbsp;
+                                                    <%--<td><a href='ProductInventory.aspx?DeleteID=<%# Eval("InventoryID") %>' class="btn btn-danger btn-sm" onclick="return confirm('Do you want to archive this item?')"><i class="fa fa-trash"></i>Archive</a>&nbsp;
                                                             </td>--%>
                                                 </tr>
                                             </ItemTemplate>
@@ -171,13 +168,23 @@
 <asp:Content runat="server" ContentPlaceHolderID="scripts">
 
     <%-- for data tables --%>
-    
     <script>
         $(document).ready(function () {
-            $('#dtProductInventory').DataTable({
+            $('#dtproductinventory').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
-                    'print'
+                    'pdf'
+                ]
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#dtinventory').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'pdf'
                 ]
             });
         });

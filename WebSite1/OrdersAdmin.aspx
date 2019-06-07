@@ -9,25 +9,18 @@
     </div>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
-    <%--    <form runat="server" class="form-horizontal">
-        <div class="card">--%>
-
     <div class="container mt--7">
-        <!-- page content -->
         <form runat="server" class="form-horizontal">
             <asp:ScriptManager runat="server" />
-            <%--<asp:UpdatePanel ID="Announcements" runat="server">
-                <ContentTemplate>--%>
             <div class="card shadow-lg">
                 <div class="card-body">
-
                     <div class="col-lg-offset-6 col-lg-3 text-white">
                         START<asp:TextBox ID="txtStart" runat="server" CssClass="form-control"
                             type="date" AutoPostBack="true" OnTextChanged="SearchByDate" />
                     </div>
-                   <br />
+                    <br />
                     <div class="col-lg-3 text-white">
-                       END<asp:TextBox ID="txtEnd" runat="server" CssClass="form-control"
+                        END<asp:TextBox ID="txtEnd" runat="server" CssClass="form-control"
                             type="date" AutoPostBack="true" OnTextChanged="SearchByDate" />
                     </div>
                     <div class="col-lg-12">
@@ -47,7 +40,7 @@
                                     <ItemTemplate>
                                         <tr class="bg-default">
                                             <td><%# Eval("OrderNo") %></td>
-                                            <td><%# Eval("DateOrdered") %></td>
+                                            <td><%# Eval("DateOrdered", "{0:MMM dd, yyyy}") %></td>
                                             <td><%# Eval("PaymentMethod") %></td>
                                             <td><%# Eval("CustomerName") %></td>
                                             <td><%# Eval("TotalAmount", "{0: #,##0.00}") %></td>
@@ -58,7 +51,6 @@
                                                     <i class="fa fa-list"></i>
                                                 </a>
                                             </td>
-
                                         </tr>
                                     </ItemTemplate>
                                     <EmptyDataTemplate>
@@ -78,5 +70,15 @@
     </div>
     <br />
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="scripts" runat="Server">
+<asp:Content ContentPlaceHolderID="scripts" runat="Server">
+    <script>
+        $(document).ready(function () {
+            $('#dtOrders').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'pdf'
+                ]
+            });
+        });
+    </script>
 </asp:Content>

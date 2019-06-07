@@ -56,7 +56,13 @@ public partial class OrdersWarehouseAdmin : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"SELECT * FROM Orders WHERE Status != 'Archived'";
+            string query = @"SELECT DISTINCT o.OrderNo, o.DateOrdered, o.PaymentMethod, 
+                                u.Lastname + ', ' + u.Firstname AS CustomerName,
+                                (SELECT SUM(Amount) FROM OrderDetails WHERE OrderNo= o.OrderNo) AS TotalAmount,
+                                o.Status FROM Orders o
+                                INNER JOIN OrderDetails od ON o.OrderNo= od.OrderNo
+                                INNER JOIN Users u ON od.UserID = u.UserID
+                                ORDER BY o.DateOrdered DESC";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -71,30 +77,55 @@ public partial class OrdersWarehouseAdmin : System.Web.UI.Page
         }
     }
 
-    //protected void AddAnnouncement(object sender, EventArgs e)
-    //{
-    //    //string fileName = Path.GetFileName(fileUpload1.FileName);
-    //    //fileUpload1.PostedFile.SaveAs(Server.MapPath("~/Images/Announcement/") + fileName);
-    //    using (SqlConnection con = new SqlConnection(Util.GetConnection()))
-    //    {
-    //        con.Open();
-    //        string query = @"INSERT INTO Announcements VALUES (@AnnouncementName, @AnnouncementDetail, @Image, @AdminID, @Status, @DateAdded, @DateModified)";
+    void GetOrders(DateTime start, DateTime end)
+    {
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        {
+            con.Open();
+            string query = @"SELECT DISTINCT o.OrderNo, o.DateOrdered, o.PaymentMethod,
+                                 u.LastName + ', ' + u.FirstName AS CustomerName,
+                                 (SELECT SUM(Amount) FROM OrderDetails WHERE OrderNo= o.OrderNo) AS TotalAmount,
+                                 o.Status FROM Orders o
+                                 INNER JOIN OrderDetails od ON o.OrderNo= od.OrderNo
+                                 INNER JOIN Users u ON od.UserID = u.UserID
+                                 WHERE o.DateOrdered BETWEEN @start AND @end
+                                 ORDER BY o.DateOrdered DESC";
 
-    //        using (SqlCommand cmd = new SqlCommand(query, con))
-    //        {
-    //            cmd.Parameters.AddWithValue("@AnnouncementName", txtannouncement.Text);
-    //            cmd.Parameters.AddWithValue("@AnnouncementDetail", txtdetails.Text);
-    //            cmd.Parameters.AddWithValue("@Image", fileUpload1.FileName);
-    //            cmd.Parameters.AddWithValue("@AdminID", "1");
-    //            cmd.Parameters.AddWithValue("@Status", "Active");
-    //            cmd.Parameters.AddWithValue("@DateAdded", DateTime.Now);
-    //            cmd.Parameters.AddWithValue("@DateModified", DBNull.Value);
-    //            cmd.ExecuteNonQuery();
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("@start", start);
+                cmd.Parameters.AddWithValue("@end", end.AddHours(23).AddMinutes(59).AddSeconds(59));
 
-    //            Response.Redirect("OrdersWarehouseAdmin.aspx");
-    //        }
-    //    }
-    //}
+                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                {
+                    DataSet ds = new DataSet();
+                    da.Fill(ds, "Orders");
+                    lvOrders.DataSource = ds;
+                    lvOrders.DataBind();
+                }
+            }
+        }
+    }
+
+    protected void SearchByDate(object sender, EventArgs e)
+    {
+        DateTime start = DateTime.Now;
+        DateTime end = DateTime.Now;
+
+        bool validStart = DateTime.TryParse(txtStart.Text, out start);
+        bool validEnd = DateTime.TryParse(txtEnd.Text, out end);
+
+        if (validStart && validEnd)
+        {
+            // search records by date range
+            GetOrders(start, end);
+        }
+        else
+        {
+            // use default
+            GetOrders();
+        }
+    }
 
     protected void EditOrders(int ID)
     {

@@ -146,7 +146,7 @@
 
                                             <div class="form-group text-white">
                                                 <div class="col-lg-12">
-                                                    <asp:CheckBox ID="Terms" runat="server" />
+                                                    <asp:CheckBox ID="Terms" runat="server" required />
                                                     I have agreed to the <a href="TermsAndCondition.aspx">Terms & Conditions.</a>
                                                     </label>
                                                 </div>

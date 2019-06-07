@@ -73,7 +73,7 @@
             $('#dtFeedback').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
-                    'print'
+                    'pdf'
                 ]
             });
         });

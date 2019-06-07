@@ -131,6 +131,26 @@
                                         OnClick="btnReject_Click">
                     <i class="fa fa-thumbs-down"></i> Reject
                                     </asp:LinkButton>
+
+                                    <%--PAYPAL--%>
+
+                                    <%--<%
+                                        string code = Guid.NewGuid().ToString();
+                                        Session["Code"] = code;
+                                    %>
+
+                                    <input type="hidden" name="cmd" value="_xclick" />
+                                    <input type="hidden" name="business" value="david.aligaen-buyer@benilde.edu.ph" />
+                                    <input type="hidden" name="currency_code" value="PHP" />
+
+                                    <input type="hidden" name="item_name" value="My Cart" />
+                                    <input type="hidden" name="amount" value="<%= Session["total"].ToString() %>" />
+                                    <input type="hidden" name="return" value="http://localhost:58759/Thanks.aspx?code=<%=code%>" />--%>
+                                    <%--<input type="submit" class="btn btn-lg btn-success btn-block" value="Paypal" />--%>
+
+                                    <asp:Button ID="btnPayNow" runat="server" target="_blank" ImageUrl="~/Images/Logo/paypal.png" Text=" Paypal Refund"
+                                        PostBackUrl="https://www.sandbox.paypal.com/cgi-bin/webscr" />
+
                                     <a href="OrdersAdmin.aspx" class="btn btn-default btn-block btn-lg">Back to Orders
                                     </a>
                                 </div>

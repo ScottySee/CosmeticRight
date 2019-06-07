@@ -19,6 +19,9 @@
     <link href="bootstrap/assets/css/blk-design-system.css" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="bootstrap/assets/demo/demo.css" rel="stylesheet" />
+    <!-- Data tables -->
+    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/buttons/1.5.4/css/buttons.dataTables.min.css" rel="stylesheet" />
 </head>
 <body>
     <!--Navbar-->
@@ -98,14 +101,22 @@
                 <div class="text-white alert alert-danger" runat="server" id="Products"></div>
                 <div class="text-white alert alert-danger" runat="server" id="Orders"></div>
             </div>
-           
+
             <asp:ContentPlaceHolder ID="body" runat="server">
             </asp:ContentPlaceHolder>
         </div>
     </div>
 
-    <asp:ContentPlaceHolder ID="scripts" runat="server">
-    </asp:ContentPlaceHolder>
+
+    <!--   Core JS Files   -->
+
+    <script src="bootstrap/assets/js/core/jquery.min.js" type="text/javascript"></script>
+
+
+    <script src="bootstrap/assets/js/core/popper.min.js" type="text/javascript"></script>
+    <script src="bootstrap/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+    <script src="bootstrap/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+
     <!-- Data tables -->
     <script src="https://code.jquery.com/jquery-3.3.1.js" type="text/javascript"></script>
 
@@ -117,11 +128,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js" type="text/javascript"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.4/js/buttons.html5.min.js" type="text/javascript"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.4/js/buttons.print.min.js" type="text/javascript"></script>
-    <!--   Core JS Files   -->
-    <script src="bootstrap/assets/js/core/jquery.min.js" type="text/javascript"></script>
-    <script src="bootstrap/assets/js/core/popper.min.js" type="text/javascript"></script>
-    <script src="bootstrap/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
-    <script src="bootstrap/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
     <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
     <script src="bootstrap/assets/js/plugins/bootstrap-switch.js"></script>
     <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
@@ -135,7 +141,26 @@
     <script src="bootstrap/assets/demo/demo.js"></script>
     <!-- Control Center for Black UI Kit: parallax effects, scripts for the example pages etc -->
     <script src="bootstrap/assets/js/blk-design-system.min.js?v=1.0.0" type="text/javascript"></script>
+
+    <asp:ContentPlaceHolder ID="scripts" runat="server">
+    </asp:ContentPlaceHolder>
+
+   <style>
+        @media print {
+            div {
+                font-size: large;
+            }
+
+            @page {
+                text-size-adjust: auto;
+                background-size: auto;
+                font-size: larger;
+            }
+        }
+    </style>
+
     <script>
+
         $(document).ready(function () {
             blackKit.initDatePicker();
             blackKit.initSliders();
@@ -150,18 +175,5 @@
             }
         }
     </script>
-    <style>
-        @media print {
-            div {
-                font-size: large;
-            }
-
-            @page {
-                text-size-adjust: auto;
-                background-size: auto;
-                font-size: larger;
-            }
-        }
-    </style>
 </body>
 </html>

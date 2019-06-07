@@ -62,7 +62,7 @@
                     </li>
                     <li class="nav-item p-0">
                         <a class="nav-link" href="OrdersAdmin.aspx">
-                            <i class="fa fa-user-circle"></i>Orders
+                            <i class="fa fa-key"></i>Orders
                         </a>
                     </li>
                     <li class="nav-item p-0">
@@ -153,13 +153,13 @@
     <asp:ContentPlaceHolder ID="scripts" runat="server">
     </asp:ContentPlaceHolder>
 
-<%--    <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+<%--<script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
     <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
 
     <script src="Scripts/fusioncharts.js"></script>
     <script src="Scripts/fusioncharts.charts.js"></script>--%>
 
-    <%--  <script>
+    <%--<script>
 
         $(document).ready(function () {
             $('dtannouncement').DataTable({
@@ -170,6 +170,7 @@
             });
         });
     </script>--%>
+
     <style>
         @media print {
             div {

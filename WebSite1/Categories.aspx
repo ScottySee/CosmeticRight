@@ -62,7 +62,7 @@
                                 <table id="dtcategories" class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Cat ID</th>
+                                            <th>#</th>
                                             <th>Category</th>
                                             <th>User</th>
                                             <th>Status</th>
@@ -96,7 +96,6 @@
                             </div>
                         </div>
                     </div>
-                    <br />
                 </div>
             </div>
         </form>
@@ -108,13 +107,14 @@
 
     <%-- for data tables --%>
     <script>
-            $(document).ready(function () {
-                $('#dtcategories').DataTable({
-                    dom: 'Bfrtip',
-                    buttons: [
-                    ]
-                });
+        $(document).ready(function () {
+            $('#dtcategories').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'pdf'
+                ]
             });
+        });
     </script>
 
     <%-- <!-- Data tables Scripts -->

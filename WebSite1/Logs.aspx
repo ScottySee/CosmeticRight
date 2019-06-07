@@ -19,16 +19,15 @@
                 <div class="card-body">
                     <div class="col-lg-12">
                         <center><h1>Audit Logs</h1></center>
-                        <table id="dtLogs" class="table table-hover">
+                        <table id="dtlogs" class="table table-hover">
                             <thead>
                                 <th>#</th>
                                 <th>User</th>
                                 <th>Log Time</th>
                                 <th>Activity</th>
-                                <th></th>
                             </thead>
                             <tbody>
-                                <asp:ListView ID="lvOrders" runat="server">
+                                <asp:ListView ID="lvLogs" runat="server">
                                     <ItemTemplate>
                                         <tr class="bg-default">
                                             <td><%# Eval("LogID") %></td>
@@ -59,12 +58,24 @@
 <%-- for data tables --%>
     <script>
         $(document).ready(function () {
-            $('#dtLogs').DataTable({
+            $('#dtlogs').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
+                    'pdf'
                 ]
             });
         });
     </script>
+
+    <%--<script>
+        $(document).ready(function () {
+            $('#dtannouncement').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'print'
+                ]
+            });
+        });
+    </script>--%>
 </asp:Content>
 

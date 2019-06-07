@@ -10,6 +10,7 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+
         if (Request.QueryString["ID"] != null)
         {
             int orderNo = 0;
@@ -76,9 +77,13 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
 
                             btnAccept.Visible = ltStatus.Text == "Pending" ? true : false;
                             btnReject.Visible = ltStatus.Text == "Pending" ? true : false;
+                            //btnAccept.Visible = ltStatus.Text == "Paid, Pending" ? true : false;
+                            //btnReject.Visible = ltStatus.Text == "Paid, Pending" ? true : false;
 
                             ltDateOrdered.Text = data["DateOrdered"].ToString();
                             ltPaymentMethod.Text = data["PaymentMethod"].ToString();
+
+                            btnPayNow.Visible = ltPaymentMethod.Text == "Paypal" ? true : false;
                         }
                     }
                     else

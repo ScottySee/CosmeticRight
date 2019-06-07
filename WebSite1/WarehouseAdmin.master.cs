@@ -19,7 +19,7 @@ public partial class Admin1 : System.Web.UI.MasterPage
             using (SqlConnection con = new SqlConnection(Util.GetConnection()))
             {
                 con.Open();
-                string query = @"Select count(quantity) Count from ProductInventory pi, Products p where pi.ProductID = p.ProductID and pi.Quantity < p.Criticallevel and pi.Status != 'Archived'";
+                string query = @"Select count(i.quantity) Count from Inventory i, Products p, ProductInventory pi where i.ProductID = p.ProductID and i.Quantity <= p.Criticallevel and pi.Status != 'Archived'";
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
                     using (SqlDataReader data = cmd.ExecuteReader())
