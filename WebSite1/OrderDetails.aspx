@@ -36,7 +36,7 @@
                                             <small>Category: <%# Eval("Category") %></small>
                                         </td>
                                         <td>Php<%# Eval("Price", "{0: #,##0.00}") %></td>
-                                        <td><%# Eval("Quantity") %>
+                                        <td><asp:label ID="txtquantity"  runat="server" Text='<%# Bind("Quantity") %>'/></td>
                                         <td>Php<%# Eval("Amount", "{0: #,##0.00}") %></td>
                                     </tr>
                                 </ItemTemplate>

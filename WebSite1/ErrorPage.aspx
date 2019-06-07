@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Member.master" AutoEventWireup="true" CodeFile="ErrorPage.aspx.cs" Inherits="ErrorPage" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Guest.master" AutoEventWireup="true" CodeFile="ErrorPage.aspx.cs" Inherits="ErrorPageGuest" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="header" Runat="Server">
     <div class="header bg-gradient-gray-dark pb-5 pt-5 pt-md-8">
@@ -31,4 +31,3 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scripts" Runat="Server">
 </asp:Content>
-
