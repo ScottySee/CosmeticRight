@@ -202,7 +202,8 @@
         }
     </script>
 
-
+    <script src="/assets/vendor/chart.js/dist/Chart.min.js"></script>
+    <script src="/assets/vendor/chart.js/dist/Chart.extension.js"></script>
 
     <script src="Scripts/fusioncharts.js"></script>
     <script src="Scripts/fusioncharts.charts.js"></script>
