@@ -230,6 +230,10 @@ public partial class CheckoutCOD : System.Web.UI.Page
                         cmd.Parameters.AddWithValue("@ProductID", ProductID[count]);
                         cmd.ExecuteNonQuery();
                         count++;
+
+                        //start of Auditlog 
+                        //Util.InventoryRecord(Session["UserID"].ToString(), ProductID[count], item, "The member created an order");
+                        //end of auditlog
                     }
                 }
             }

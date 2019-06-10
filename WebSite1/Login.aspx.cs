@@ -28,19 +28,17 @@ public partial class Login : System.Web.UI.Page
                 Response.Redirect("Member.aspx");
             }
         }
-
     }
 
     protected void BtnLogin_Click(object sender, EventArgs e)
     {
-      
         if (Request.Form["g-recaptcha-response"] != "")
         {
             using (SqlConnection con = new SqlConnection(Util.GetConnection()))
             {
                 con.Open();
                 string query = @"SELECT * FROM Users
-                                WHERE Email=@Email AND Password=@Password";
+                                WHERE Email=@Email AND Password=@Password AND Status='Verified'";
                 string query1 = @"INSERT INTO WebsiteVisit VALUES (@Date)";
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {

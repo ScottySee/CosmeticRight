@@ -15,7 +15,7 @@
                                     <asp:label id="Label2" runat="server" text="Label"></asp:label>
                                 </div>
                                 <div class="alert alert-danger" id="error" runat="server" visible="false">
-                                    <strong>Invalid Email or Password.</strong>
+                                    <strong>Invalid Email or Password Or Email not verified.</strong>
                                 </div>
                                 <br />
                                 <div class="form-group">
@@ -23,6 +23,9 @@
                                 </div>
                                 <div class="form-group">
                                     <asp:textbox runat="server" id="password" type="password" placeholder="Password" cssclass="form-control" maxlength="20"></asp:textbox>
+                                </div>
+                                <div class="form-group">
+                                    <asp:textbox runat="server" id="txtstatus" cssclass="form-control" maxlength="20" Visible="false"></asp:textbox>
                                 </div>
                                 <div class="g-recaptcha" data-sitekey="6LfAbqUUAAAAALSwsXhZ-dTJIsNujGLIsmLvB3Pa"></div>
                                 <div class="text-center">

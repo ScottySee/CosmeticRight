@@ -262,6 +262,10 @@ public partial class OrderDetails : System.Web.UI.Page
                         cmd.Parameters.AddWithValue("@ProductID", ProductID[count]);
                         cmd.ExecuteNonQuery();
                         count++;
+
+                        //start of Auditlog 
+                        //Util.InventoryRecord(Session["UserID"].ToString(), ProductID[count], item, "The member cancels order");
+                        //end of auditlog
                     }
                 }
             }

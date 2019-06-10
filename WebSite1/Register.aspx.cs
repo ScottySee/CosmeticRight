@@ -78,7 +78,9 @@ public partial class Register : System.Web.UI.Page
                         con.Open();
                         string SQL = @"INSERT INTO Users VALUES (@UserType, @Firstname, @Lastname, @Gender,
                          @BuildingNo, @Street, @Municipality, @CityID, @Landline, @Mobile,
-                         @Email, @Password, @EmailCode, @DateAdded, @DateModified)";
+                         @Email, @Password, @EmailCode, @Status, @DateAdded, @DateModified)";
+
+                        string SQL2 = @"SELECT * FROM Users WHERE Email=@Email";
                         using (SqlCommand cmd = new SqlCommand(SQL, con))
                         {
                             cmd.Parameters.AddWithValue("@UserType", "3");
@@ -94,51 +96,105 @@ public partial class Register : System.Web.UI.Page
                             cmd.Parameters.AddWithValue("@Email", Server.HtmlEncode(email.Text.Trim()));
                             cmd.Parameters.AddWithValue("@Password", Util.CreateSHAHash(password.Text));
                             cmd.Parameters.AddWithValue("@EmailCode", Server.HtmlEncode("dgxdhtrse33434"));
+                            cmd.Parameters.AddWithValue("@Status", Server.HtmlEncode("Unverified"));
                             cmd.Parameters.AddWithValue("@DateAdded", DateTime.Now);
                             cmd.Parameters.AddWithValue("@DateModified", DBNull.Value);
                             cmd.ExecuteNonQuery();
 
-                            //start of Auditlog 
-                            //Util.Log(Session["UserID"].ToString(), "The Member has created their account");
-                            //end of auditlog
+                            Label2.Visible = true;
+                            Label2.Text = "Successfully Registered.";
 
-                            //send email
-                            using (MailMessage mm = new MailMessage("scottysee98@gmail.com", email.Text))
+                            //firstname.Text = null;
+                            //lastname.Text = null;
+                            //gender.SelectedIndex = 0;
+                            //buildingno.Text = null;
+                            //street.Text = null;
+                            //municipality.Text = null;
+                            //ddlCity.SelectedIndex = 0;
+                            //landline.Text = null;
+                            //mobile.Text = null;
+                            //email.Text = null;
+
+                        }
+
+                        using (SqlCommand cmd = new SqlCommand(SQL2, con))
+                        {
+                            cmd.Parameters.AddWithValue("@Email", Server.HtmlEncode(email.Text.Trim()));
+                            using (SqlDataReader data = cmd.ExecuteReader())
                             {
-                                mm.Subject = "Email Verification";
-                                mm.Body = "Hi, " + firstname.Text + "<br/>" + "Thank you for registering on our website!<br/>" + "<br/>" + "This email is send for congratulating you for successfully registering on our website!" + "<br/>" +
-                                  "These are your email & your password " + "<br/>" + "Email: " + email.Text + "<br/>" + "Password: " + password.Text + "<br/>" + "<br/>" + "If you have any question, please email us at scottysee98@gmail.com" + "<br/>" + "Thank You!";
+                                if (data.HasRows) //credentials are correct
+                                {
+                                    while (data.Read())
+                                    {
+                                        ID = data["UserID"].ToString();
+                                    }
+                                    using (SqlConnection com = new SqlConnection(Util.GetConnection()))
+                                    {
+                                        com.Open();
+                                        string SQL3 = @"UPDATE Users SET EmailCode = 'dgxdhtrse33434' WHERE Email=@Email";
+                                        using (SqlCommand cmd2 = new SqlCommand(SQL3, com))
+                                        {
+                                            cmd2.Parameters.AddWithValue("@Email", Server.HtmlEncode(email.Text.Trim()));
+                                            cmd2.ExecuteNonQuery();
+                                        }
+                                    }
 
-                                mm.IsBodyHtml = true;
-                                SmtpClient smtp = new SmtpClient();
-                                smtp.Host = "smtp.gmail.com";
-                                smtp.EnableSsl = true;
-                                NetworkCredential NetworkCred = new NetworkCredential("scottysee98@gmail.com", "POOHPOOH98"); //email and password of the sender.
-                                smtp.UseDefaultCredentials = true;
-                                smtp.Credentials = NetworkCred;
-                                smtp.Port = 587;
-                                smtp.Send(mm);
-                                ClientScript.RegisterStartupScript(GetType(), "alert", "alert('Email sent.');", true);
+                                    //send email
+                                    using (MailMessage mm = new MailMessage("scottysee98@gmail.com", email.Text))
+                                    {
+                                        mm.Subject = "Email Confirmation";
+                                        mm.Body = "Hi, " + firstname.Text + "<br/>" + "Thank you for registering on our website!<br/>" + "<br/>" + "This email was sent for congratulating you for successfully registering on our website!" + "<br/>" + "Click the link to verify your account " + "<a href='http://localhost:58759/EmailVerification.aspx?UserID=" + ID + "'>Verify Account</a>" + "<br/>" + "<br/>" + "If you have any question, please email us at scottysee98@gmail.com" + "<br/>" + "Thank You!";
+
+                                        mm.IsBodyHtml = true;
+                                        SmtpClient smtp = new SmtpClient();
+                                        smtp.Host = "smtp.gmail.com";
+                                        smtp.EnableSsl = true;
+                                        NetworkCredential NetworkCred = new NetworkCredential("scottysee98@gmail.com", "POOHPOOH98"); //email and password of the sender.
+                                        smtp.UseDefaultCredentials = true;
+                                        smtp.Credentials = NetworkCred;
+                                        smtp.Port = 587;
+                                        smtp.Send(mm);
+                                        ClientScript.RegisterStartupScript(GetType(), "alert", "alert('Email sent.');", true);
+                                    }
+                                }
+                                else //did not match
+                                {
+
+                                }
                             }
-
-                            Response.Redirect("Login.aspx");
                         }
                     }
                 }
-
                 else
                 {
                     Label2.Visible = true;
                     Label2.Text = "Password must be the same.";
                 }
             }
-
         }
         else
         {
             Label2.Visible = true;
             Label2.Text = "Terms and Condition checkbox should be checked";
         }
-
     }
 }
+
+////send email
+//                            using (MailMessage mm = new MailMessage("scottysee98@gmail.com", email.Text))
+//                            {
+//                                mm.Subject = "Email Verification";
+//                                mm.Body = "Hi, " + firstname.Text + "<br/>" + "Thank you for registering on our website!<br/>" + "<br/>" + "This email was sent for congratulating you for successfully registering on our website!" + "<br/>" +
+//                                  "Click the link to verify your account " + "<a href='http://localhost:58759/EmailVerification.aspx?UserID=" + ID + "'>Verify Account</a>" + "<br/>" + "<br/>" + "If you have any question, please email us at scottysee98@gmail.com" + "<br/>" + "Thank You!";
+
+//                                mm.IsBodyHtml = true;
+//                                SmtpClient smtp = new SmtpClient();
+//smtp.Host = "smtp.gmail.com";
+//                                smtp.EnableSsl = true;
+//                                NetworkCredential NetworkCred = new NetworkCredential("scottysee98@gmail.com", "POOHPOOH98"); //email and password of the sender.
+//smtp.UseDefaultCredentials = true;
+//                                smtp.Credentials = NetworkCred;
+//                                smtp.Port = 587;
+//                                smtp.Send(mm);
+//                                ClientScript.RegisterStartupScript(GetType(), "alert", "alert('Email sent.');", true);
+//                            }

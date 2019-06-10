@@ -49,7 +49,7 @@ public partial class EditMemberProfile : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"SELECT * FROM Users WHERE UserID=@UserID";
+            string query = @"SELECT Firstname, Lastname, Gender, BuildingNo, Street, Municipality, CityID, Landline, Mobile, Email FROM Users WHERE UserID=@UserID";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -84,7 +84,7 @@ public partial class EditMemberProfile : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"UPDATE Users SET FirstName=@FirstName, LastName=@LastName, Gender=@Gender, BuildingNo=@BuildingNo, Street=@Street, Municipality=@Municipality, CityID=@CityID, Landline=@Landline, Mobile=@Mobile, Email=@Email, EmailCode=@EmailCode, DateModified=@DateModified
+            string query = @"UPDATE Users SET Firstname=@Firstname, Lastname=@Lastname, Gender=@Gender, BuildingNo=@BuildingNo, Street=@Street, Municipality=@Municipality, CityID=@CityID, Landline=@Landline, Mobile=@Mobile, Email=@Email, EmailCode=@EmailCode, DateModified=@DateModified
               WHERE UserID=@UserID";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
