@@ -148,6 +148,10 @@ public partial class ProductInventory : System.Web.UI.Page
                 Util.Log(Session["UserID"].ToString(), "The warhouse admin has added an inventory");
                 //end of auditlog
 
+                //start of Auditlog 
+                Util.InventoryRecord(txtavailable.Text, "The warehouse admin has added an inventory.");
+                //end of auditlog
+
                 message1.InnerText = "Inventory Successfully Added.";
 
                 //lahat ng textbox

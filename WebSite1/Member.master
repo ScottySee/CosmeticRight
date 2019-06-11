@@ -80,13 +80,13 @@
                         </a>
                     </li>
                     <li class="nav-item p-0">
-                        <a class="nav-link" href="ProductDisplay.aspx">
-                            <i class="fa fa-medkit"></i>Products
+                        <a class="nav-link" href="Orders.aspx">
+                            <i class="fa fa-list-alt"></i>Orders
                         </a>
                     </li>
                     <li class="nav-item p-0">
-                        <a class="nav-link" href="Orders.aspx">
-                            <i class="fa fa-list-alt"></i>Orders
+                        <a class="nav-link" href="ProductDisplay.aspx">
+                            <i class="fa fa-medkit"></i>Products
                         </a>
                     </li>
                     <li class="nav-item p-0">

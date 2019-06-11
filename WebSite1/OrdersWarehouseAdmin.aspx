@@ -42,6 +42,7 @@
                                     <asp:ListItem Value="Processing" style="color: black">Processing</asp:ListItem>
                                     <asp:ListItem Value="Packaging" style="color: black">Packagiing</asp:ListItem>
                                     <asp:ListItem Value="For Delivery" style="color: black">For Delivery</asp:ListItem>
+                                    <asp:ListItem Value="Done" style="color: black">Done</asp:ListItem>
                                 </asp:DropDownList>
                             </div>
                         </div>

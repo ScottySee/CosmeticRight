@@ -23,6 +23,12 @@
     <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/buttons/1.5.4/css/buttons.dataTables.min.css" rel="stylesheet" />
 
+
+    <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+
+
+    <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
+
 </head>
 <body>
     <!--Navbar-->
@@ -83,6 +89,11 @@
                     <li class="nav-item p-0">
                         <a class="nav-link" href="Logs.aspx">
                             <i class="fa fa-user-circle"></i>Audit Logs
+                        </a>
+                    </li>
+                    <li class="nav-item p-0">
+                        <a class="nav-link" href="Reports.aspx">
+                            <i class="fa fa-user-circle"></i>Reports
                         </a>
                     </li>
                     <li class="nav-item p-0">
@@ -153,7 +164,7 @@
     <asp:ContentPlaceHolder ID="scripts" runat="server">
     </asp:ContentPlaceHolder>
 
-<%--<script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+    <%--<script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
     <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
 
     <script src="Scripts/fusioncharts.js"></script>

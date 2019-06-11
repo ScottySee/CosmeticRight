@@ -242,6 +242,10 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
                         cmd.Parameters.AddWithValue("@ProductID", ProductID[count]);
                         cmd.ExecuteNonQuery();
                         count++;
+
+                        //start of Auditlog 
+                        //Util.InventoryRecord(item, "The office admin has rejected the order, inventory returned");
+                        //end of auditlog
                     }
                 }
             }

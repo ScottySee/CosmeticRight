@@ -58,7 +58,9 @@ public partial class Categories : System.Web.UI.Page
         //@"Server=MSI\MSSQLSERVER2;Database=Test;Integrated Security=true";
         {
             con.Open();
-            string query = @"SELECT c.CatID, Category, u.Lastname + ', ' + u.Firstname AS Username, Status FROM Categories                   c INNER JOIN Users u ON c.UserID = u.UserID WHERE Status != 'Archived'";
+            string query = @"SELECT c.CatID, c.Category, u.Lastname + ', ' + u.Firstname AS Username, c.Status FROM Categories c
+                                INNER JOIN Users u ON c.UserID = u.UserID
+								WHERE c.Status != 'Archived' ";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {

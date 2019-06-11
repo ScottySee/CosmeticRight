@@ -145,25 +145,46 @@ public class Util
         }
     }
 
-    //public static void InventoryRecord(string UserID, string Product, string quantity, string activity)
-    //{
-    //    using (SqlConnection con = new SqlConnection(GetConnection()))
-    //    {
-    //        con.Open();
-    //        string query = @"INSERT INTO InventoryLog (UserID, Product, Quantity, LogTime, Activity)
-    //                            VALUES (@UserID, @Product, @Quantity, @LogTime, @Activity)";
-    //        using (SqlCommand cmd = new SqlCommand(query, con))
-    //        {
-    //            cmd.Parameters.AddWithValue("@UserID", UserID);
-    //            cmd.Parameters.AddWithValue("@Product", Product);
-    //            cmd.Parameters.AddWithValue("@Quantity", quantity);
-    //            cmd.Parameters.AddWithValue("@LogTime", DateTime.Now);
-    //            cmd.Parameters.AddWithValue("@Activity", activity);
+    public static void InventoryRecord(string ProductID, string quantity, string activity)
+    {
+        using (SqlConnection con = new SqlConnection(GetConnection()))
+        {
+            con.Open();
+            string query = @"INSERT INTO InventoryLog (UserID, ProductID, Quantity, LogTime, Activity)
+                                VALUES (@UserID, @ProductID, @Quantity, @LogTime, @Activity)";
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                string UserID = HttpContext.Current.Session["UserID"].ToString();
+                cmd.Parameters.AddWithValue("@UserID", UserID);
+                cmd.Parameters.AddWithValue("@ProductID", ProductID);
+                cmd.Parameters.AddWithValue("@Quantity", quantity);
+                cmd.Parameters.AddWithValue("@LogTime", DateTime.Now);
+                cmd.Parameters.AddWithValue("@Activity", activity);
 
-    //            cmd.ExecuteNonQuery();
-    //        }
-    //    }
-    //}
+                cmd.ExecuteNonQuery();
+            }
+        }
+    }
+
+    public static void SalesRecord(string OrderNo, string Amount)
+    {
+        using (SqlConnection con = new SqlConnection(GetConnection()))
+        {
+            con.Open();
+            string query = @"INSERT INTO SalesLog (UserID, OrderNo, Amount, LogTime)
+                                VALUES (@UserID, @OrderNo, @Amount, @LogTime)";
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                string UserID = HttpContext.Current.Session["UserID"].ToString();
+                cmd.Parameters.AddWithValue("@UserID", UserID);
+                cmd.Parameters.AddWithValue("@OrderNo", OrderNo);
+                cmd.Parameters.AddWithValue("@Amount", Amount);
+                cmd.Parameters.AddWithValue("@LogTime", DateTime.Now);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+    }
 
     //public static string GetMimeTypeByWindowsRegistry(string fileNameOrExtension)
     //{

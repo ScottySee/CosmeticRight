@@ -185,8 +185,7 @@ public partial class CheckoutCOD : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@DateOrdered", DateTime.Now);
                 cmd.Parameters.AddWithValue("@PaymentMethod", Server.HtmlEncode("Cash on Delivery"));
                 cmd.Parameters.AddWithValue("@Status", Server.HtmlEncode("Pending"));
-                orderNo = (int)cmd.ExecuteScalar();
-
+                orderNo = (int)cmd.ExecuteScalar(); 
             }
 
         }
@@ -200,6 +199,8 @@ public partial class CheckoutCOD : System.Web.UI.Page
             string query = @"UPDATE OrderDetails SET OrderNo=@OrderNo
              WHERE OrderNo IS NULL AND UserID=@UserID";
 
+            //string query2 = @"Select Sum(Amount) as Total Where OrderNo=@OrderNo From OrderDetails";
+
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@OrderNo", orderNo);
@@ -207,7 +208,6 @@ public partial class CheckoutCOD : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@UserID ", Session["UserID"].ToString());
                 // use Session["userid"].ToString() instead of 1
                 cmd.ExecuteNonQuery();
-
             }
         }
         #endregion
@@ -217,12 +217,14 @@ public partial class CheckoutCOD : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             int count = 0;
+
             foreach (var item in quantity)
             {
                 if (item != null)
                 {
                     con.Close();
                     con.Open();
+                    //string mystring = ProductID.ToString();
                     string query = @"UPDATE Inventory SET Quantity = Quantity - @Quantity WHERE ProductID = @ProductID AND Inventory.Quantity > (Select Criticallevel from Products where ProductID = @ProductID)";
                     using (SqlCommand cmd = new SqlCommand(query, con))
                     {
@@ -232,16 +234,16 @@ public partial class CheckoutCOD : System.Web.UI.Page
                         count++;
 
                         //start of Auditlog 
-                        //Util.InventoryRecord(Session["UserID"].ToString(), ProductID[count], item, "The member created an order");
+                        //Util.InventoryRecord(ProductID[count], item, "The member has created an order, inventory deducted");
                         //end of auditlog
-                    }
+
+                        //Convert.ToString("ProductID");
+                       // Convert.ToString(ProductID[count])
+}
                 }
             }
         }
         #endregion
-
         Response.Redirect("Orders.aspx");
     }
-
-
 }

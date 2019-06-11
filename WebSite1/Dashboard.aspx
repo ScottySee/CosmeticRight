@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OfficeAdmin.master" AutoEventWireup="true" CodeFile="Dashboard.aspx.cs" Inherits="Dashboard" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OfficeAdmin.master" AutoEventWireup="true" CodeFile="Dashboard.aspx.cs" Inherits="Dashboard" ValidateRequest="false"%>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="header" runat="Server">
     <div class="header bg-gradient-gray-dark pb-5 pt-5 pt-md-8">
@@ -72,98 +72,98 @@
         <%--</nav>--%>
         <!-- Header -->
         <%--<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">--%>
-            <div class="container-fluid">
-                <div class="header-body">
-                    <!-- Card stats -->
-                    <div class="row">
-                        <div class="col-xl-3 col-lg-6">
-                            <div class="card card-stats mb-4 mb-xl-0">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col">
-                                            <h3 class="card-title text-uppercase mb-0 text-white">Total Visits</h3>
-                                            <asp:Label ID="count" runat="server" class="h1 font-weight-bold mb-0 text-black form-control" />
-                                            <%--<span class="h2 font-weight-bold mb-0 text-white">350,897</span>--%>
-                                        </div>
-                                        <div class="col-auto">
-                                            <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
-                                                <i class="fas fa-chart-bar"></i>
-                                            </div>
+        <div class="container-fluid">
+            <div class="header-body">
+                <!-- Card stats -->
+                <div class="row">
+                    <div class="col-xl-3 col-lg-6">
+                        <div class="card card-stats mb-4 mb-xl-0">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h3 class="card-title text-uppercase mb-0 text-white">Total Visits</h3>
+                                        <asp:Label ID="count" runat="server" class="h1 font-weight-bold mb-0 text-black form-control" />
+                                        <%--<span class="h2 font-weight-bold mb-0 text-white">350,897</span>--%>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                                            <i class="fas fa-chart-bar"></i>
                                         </div>
                                     </div>
-                                    <%--<p class="mt-3 mb-0 text-muted text-sm">
+                                </div>
+                                <%--<p class="mt-3 mb-0 text-muted text-sm">
                                         <span class="text-success mr-2"><i class="fa fa-arrow-up"></i>3.48%</span>
                                         <span class=" text-white">Since last month</span>
                                     </p>--%>
-                                </div>
                             </div>
                         </div>
-                        <div class="col-xl-3 col-lg-6">
-                            <div class="card card-stats mb-4 mb-xl-0">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col">
-                                            <h3 class="card-title text-uppercase mb-0 text-white">Orders</h3>
-                                            <asp:Label ID="count1" runat="server" class="h1 font-weight-bold mb-0 text-black form-control" />
-                                        </div>
-                                        <div class="col-auto">
-                                            <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
-                                                <i class="fas fa-chart-pie"></i>
-                                            </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6">
+                        <div class="card card-stats mb-4 mb-xl-0">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h3 class="card-title text-uppercase mb-0 text-white">Orders</h3>
+                                        <asp:Label ID="count1" runat="server" class="h1 font-weight-bold mb-0 text-black form-control" />
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
+                                            <i class="fas fa-chart-pie"></i>
                                         </div>
                                     </div>
-                                    <%--<p class="mt-3 mb-0 text-muted text-sm">
+                                </div>
+                                <%--<p class="mt-3 mb-0 text-muted text-sm">
                                         <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i>3.48%</span>
                                         <span class="text-nowrap">Since last week</span>
                                     </p>--%>
-                                </div>
                             </div>
                         </div>
-                        <div class="col-xl-3 col-lg-6">
-                            <div class="card card-stats mb-4 mb-xl-0">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col">
-                                            <h3 class="card-title text-uppercase text-white mb-0">Users</h3>
-                                            <asp:Label ID="count2" runat="server" class="h1 font-weight-bold mb-0 text-black form-control" />
-                                        </div>
-                                        <div class="col-auto">
-                                            <div class="icon icon-shape bg-info text-black rounded-circle shadow">
-                                                <i class="fas fa-users"></i>
-                                            </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6">
+                        <div class="card card-stats mb-4 mb-xl-0">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h3 class="card-title text-uppercase text-white mb-0">Users</h3>
+                                        <asp:Label ID="count2" runat="server" class="h1 font-weight-bold mb-0 text-black form-control" />
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-info text-black rounded-circle shadow">
+                                            <i class="fas fa-users"></i>
                                         </div>
                                     </div>
-                                    <%--<p class="mt-3 mb-0 text-muted text-sm">
+                                </div>
+                                <%--<p class="mt-3 mb-0 text-muted text-sm">
                                         <span class="text-warning mr-2"><i class="fas fa-arrow-down"></i>1.10%</span>
                                         <span class="text-nowrap">Since yesterday</span>
                                     </p>--%>
-                                </div>
                             </div>
                         </div>
-                        <div class="col-xl-3 col-lg-6">
-                            <div class="card card-stats mb-4 mb-xl-0">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col">
-                                            <h3 class="card-title text-uppercase text-white mb-0">Sales</h3>
-                                            <asp:Label ID="sales" runat="server" class="h1 font-weight-bold mb-0 text-black form-control"></asp:Label>
-                                        </div>
-                                        <div class="col-auto">
-                                            <div class="icon icon-shape bg-success text-black rounded-circle shadow">
-                                                <i class="fas fa-money-bill-alt"></i>
-                                            </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6">
+                        <div class="card card-stats mb-4 mb-xl-0">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h3 class="card-title text-uppercase text-white mb-0">Sales</h3>
+                                        <asp:Label ID="sales" runat="server" class="h1 font-weight-bold mb-0 text-black form-control"></asp:Label>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-success text-black rounded-circle shadow">
+                                            <i class="fas fa-money-bill-alt"></i>
                                         </div>
                                     </div>
-                                    <%--<p class="mt-3 mb-0 text-muted text-sm">
+                                </div>
+                                <%--<p class="mt-3 mb-0 text-muted text-sm">
                                         <span class="text-success mr-2"><i class="fas fa-arrow-up"></i>12%</span>
                                         <span class="text-nowrap">Since last month</span>
                                     </p>--%>
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         <%--</div>--%>
         <br />
         <br />
@@ -198,6 +198,9 @@
                         </div>
                         <div class="card-body">
                             <!-- Chart -->
+                            <%--<div style="text-align: center">
+                                <asp:Literal ID="Literal1" runat="server"></asp:Literal>
+                            </div>--%>
                             <div class="chart">
                                 <!-- Chart wrapper -->
                                 <canvas id="chart-sales" class="chart-canvas"></canvas>
@@ -216,6 +219,7 @@
                             </div>
                         </div>
                         <div class="card-body">
+                            
                             <!-- Chart -->
                             <div class="chart">
                                 <canvas id="chart-orders" class="chart-canvas"></canvas>
@@ -228,5 +232,53 @@
     </div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scripts" runat="Server">
+    <script>
+        {
+            // Chart Configuration
+            "chart": {
+                "caption": "Countries With Most Oil Reserves [2017-18]",
+                    "subCaption": "In MMbbl = One Million barrels",
+                        "xAxisName": "Country",
+                            "yAxisName": "Reserves (MMbbl)",
+                                "numberSuffix": "K",
+                                    "theme": "fusion"
+            },
+            // Chart Data
+            "data": [
+                {
+                    "label": "Venezuela",
+                    "value": "290"
+                },
+                {
+                    "label": "Saudi",
+                    "value": "260"
+                },
+                {
+                    "label": "Canada",
+                    "value": "180"
+                },
+                {
+                    "label": "Iran",
+                    "value": "140"
+                },
+                {
+                    "label": "Russia",
+                    "value": "115"
+                },
+                {
+                    "label": "UAE",
+                    "value": "100"
+                },
+                {
+                    "label": "US",
+                    "value": "30"
+                },
+                {
+                    "label": "China",
+                    "value": "30"
+                }
+            ]
+        }
+    </script>
 </asp:Content>
 
