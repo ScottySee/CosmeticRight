@@ -46,11 +46,14 @@ public partial class Reports : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"Select s.SalesID, u.Lastname + ' ' + u.Firstname AS Customer, o.OrderNo, 
-                                (SELECT SUM(Amount) FROM OrderDetails od WHERE od.OrderNo = o.OrderNo) AS Total, s.LogTime FROM SalesLog s
-                                INNER JOIN Users u ON s.UserID = u.UserID
-                                INNER JOIN Orders o ON o.OrderNo= s.OrderNo";
+            string query = @"Select DISTINCT o.OrderNo, (SELECT u.Lastname + ' ' + u.Firstname AS Customer FROM Users u WHERE od.UserID=u.UserID) as Username, (SELECT SUM(Amount) FROM OrderDetails WHERE OrderNo = o.OrderNo) AS Total,
+                    o.DateOrdered From Orders o, OrderDetails od WHERE o.Status='Done'";
 
+            //@"Select o.OrderNo, u.Lastname + ' ' + u.Firstname AS Customer, (SELECT SUM(Amount) FROM OrderDetails WHERE OrderNo = o.OrderNo) AS Total,
+            //        o.DateOrdered From Orders o
+            //        INNER JOIN Users u ON s.UserID = u.UserID";
+
+            //@"Select(SELECT SUM(Amount) FROM OrderDetails WHERE OrderNo = o.OrderNo) AS Total From Orders o Where o.Status = 'Done'";
             //string query1 = @"SELECT DISTINCT o.OrderNo,
             //                    u.Lastname + ', ' + u.Firstname AS CustomerName,
             //                    (SELECT SUM(Amount) FROM OrderDetails WHERE OrderNo= o.OrderNo) AS TotalAmount,

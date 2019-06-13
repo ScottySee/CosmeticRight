@@ -7,6 +7,8 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.UI.DataVisualization.Charting;
+using System.Globalization;
 
 public partial class Dashboard : System.Web.UI.Page
 {
@@ -63,12 +65,15 @@ public partial class Dashboard : System.Web.UI.Page
         //Chart MyFirstChart = new Chart("column2d", "first_chart", "800", "550", "json", jsonData.ToString());
         //// render chart
         //Literal1.Text = MyFirstChart.Render();
+
         if (!IsPostBack)
         {
             GetWebsiteCount();
             GetOrderCount();
             GetUserCount();
             GetSales();
+            GetChartDataSales();
+            GetChartDataOrders();
         }
     }
 
@@ -148,7 +153,10 @@ public partial class Dashboard : System.Web.UI.Page
             con.Open();
             //string query = @"SELECT SUM(Amount) AS Total FROM OrderDetails";
 
-            string query = @"Select (SELECT SUM(Amount) FROM OrderDetails WHERE OrderNo = o.OrderNo) AS Total From Orders o Where o.Status='Done'";
+            string query = @"Select SUM(Amount) AS Total FROM OrderDetails od JOIN Orders o ON od.OrderNo = o.OrderNo WHERE o.Status='Done'";
+
+            //string query = @"Select DISTINCT o.OrderNo, (SELECT u.Lastname + ' ' + u.Firstname AS Customer FROM Users u WHERE od.UserID=u.UserID) as Username, (SELECT SUM(Amount) FROM OrderDetails WHERE OrderNo = o.OrderNo) AS Total,
+            //        o.DateOrdered From Orders o, OrderDetails od WHERE o.Status='Done'";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -165,4 +173,56 @@ public partial class Dashboard : System.Web.UI.Page
             }
         }
     }
+
+    private void GetChartDataSales()
+    {
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        {
+            con.Open();
+            string query = @"SELECT SUM(total) Total, DateOrdered  from (Select (SELECT Amount FROM OrderDetails WHERE OrderNo = o.OrderNo) Total, DATEPART(Month, DateOrdered) DateOrdered From Orders o 
+Where o.Status='Done') SalesPerMonth group by DateOrdered";
+
+            //string query = @"Select SUM(Amount) AS Total FROM OrderDetails od JOIN Orders o ON od.OrderNo = o.OrderNo WHERE o.Status = 'Done' GROUP BY DATEPART(MONTH, DateOrdered)";
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                using (SqlDataReader data = cmd.ExecuteReader())
+                {
+                    Series series = Chart1.Series["Series1"];
+                    while (data.Read())
+                    {
+                        series.Points.AddXY(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(int.Parse(data["DateOrdered"].ToString())), data["Total"]);
+
+                        //Convert.ToDateTime(data["DateStart"]).ToString("MM/dd/yyyy");
+                    }
+                }
+            }
+        }
+    }
+
+    private void GetChartDataOrders()
+    {
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        {
+            con.Open();
+            string query = @"Select Count(OrderNo) OrderCount, DateOrdered  from 
+(SELECT OrderNo, DATEPART(Month, DateOrdered) DateOrdered from 
+(SELECT * from Orders o where o.Status = 'Done') Table1) Table2 group by DateOrdered";
+
+            //string query = @"Select SUM(Amount) AS Total FROM OrderDetails od JOIN Orders o ON od.OrderNo = o.OrderNo WHERE o.Status = 'Done' GROUP BY DATEPART(MONTH, DateOrdered)";
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                using (SqlDataReader data = cmd.ExecuteReader())
+                {
+                    Series series = Chart2.Series["Series1"];
+                    while (data.Read())
+                    {
+                        series.Points.AddXY(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(int.Parse(data["DateOrdered"].ToString())), data["OrderCount"]);
+
+                        //Convert.ToDateTime(data["DateStart"]).ToString("MM/dd/yyyy");
+                    }
+                }
+            }
+        }
+    }
+
 }

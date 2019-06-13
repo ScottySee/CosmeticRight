@@ -28,7 +28,7 @@ public partial class OrderDetails : System.Web.UI.Page
                     GetOrderInfo(orderNo);
                     GetCustomerInfo(orderNo);
                     GetCity();
-                    if (ltStatus.Text == "Cancelled" || ltStatus.Text == "For Delivery")
+                    if (ltStatus.Text == "Cancelled" || ltStatus.Text == "For Delivery" || ltStatus.Text == "Done")
                     {
                         btnCancel.Visible = false;
                     }
@@ -261,11 +261,11 @@ public partial class OrderDetails : System.Web.UI.Page
                         cmd.Parameters.AddWithValue("@Quantity", item);
                         cmd.Parameters.AddWithValue("@ProductID", ProductID[count]);
                         cmd.ExecuteNonQuery();
-                        count++;
-
+                        
                         //start of Auditlog 
-                        //Util.InventoryRecord(Session["UserID"].ToString(), ProductID[count], item, "The member cancels order");
+                        Util.InventoryRecord(ProductID[count], item, "The member cancels order, inventory added.");
                         //end of auditlog
+                        count++;
                     }
                 }
             }

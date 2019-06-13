@@ -241,31 +241,14 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
                         cmd.Parameters.AddWithValue("@Quantity", item);
                         cmd.Parameters.AddWithValue("@ProductID", ProductID[count]);
                         cmd.ExecuteNonQuery();
-                        count++;
 
                         //start of Auditlog 
-                        //Util.InventoryRecord(item, "The office admin has rejected the order, inventory returned");
+                        Util.InventoryRecord(ProductID[count], item, "The office admin has rejected an order, inventory added");
                         //end of auditlog
+                        count++;
                     }
                 }
             }
         }
-
-        //using (SqlConnection con = new SqlConnection(Util.GetConnection()))
-        //{
-        //    con.Open();
-        //    string query1 = @"INSERT INTO InventoryLog
-        //                    VALUES (@Product, @QuantityOrdered, @AvailableQuantity, @RemainingQuantity, @LogTime, @Activity)";
-        //    using (SqlCommand cmd = new SqlCommand(query1, con))
-        //    {
-        //        cmd.Parameters.AddWithValue("@Product", "Dove");
-        //        cmd.Parameters.AddWithValue("@AvailableQuantity", "900");
-        //        cmd.Parameters.AddWithValue("@QuantityOrdered", "400");
-        //        cmd.Parameters.AddWithValue("@RemainingQuantity", "500");
-        //        cmd.Parameters.AddWithValue("@LogTime", "June 7, 2019 10:01:54 AM");
-        //        cmd.ExecuteNonQuery();
-        //        Response.Redirect("OrderDetailsAdmin.aspx");
-        //    }
-        //}
     }
 }

@@ -100,7 +100,7 @@
                                             </tr>
                                             <tr>
                                                 <td>VAT (12%)</td>
-                                                <td align="right">
+                                                <td align="right">Php
                                                     <asp:Literal ID="ltVAT" runat="server" />
                                                 </td>
                                             </tr>

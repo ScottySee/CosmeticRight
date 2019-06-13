@@ -139,7 +139,7 @@
                                                     <td><%# Eval("Product") %></td>
                                                     <td><%# Eval("CatID") %></td>
                                                     <td><%# Eval("Code") %></td>
-                                                    <td><%# Eval("Price") %></td>
+                                                    <td>Php <%# Eval("Price") %></td>
                                                     <td><img src='/Images/Products/<%# Eval("Image") %>' class="img-fluid" width="100" /></td>
                                                     <td><%# Eval("Status") %></td>
                                                     <td>

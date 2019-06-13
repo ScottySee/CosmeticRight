@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 
 public partial class CheckoutCOD : System.Web.UI.Page
 {
-    public static string[] quantity = new string [100];
+    public static string[] quantity = new string[100];
     public static string[] ProductID = new string[100];
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -141,7 +141,7 @@ public partial class CheckoutCOD : System.Web.UI.Page
             }
         }
     }
-   
+
     protected void btnCheckout_Click(object sender, EventArgs e)
     {
         #region Step #1: Update Customer Information 
@@ -185,7 +185,7 @@ public partial class CheckoutCOD : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@DateOrdered", DateTime.Now);
                 cmd.Parameters.AddWithValue("@PaymentMethod", Server.HtmlEncode("Cash on Delivery"));
                 cmd.Parameters.AddWithValue("@Status", Server.HtmlEncode("Pending"));
-                orderNo = (int)cmd.ExecuteScalar(); 
+                orderNo = (int)cmd.ExecuteScalar();
             }
 
         }
@@ -213,33 +213,29 @@ public partial class CheckoutCOD : System.Web.UI.Page
         #endregion
 
         #region Step #4: Minus Inventory Record 
-
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             int count = 0;
-
             foreach (var item in quantity)
             {
                 if (item != null)
                 {
                     con.Close();
                     con.Open();
-                    //string mystring = ProductID.ToString();
                     string query = @"UPDATE Inventory SET Quantity = Quantity - @Quantity WHERE ProductID = @ProductID AND Inventory.Quantity > (Select Criticallevel from Products where ProductID = @ProductID)";
+                    //string query2 = @"INSERT INTO InventoryLog VALUES (@UserID, @ProductID, @Quantity, @LogTime, @Activity)";
                     using (SqlCommand cmd = new SqlCommand(query, con))
                     {
                         cmd.Parameters.AddWithValue("@Quantity", item);
                         cmd.Parameters.AddWithValue("@ProductID", ProductID[count]);
                         cmd.ExecuteNonQuery();
-                        count++;
+                        
 
                         //start of Auditlog 
-                        //Util.InventoryRecord(ProductID[count], item, "The member has created an order, inventory deducted");
+                        Util.InventoryRecord(ProductID[count], item, "The member has created an order, inventory deducted.");
                         //end of auditlog
-
-                        //Convert.ToString("ProductID");
-                       // Convert.ToString(ProductID[count])
-}
+                        count++;
+                    }
                 }
             }
         }

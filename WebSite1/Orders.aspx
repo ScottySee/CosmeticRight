@@ -43,7 +43,7 @@
                                             <td><%# Eval("DateOrdered", "{0:MMM dd, yyyy}") %></td>
                                             <td><%# Eval("PaymentMethod") %></td>
                                             <td><%# Eval("CustomerName") %></td>
-                                            <td><%# Eval("TotalAmount", "{0: #,##0.00}") %></td>
+                                            <td>Php<%# Eval("TotalAmount", "{0: #,##0.00}") %></td>
                                             <td><%# Eval("Status") %></td>
                                             <td>
                                                 <a href='OrderDetails.aspx?ID=<%# Eval("OrderNo") %>' class="btn btn-xs btn-info"

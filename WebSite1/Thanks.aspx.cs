@@ -65,11 +65,12 @@ public partial class Thanks : System.Web.UI.Page
                             cmd.Parameters.AddWithValue("@Quantity", item);
                             cmd.Parameters.AddWithValue("@ProductID", ProductID[count]);
                             cmd.ExecuteNonQuery();
-                            count++;
+                            
 
                             //start of Auditlog 
-                            Util.InventoryRecord(Session["UserID"].ToString(), ProductID[count], item, "The member has created an order");
+                            Util.InventoryRecord(ProductID[count], item, "The member has created an order, inventory deducted.");
                             //end of auditlog
+                            count++;
                         }
                     }
                 }

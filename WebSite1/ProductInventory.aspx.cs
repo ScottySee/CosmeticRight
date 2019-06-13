@@ -149,13 +149,30 @@ public partial class ProductInventory : System.Web.UI.Page
                 //end of auditlog
 
                 //start of Auditlog 
-                Util.InventoryRecord(txtavailable.Text, "The warehouse admin has added an inventory.");
+                //Util.InventoryRecord(txtavailable.Text, "The warehouse admin has added an inventory.");
                 //end of auditlog
 
                 message1.InnerText = "Inventory Successfully Added.";
 
-                //lahat ng textbox
+            }
+        }
+        #endregion
 
+        //working na
+        #region Step #1a: Add Inventory Record in InventoryLog table
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        {
+            con.Open();
+            string query = @"INSERT INTO InventoryLog VALUES (@UserID, @ProductID, @Quantity, @LogTime, @Activity)";
+
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
+                cmd.Parameters.AddWithValue("@ProductID", ddlProduct.SelectedValue);
+                cmd.Parameters.AddWithValue("@Quantity", Server.HtmlEncode(txtavailable.Text.Trim()));
+                cmd.Parameters.AddWithValue("@LogTime", DateTime.Now);
+                cmd.Parameters.AddWithValue("@Activity", Server.HtmlEncode("The warehouse admin has added an inventory."));
+                cmd.ExecuteNonQuery();
             }
         }
         #endregion

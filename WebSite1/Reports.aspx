@@ -24,7 +24,7 @@
                                 <table id="dtInventory" class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
+                                            <th>#</th>
                                             <th>User</th>
                                             <th>Product</th>
                                             <th>Quantity</th>
@@ -72,9 +72,8 @@
                                 <table id="dtSales" class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
-                                            <th>User</th>
                                             <th>Order #</th>
+                                            <th>User</th>
                                             <th>Amount</th>
                                             <th>Time</th>
                                         </tr>
@@ -83,11 +82,10 @@
                                         <asp:ListView ID="lvSales" runat="server">
                                             <ItemTemplate>
                                                 <tr class="bg-default">
-                                                    <td><%# Eval("SalesID") %></td>
-                                                    <td><%# Eval("OrderID") %></td>
-                                                    <td><%# Eval("CustomerName") %></td>
-                                                    <td><%# Eval("Amount") %></td>
-                                                    <td><%# Eval("LogTime") %></td>
+                                                    <td><%# Eval("OrderNo") %></td>
+                                                    <td><%# Eval("Username") %></td>
+                                                    <td>Php<%# Eval("Total", "{0: #,##0.00}") %></td>
+                                                    <td><%# Eval("DateOrdered") %></td>
                                                 </tr>
                                             </ItemTemplate>
                                             <EmptyDataTemplate>

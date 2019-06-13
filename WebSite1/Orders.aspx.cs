@@ -23,7 +23,7 @@ public partial class OrderHistory : System.Web.UI.Page
         {
             con.Open();
             string query = @"SELECT DISTINCT o.OrderNo, o.DateOrdered, o.PaymentMethod, 
-                                u.Lastname + ' ' + u.Firstname AS CustomerName,
+                                u.Lastname + ', ' + u.Firstname AS CustomerName,
                                 (SELECT SUM(Amount) FROM OrderDetails WHERE OrderNo= o.OrderNo) AS TotalAmount, o.Status
                                 FROM Orders o
                                 INNER JOIN OrderDetails od ON o.OrderNo= od.OrderNo
