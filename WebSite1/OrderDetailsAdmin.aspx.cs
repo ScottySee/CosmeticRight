@@ -30,10 +30,10 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
                 }
             }
             else
-                Response.Redirect("Orders.aspx");
+                Response.Redirect("OrdersAdmin.aspx");
         }
         else
-            Response.Redirect("Orders.aspx");
+            Response.Redirect("OrdersAdmin.aspx");
     }
 
     void GetCity()
@@ -90,7 +90,7 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
                     }
                     else
                     {
-                        Response.Redirect("Orders.aspx");
+                        Response.Redirect("OrdersAdmin.aspx");
                     }
                 }
             }

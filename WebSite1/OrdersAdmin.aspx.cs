@@ -29,6 +29,7 @@ public partial class OrdersAdmin : System.Web.UI.Page
                                 INNER JOIN OrderDetails od ON o.OrderNo= od.OrderNo
                                 INNER JOIN Users u ON od.UserID = u.UserID
                                 ORDER BY o.DateOrdered DESC";
+
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 using (SqlDataAdapter da = new SqlDataAdapter(cmd))

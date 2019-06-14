@@ -172,7 +172,7 @@ public partial class OrdersWarehouseAdmin : System.Web.UI.Page
                 cmd.ExecuteNonQuery();
 
                 //start of Auditlog 
-                Util.Log(Session["UserID"].ToString(), "The Warehouse Admin has updated the order status");
+                Util.Log(Session["UserID"].ToString(), "The warehouse admin has updated the order status");
                 //end of auditlog
 
                 Response.Redirect("OrdersWarehouseAdmin.aspx");
