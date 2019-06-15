@@ -9,6 +9,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.DataVisualization.Charting;
 using System.Globalization;
+using System.Drawing;
 
 public partial class Dashboard : System.Web.UI.Page
 {
@@ -66,6 +67,25 @@ public partial class Dashboard : System.Web.UI.Page
         //// render chart
         //Literal1.Text = MyFirstChart.Render();
 
+        //Color[] barColors = new Color[9]
+        //{
+        //      Color.Purple,
+        //      Color.SteelBlue,
+        //      Color.Aqua,
+        //      Color.Yellow,
+        //      Color.Navy,
+        //      Color.Green,
+        //      Color.Blue,
+        //      Color.Red,
+        //      Color.AliceBlue
+        //};
+
+        ////Assingning the color to bars
+        //foreach (ChartSeriesItem item in Chart2.Series[0].Items)
+        //{
+        //    item.Appearance.FillStyle.MainColor = barColors[item.Index];
+        //}
+
         if (!IsPostBack)
         {
             GetWebsiteCount();
@@ -82,7 +102,7 @@ public partial class Dashboard : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"select count(*) as Count from WebsiteVisit";
+            string query = @"SELECT count(*) as Count FROM WebsiteVisit";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -105,7 +125,7 @@ public partial class Dashboard : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"select count(*) as Count from Orders";
+            string query = @"SELECT count(*) as Count FROM Orders WHERE Status='Done'";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -128,7 +148,7 @@ public partial class Dashboard : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"select count(*) as Count from Users";
+            string query = @"SELECT count(*) as Count FROM Users";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -153,7 +173,7 @@ public partial class Dashboard : System.Web.UI.Page
             con.Open();
             //string query = @"SELECT SUM(Amount) AS Total FROM OrderDetails";
 
-            string query = @"Select SUM(Amount) AS Total FROM OrderDetails od JOIN Orders o ON od.OrderNo = o.OrderNo WHERE o.Status='Done'";
+            string query = @"SELECT SUM(Amount) AS Total FROM OrderDetails od JOIN Orders o ON od.OrderNo = o.OrderNo WHERE o.Status='Done'";
 
             //string query = @"Select DISTINCT o.OrderNo, (SELECT u.Lastname + ' ' + u.Firstname AS Customer FROM Users u WHERE od.UserID=u.UserID) as Username, (SELECT SUM(Amount) FROM OrderDetails WHERE OrderNo = o.OrderNo) AS Total,
             //        o.DateOrdered From Orders o, OrderDetails od WHERE o.Status='Done'";
@@ -179,8 +199,7 @@ public partial class Dashboard : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"SELECT SUM(total) Total, DateOrdered  from (Select (SELECT Amount FROM OrderDetails WHERE OrderNo = o.OrderNo) Total, DATEPART(Month, DateOrdered) DateOrdered From Orders o 
-Where o.Status='Done') SalesPerMonth group by DateOrdered";
+            string query = @"SELECT SUM(total) Total, DateOrdered  FROM (SELECT (SELECT Amount FROM OrderDetails WHERE OrderNo = o.OrderNo) Total, DATEPART                    (Month, DateOrdered) DateOrdered FROM Orders o WHERE o.Status='Done') SalesPerMonth GROUP BY DateOrdered";
 
             //string query = @"Select SUM(Amount) AS Total FROM OrderDetails od JOIN Orders o ON od.OrderNo = o.OrderNo WHERE o.Status = 'Done' GROUP BY DATEPART(MONTH, DateOrdered)";
             using (SqlCommand cmd = new SqlCommand(query, con))
@@ -194,6 +213,31 @@ Where o.Status='Done') SalesPerMonth group by DateOrdered";
 
                         //Convert.ToDateTime(data["DateStart"]).ToString("MM/dd/yyyy");
                     }
+                    foreach (Series charts in Chart1.Series)
+                    {
+                        int i = 0;
+                        foreach (DataPoint point in charts.Points)
+                        {
+                            point.Label = string.Format("{0:0}", point.YValues[0]);
+                            if (i % 3 == 0)
+                            {
+                                Color colour = ColorTranslator.FromHtml("#CD5C5C");
+                                point.Color = colour;
+                            }
+                            else if (i % 3 == 1)
+                            {
+                                Color colour = ColorTranslator.FromHtml("#bfbfbf");
+                                point.Color = colour;
+                            }
+                            else
+                            {
+                                Color colour = ColorTranslator.FromHtml("#5ccd80");
+                                point.Color = colour;
+                            }
+
+                            i++;
+                        }
+                    }
                 }
             }
         }
@@ -204,9 +248,8 @@ Where o.Status='Done') SalesPerMonth group by DateOrdered";
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"Select Count(OrderNo) OrderCount, DateOrdered  from 
-(SELECT OrderNo, DATEPART(Month, DateOrdered) DateOrdered from 
-(SELECT * from Orders o where o.Status = 'Done') Table1) Table2 group by DateOrdered";
+            string query = @"SELECT Count(OrderNo) OrderCount, DateOrdered FROM (SELECT OrderNo, DATEPART(Month, DateOrdered) DateOrdered
+                                 FROM (SELECT * FROM Orders o where o.Status = 'Done') Table1) Table2 GROUP BY DateOrdered";
 
             //string query = @"Select SUM(Amount) AS Total FROM OrderDetails od JOIN Orders o ON od.OrderNo = o.OrderNo WHERE o.Status = 'Done' GROUP BY DATEPART(MONTH, DateOrdered)";
             using (SqlCommand cmd = new SqlCommand(query, con))
@@ -220,9 +263,67 @@ Where o.Status='Done') SalesPerMonth group by DateOrdered";
 
                         //Convert.ToDateTime(data["DateStart"]).ToString("MM/dd/yyyy");
                     }
+                    foreach (Series charts in Chart2.Series)
+                    {
+                        int i = 0;
+                        foreach (DataPoint point in charts.Points)
+                        {
+                            point.Label = string.Format("{0:0}", point.YValues[0]);
+                            if (i % 3 == 0)
+                            {
+                                Color colour = ColorTranslator.FromHtml("#CD5C5C");
+                                point.Color = colour;
+                            }
+                            else if (i % 3 == 1)
+                            {
+                                Color colour = ColorTranslator.FromHtml("#bfbfbf");
+                                point.Color = colour;
+                            }
+                            else
+                            {
+                                Color colour = ColorTranslator.FromHtml("#5ccd80");
+                                point.Color = colour;
+                            }
+
+                            i++;
+                        }
+                    }
                 }
             }
         }
     }
 
+
+    protected void Chart2_Customize(object sender, EventArgs e)
+    {
+        try
+        {
+            Chart1.BackColor = System.Drawing.Color.LightGray;
+
+
+        }
+        catch (Exception)
+        { }
+    }
+
+    protected void Chart1_Load(object sender, EventArgs e)
+    {
+        try
+        {
+
+            Series series1 = new Series("Spline");
+
+            series1.ChartType = SeriesChartType.Column;
+
+            series1.Points[0].Color = System.Drawing.Color.Red;
+            series1.Points[1].Color = System.Drawing.Color.Green;
+            series1.Points[2].Color = System.Drawing.Color.Blue;
+            series1.Color = System.Drawing.Color.Green;
+
+            Chart1.Series.Add(series1);
+
+        }
+        catch (Exception)
+        { }
+    }
 }

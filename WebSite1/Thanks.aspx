@@ -22,7 +22,7 @@
                 <ContentTemplate>--%>
                     <div class="card shadow-lg">
                         <div class="card-body">
-                            <h1>Thanks for ordering. Click here to see your <a href="Orders.aspx">orders</a>.</h1>
+                            <h1>Thank you for ordering. Click here to see your <a href="Orders.aspx">orders</a>.</h1>
                             </div></div></form></div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scripts" Runat="Server">

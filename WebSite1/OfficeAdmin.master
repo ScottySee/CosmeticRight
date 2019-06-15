@@ -73,27 +73,27 @@
                     </li>
                     <li class="nav-item p-0">
                         <a class="nav-link" href="Announcement.aspx">
-                            <i class="fa fa-scroll"></i>Announcement
+                            <i class="fa fa-clipboard"></i>Announcement
                         </a>
                     </li>
                     <li class="nav-item p-0">
                         <a class="nav-link" href="ViewFeedback.aspx">
-                            <i class="fa fa-user-circle"></i>Feedback
+                            <i class="fa fa-clipboard"></i>Feedback
                         </a>
                     </li>
                     <li class="nav-item p-0">
                         <a class="nav-link" href="Dashboard.aspx">
-                            <i class="fa fa-user-circle"></i>Dashboard
+                            <i class="fa fa-clipboard"></i>Dashboard
                         </a>
                     </li>
                     <li class="nav-item p-0">
                         <a class="nav-link" href="Logs.aspx">
-                            <i class="fa fa-user-circle"></i>Audit Logs
+                            <i class="fa fa-clipboard"></i>Audit Logs
                         </a>
                     </li>
                     <li class="nav-item p-0">
                         <a class="nav-link" href="Reports.aspx">
-                            <i class="fa fa-user-circle"></i>Reports
+                            <i class="fa fa-clipboard"></i>Reports
                         </a>
                     </li>
                     <li class="nav-item p-0">

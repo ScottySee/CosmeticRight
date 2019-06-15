@@ -176,7 +176,7 @@ public partial class CheckoutCOD : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"INSERT INTO Orders VALUES (@DateOrdered,
+            string query = @"INSERT INTO Orders (DateOrdered, PaymentMethod, Status) VALUES (@DateOrdered,
             @PaymentMethod, @Status);
             SELECT TOP 1 OrderNo FROM Orders ORDER BY OrderNo DESC;";
 
@@ -240,6 +240,7 @@ public partial class CheckoutCOD : System.Web.UI.Page
             }
         }
         #endregion
+
         Response.Redirect("Orders.aspx");
     }
 }

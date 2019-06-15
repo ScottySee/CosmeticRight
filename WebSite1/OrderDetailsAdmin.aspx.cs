@@ -63,7 +63,7 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"SELECT OrderNo, DateOrdered, PaymentMethod, Status
+            string query = @"SELECT OrderNo, DateOrdered, PaymentMethod, Status, CancelReason, CancelDate
                             FROM Orders WHERE OrderNo=@OrderNo";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -76,16 +76,30 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
                         {
                             ltOrderNo.Text = data["OrderNo"].ToString();
                             ltStatus.Text = data["Status"].ToString();
+                            ltReason.Text = data["CancelReason"].ToString();
+                            ltDate.Text = data["CancelDate"].ToString();
 
                             btnAccept.Visible = ltStatus.Text == "Pending" ? true : false;
                             btnReject.Visible = ltStatus.Text == "Pending" ? true : false;
-                            //btnAccept.Visible = ltStatus.Text == "Paid, Pending" ? true : false;
-                            //btnReject.Visible = ltStatus.Text == "Paid, Pending" ? true : false;
 
                             ltDateOrdered.Text = data["DateOrdered"].ToString();
                             ltPaymentMethod.Text = data["PaymentMethod"].ToString();
 
-                            btnPayNow.Visible = ltPaymentMethod.Text == "Paypal" ? true : false;
+                            //btnPayNow.Visible = ltPaymentMethod.Text == "Paypal" ? true : false;
+                            btnRefund.Visible = ltPaymentMethod.Text == "Cash on Delivery" ? true : false;
+                            if(!(ltStatus.Text == "Done"))
+                            {
+                                btnRefund.Visible = false;
+                            }
+                            //btnRefund.Visible = ltStatus.Text == "Refund" ? true : false;
+
+                            if (!(ltStatus.Text == "Cancelled, Pending for Approval"))
+                            {
+                                ltReason.Visible = false;
+                                ltDate.Visible = false;
+                                btnApprove.Visible = false;
+                                btnDisApprove.Visible = false;
+                            }
                         }
                     }
                     else
@@ -248,6 +262,71 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
                         count++;
                     }
                 }
+            }
+        }
+    }
+
+    protected void btnRefund_Click(object sender, EventArgs e)
+    {
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        {
+            con.Open();
+            string query = @"UPDATE Orders SET Status=@Status
+                WHERE OrderNo=@OrderNo";
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("Status", "Refund");
+                cmd.Parameters.AddWithValue("OrderNo", ltOrderNo.Text);
+                cmd.ExecuteNonQuery();
+                Response.Redirect("OrderDetailsAdmin.aspx");
+            }
+        }
+    }
+
+    protected void btnPayNow_Click(object sender, EventArgs e)
+    {
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        {
+            con.Open();
+            string query = @"UPDATE Orders SET Status=@Status
+                WHERE OrderNo=@OrderNo";
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("Status", "Refund");
+                cmd.Parameters.AddWithValue("OrderNo", ltOrderNo.Text);
+                cmd.ExecuteNonQuery();
+            }
+        }
+    }
+
+    protected void btnApprove_Click(object sender, EventArgs e)
+    {
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        {
+            con.Open();
+            string query = @"UPDATE Orders SET Status=@Status
+                WHERE OrderNo=@OrderNo";
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("Status", "Cancelled Approved");
+                cmd.Parameters.AddWithValue("OrderNo", ltOrderNo.Text);
+                cmd.ExecuteNonQuery();
+            }
+        }
+    }
+
+    protected void btnDisApprove_Click(object sender, EventArgs e)
+    {
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        {
+            con.Open();
+            string query = @"UPDATE Orders SET Status=@Status
+                WHERE OrderNo=@OrderNo";
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("Status", "Cancelled Disapproved");
+                cmd.Parameters.AddWithValue("OrderNo", ltOrderNo.Text);
+                cmd.ExecuteNonQuery();
             }
         }
     }

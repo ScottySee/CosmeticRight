@@ -242,12 +242,12 @@
 
                             <!-- Chart -->
                             <!-- Chart -->
-                            <asp:Chart ID="Chart2" runat="server" Width="350">
+                            <asp:Chart ID="Chart2" runat="server" Width="350" OnCustomize="Chart2_Customize">
                                 <%--<Titles>
                                     <asp:Title Text="Total marks of students"></asp:Title>
                                 </Titles>--%>
                                 <Series>
-                                    <asp:Series Name="Series1"  ChartArea="ChartArea1">
+                                    <asp:Series Name="Series1"  ChartArea="ChartArea1" Color="blue" >
                                         <%--<Points>
                                             <asp:DataPoint AxisLabel="Jan" YValues="38" />
                                             <asp:DataPoint AxisLabel="Feb" YValues="24" />

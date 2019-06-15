@@ -12,7 +12,7 @@
     <form runat="server" class="form-horizontal">
         <div class="container">
             <div class="text-white">
-                <i class="fa fa-money"></i>Order #<asp:Literal ID="ltOrderNo" runat="server" />
+                <i class="fa fa-money"></i>Order #<asp:literal id="ltOrderNo" runat="server" />
                 Details
             </div>
             <div class="row">
@@ -25,7 +25,7 @@
                             <th>Amount</th>
                         </thead>
                         <tbody>
-                            <asp:ListView ID="lvCart" runat="server">
+                            <asp:listview id="lvCart" runat="server">
                                 <ItemTemplate>
                                     <tr>
                                         <td>
@@ -36,7 +36,8 @@
                                             <small>Category: <%# Eval("Category") %></small>
                                         </td>
                                         <td>Php<%# Eval("Price", "{0: #,##0.00}") %></td>
-                                        <td><asp:label ID="txtquantity"  runat="server" Text='<%# Bind("Quantity") %>'/></td>
+                                        <td>
+                                            <asp:Label ID="txtquantity" runat="server" Text='<%# Bind("Quantity") %>' /></td>
                                         <td>Php<%# Eval("Amount", "{0: #,##0.00}") %></td>
                                     </tr>
                                 </ItemTemplate>
@@ -47,7 +48,7 @@
                                         </td>
                                     </tr>
                                 </EmptyDataTemplate>
-                            </asp:ListView>
+                            </asp:listview>
                         </tbody>
                     </table>
                     <br />
@@ -61,30 +62,30 @@
                                 <tr>
                                     <td>Status</td>
                                     <td align="right">
-                                        <asp:Literal ID="ltStatus" runat="server" />
+                                        <asp:literal id="ltStatus" runat="server" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Payment Method</td>
                                     <td align="right">
-                                        <asp:Literal ID="ltPaymentMethod" runat="server" />
+                                        <asp:literal id="ltPaymentMethod" runat="server" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Date Ordered</td>
                                     <td align="right">
-                                        <asp:Literal ID="ltDateOrdered" runat="server" />
+                                        <asp:literal id="ltDateOrdered" runat="server" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Gross Amount</td>
-                                    <td align="right">Php<asp:Literal ID="ltGross" runat="server" />
+                                    <td align="right">Php<asp:literal id="ltGross" runat="server" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>VAT (12%)</td>
                                     <td align="right">Php
-                                        <asp:Literal ID="ltVAT" runat="server" />
+                                        <asp:literal id="ltVAT" runat="server" />
                                     </td>
                                 </tr>
                                 <%--<tr>
@@ -96,20 +97,50 @@
                                 <tr>
                                     <td>Total Amount</td>
                                     <td align="right">
-                                        <h3>Php<asp:Literal ID="ltTotal" runat="server" /></h3>
+                                        <h3>Php<asp:literal id="ltTotal" runat="server" /></h3>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                      
-                        <asp:LinkButton ID="btnCancel" runat="server"
-                            CssClass="btn btn-danger btn-lg btn-block"
-                            OnClientClick='return confirm("Cancel order?");' OnClick="btnCancel_Click">
-                    <i class="fa fa-thumbs-down"></i> Cancel
-                        </asp:LinkButton>
-                        <a href="Orders.aspx" class="btn btn-default btn-block btn-lg">Back to Orders
-                        </a>
                     </div>
+                    <!-- Button trigger modal -->
+                    <button id="cancel" class="btn btn-primary btn-block btn-lg" data-toggle="modal" data-target="#Cancelation">
+                        Cancel
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="Cancelation" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">Cancel</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label class="control-label">Reasons:</label>
+                                        <asp:dropdownlist style="color: black" id="ddlReason" runat="server" class="form-control" required>
+                                            <asp:ListItem Value="" style="color: black">--------------------------Select Reason--------------------------</asp:ListItem>
+                                            <asp:ListItem Value="Seller is not responsive to my inquiries" style="color: black">Seller is not responsive to my inquiries</asp:ListItem>
+                                            <asp:ListItem Value="Seller ask me to cancel" style="color: black">Seller ask me to cancel</asp:ListItem>
+                                            <asp:ListItem Value="Found cheaper price" style="color: black">Found cheaper price</asp:ListItem>
+                                            <asp:ListItem Value="Others / Change of mind" style="color: black">Others / Change of mind</asp:ListItem>
+                                        </asp:dropdownlist>
+                                    </div>
+                                    <div class="form-group">
+                                        <asp:button id="btnCancel" runat="server" text="Submit" class="btn btn-block btn-success submit btn-block" onclientclick='return confirm("Are you sure to cancel this order?");' onclick="btnCancel_Click" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <%--<asp:LinkButton ID="btnCancel" runat="server"
+                        CssClass="btn btn-danger btn-lg btn-block"
+                        OnClick="btnCancel_Click" data-toggle="modal" data-target="#myModal">
+                    <i class="fa fa-thumbs-down"></i> Cancel
+                    </asp:LinkButton>--%>
+                    <a href="Orders.aspx" class="btn btn-default btn-block btn-lg">Back to Orders
+                    </a>
                 </div>
             </div>
             <h3>Billing and Delivery Details</h3>
@@ -118,25 +149,25 @@
                     <div class="form-group">
                         <label class="control-label col-lg-4">First Name</label>
                         <div class="col-lg-8">
-                            <asp:Label ID="txtFN" runat="server" class="form-control" />
+                            <asp:label id="txtFN" runat="server" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-lg-4">Last Name</label>
                         <div class="col-lg-8">
-                            <asp:Label ID="txtLN" runat="server" class="form-control" />
+                            <asp:label id="txtLN" runat="server" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-lg-4">Unit/Building No.</label>
                         <div class="col-lg-8">
-                            <asp:Label ID="txtbuilding" runat="server" class="form-control" />
+                            <asp:label id="txtbuilding" runat="server" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-lg-4">Street</label>
                         <div class="col-lg-8">
-                            <asp:Label ID="txtStreet" runat="server" class="form-control" />
+                            <asp:label id="txtStreet" runat="server" class="form-control" />
                         </div>
                     </div>
                 </div>
@@ -144,26 +175,26 @@
                     <div class="form-group">
                         <label class="control-label col-lg-4">Municipality</label>
                         <div class="col-lg-8">
-                            <asp:Label ID="txtMunicipality" runat="server" class="form-control" />
+                            <asp:label id="txtMunicipality" runat="server" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-lg-4">City</label>
                         <div class="col-lg-8">
-                            <asp:DropDownList ID="ddlCity" runat="server" CssClass="form-control" required />
+                            <asp:dropdownlist id="ddlCity" runat="server" cssclass="form-control" required />
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="control-label col-lg-4">Phone</label>
                         <div class="col-lg-8">
-                            <asp:Label ID="txtPhone" runat="server" class="form-control" />
+                            <asp:label id="txtPhone" runat="server" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-lg-4">Mobile</label>
                         <div class="col-lg-8">
-                            <asp:Label ID="txtMobile" runat="server" class="form-control" />
+                            <asp:label id="txtMobile" runat="server" class="form-control" />
                         </div>
                     </div>
                 </div>
