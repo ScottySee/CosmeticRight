@@ -219,19 +219,24 @@ public partial class Dashboard : System.Web.UI.Page
                         foreach (DataPoint point in charts.Points)
                         {
                             point.Label = string.Format("{0:0}", point.YValues[0]);
-                            if (i % 3 == 0)
+                            if (i % 4 == 0)
                             {
-                                Color colour = ColorTranslator.FromHtml("#CD5C5C");
+                                Color colour = ColorTranslator.FromHtml("#FF0000");
                                 point.Color = colour;
                             }
-                            else if (i % 3 == 1)
+                            else if (i % 4 == 1)
                             {
-                                Color colour = ColorTranslator.FromHtml("#bfbfbf");
+                                Color colour = ColorTranslator.FromHtml("#2f00ff");
+                                point.Color = colour;
+                            }
+                            else if (i % 4 == 2)
+                            {
+                                Color colour = ColorTranslator.FromHtml("#00f9ff");
                                 point.Color = colour;
                             }
                             else
                             {
-                                Color colour = ColorTranslator.FromHtml("#5ccd80");
+                                Color colour = ColorTranslator.FromHtml("#e3ff00");
                                 point.Color = colour;
                             }
 
@@ -269,19 +274,24 @@ public partial class Dashboard : System.Web.UI.Page
                         foreach (DataPoint point in charts.Points)
                         {
                             point.Label = string.Format("{0:0}", point.YValues[0]);
-                            if (i % 3 == 0)
+                            if (i % 4 == 0)
                             {
-                                Color colour = ColorTranslator.FromHtml("#CD5C5C");
+                                Color colour = ColorTranslator.FromHtml("#FF0000");
                                 point.Color = colour;
                             }
-                            else if (i % 3 == 1)
+                            else if (i % 4 == 1)
                             {
-                                Color colour = ColorTranslator.FromHtml("#bfbfbf");
+                                Color colour = ColorTranslator.FromHtml("#2f00ff");
+                                point.Color = colour;
+                            }
+                            else if (i % 4 == 2)
+                            {
+                                Color colour = ColorTranslator.FromHtml("#00f9ff");
                                 point.Color = colour;
                             }
                             else
                             {
-                                Color colour = ColorTranslator.FromHtml("#5ccd80");
+                                Color colour = ColorTranslator.FromHtml("#e3ff00");
                                 point.Color = colour;
                             }
 

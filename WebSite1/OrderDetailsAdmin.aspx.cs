@@ -311,6 +311,34 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("Status", "Cancelled Approved");
                 cmd.Parameters.AddWithValue("OrderNo", ltOrderNo.Text);
                 cmd.ExecuteNonQuery();
+
+
+            }
+        }
+
+        // for updating inventory
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        {
+            int count = 0;
+            foreach (var item in quantity)
+            {
+                if (item != null)
+                {
+                    con.Close();
+                    con.Open();
+                    string query = @"UPDATE Inventory SET Quantity = Quantity + @Quantity WHERE ProductID = @ProductID AND Inventory.Quantity > (Select Criticallevel from Products where ProductID = @ProductID)";
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@Quantity", item);
+                        cmd.Parameters.AddWithValue("@ProductID", ProductID[count]);
+                        cmd.ExecuteNonQuery();
+
+                        //start of Auditlog 
+                        Util.InventoryRecord(ProductID[count], item, "The member cancels order, inventory returned.");
+                        //end of auditlog
+                        count++;
+                    }
+                }
             }
         }
     }

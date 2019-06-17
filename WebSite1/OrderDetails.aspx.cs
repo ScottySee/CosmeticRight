@@ -12,6 +12,7 @@ public partial class OrderDetails : System.Web.UI.Page
 {
     public static string[] quantity = new string[100];
     public static string[] ProductID = new string[100];
+    public static string status;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.QueryString["ID"] != null)
@@ -244,6 +245,7 @@ public partial class OrderDetails : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@Status", "Cancelled, Pending for Approval");
                 cmd.Parameters.AddWithValue("OrderNo", ltOrderNo.Text);
                 cmd.ExecuteNonQuery();
+
                 Response.Redirect("OrderDetails.aspx");
             }
         }

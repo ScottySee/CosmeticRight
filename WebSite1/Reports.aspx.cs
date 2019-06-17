@@ -13,12 +13,13 @@ public partial class Reports : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
+            GetInventoryLogRecord();
             GetInventoryReport();
             GetSalesReport();
         }
     }
 
-    void GetInventoryReport()
+    void GetInventoryLogRecord()
     {
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
@@ -41,26 +42,40 @@ public partial class Reports : System.Web.UI.Page
         }
     }
 
+    void GetInventoryReport()
+    {
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        {
+            con.Open();
+            string query = @"Select DISTINCT Datename(Month, il.LogTime) Month, p.ProductID, p.Product, p.Price AS UnitPrice,
+                                (Select Sum(Quantity) TotalAdded from InventoryLog where Activity LIKE '%added%' and ProductID = p.ProductID and (MONTH(LogTime) = MONTH(GETDATE()) and YEAR(LogTime) = Year(GETDATE())) GROUP BY ProductID) QuantityAdded,
+                                (SELECT Sum(Quantity) TotalDeducted from InventoryLog where Activity LIKE '%deducted%' and ProductID = p.ProductID and (MONTH(LogTime) = MONTH(GETDATE()) and YEAR(LogTime) = Year(GETDATE())) GROUP BY ProductID) QuantitySold,
+                                (Select Quantity From Inventory where ProductID=p.ProductID) RemainingQuantity
+                                from Products p, InventoryLog il where (MONTH(LogTime) = MONTH(GETDATE()) and YEAR(LogTime) = Year(GETDATE()))";
+
+            //string query = @"SELECT SUM(total) Total, DateOrdered  FROM (SELECT (SELECT Amount FROM OrderDetails WHERE OrderNo = o.OrderNo) Total, DATENAME                    (Month, DateOrdered) DateOrdered FROM Orders o WHERE o.Status='Done') SalesPerMonth GROUP BY DateOrdered";
+
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                {
+                    DataSet ds = new DataSet();
+                    da.Fill(ds, "InventoryLog");
+                    lvInventoryReport.DataSource = ds;
+                    lvInventoryReport.DataBind();
+                }
+            }
+        }
+    }
+
     void GetSalesReport()
     {
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"Select DISTINCT o.OrderNo, (SELECT u.Lastname + ' ' + u.Firstname AS Customer FROM Users u WHERE od.UserID=u.UserID) as Username, (SELECT SUM(Amount) FROM OrderDetails WHERE OrderNo = o.OrderNo) AS Total,
-                    o.DateOrdered From Orders o, OrderDetails od WHERE o.Status='Done'";
+            string query = @"SELECT SUM(total) Total, DateOrdered  FROM (SELECT (SELECT Amount FROM OrderDetails WHERE OrderNo = o.OrderNo) Total, DATENAME                    (Month, DateOrdered) DateOrdered FROM Orders o WHERE o.Status='Done') SalesPerMonth GROUP BY DateOrdered";
 
-            //@"Select o.OrderNo, u.Lastname + ' ' + u.Firstname AS Customer, (SELECT SUM(Amount) FROM OrderDetails WHERE OrderNo = o.OrderNo) AS Total,
-            //        o.DateOrdered From Orders o
-            //        INNER JOIN Users u ON s.UserID = u.UserID";
-
-            //@"Select(SELECT SUM(Amount) FROM OrderDetails WHERE OrderNo = o.OrderNo) AS Total From Orders o Where o.Status = 'Done'";
-            //string query1 = @"SELECT DISTINCT o.OrderNo,
-            //                    u.Lastname + ', ' + u.Firstname AS CustomerName,
-            //                    (SELECT SUM(Amount) FROM OrderDetails WHERE OrderNo= o.OrderNo) AS TotalAmount,
-            //                    o.Status FROM Orders o
-            //                    INNER JOIN OrderDetails od ON o.OrderNo= od.OrderNo
-            //                    INNER JOIN Users u ON od.UserID = u.UserID
-            //                    ORDER BY o.DateOrdered DESC";
+            //string query = @"SELECT SUM(total) Total, DateOrdered  FROM (SELECT (SELECT Amount FROM OrderDetails WHERE OrderNo = o.OrderNo) Total FROM Orders o WHERE o.Status='Done') OrderDetails";
 
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
