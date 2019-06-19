@@ -99,6 +99,18 @@
                                                 </td>
                                             </tr>
                                             <tr>
+                                                <td>Reason for Refund</td>
+                                                <td align="right">
+                                                    <asp:Literal ID="ltRefund" runat="server" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Date of Refund</td>
+                                                <td align="right">
+                                                    <asp:Literal ID="ltRefundDate" runat="server" />
+                                                </td>
+                                            </tr>
+                                            <tr>
                                                 <td>Date Ordered</td>
                                                 <td align="right">
                                                     <asp:Literal ID="ltDateOrdered" runat="server" />
@@ -144,6 +156,25 @@
                     <i class="fa fa-thumbs-down"></i> Reject
                                     </asp:LinkButton>
 
+
+                                    <asp:LinkButton ID="btnApprove" runat="server"
+                                        CssClass="btn btn-success btn-lg btn-block"
+                                        OnClientClick='return confirm("Accept the cancelation reason?");'
+                                       OnClick="btnApprove_Click">Approve Cancelation
+                                    </asp:LinkButton>
+                                    <asp:LinkButton ID="btnDisApprove" runat="server"
+                                        CssClass="btn btn-danger btn-lg btn-block"
+                                        OnClientClick='return confirm("Disapprove the cancelation reason?");'
+                                       OnClick="btnDisApprove_Click">Disapprove Cancelation
+                                    </asp:LinkButton>
+
+
+                                    <%--<asp:LinkButton ID="btnVerify" runat="server"
+                                        CssClass="btn btn-success btn-lg btn-block"
+                                        OnClientClick='return confirm("Accept the reason for refund?");'
+                                       OnClick="btnApprove_Click">Approve Refund
+                                    </asp:LinkButton>--%>
+
                                     <%--PAYPAL--%>
 
                                     <%--<%
@@ -161,22 +192,6 @@
                                     <%--<input type="submit" class="btn btn-lg btn-success btn-block" value="Paypal" />--%>
 
                                     <%--<asp:LinkButton ID="btnPayNow" CssClass="btn btn-success btn-lg btn-block" runat="server" target="_blank" ImageUrl="~/Images/Logo/paypal.png" Text=" Paypal Refund" PostBackUrl="https://www.sandbox.paypal.com/cgi-bin/webscr" OnClick="btnPayNow_Click"/>--%>
-
-                                    <asp:LinkButton ID="btnApprove" runat="server"
-                                        CssClass="btn btn-success btn-lg btn-block"
-                                        OnClientClick='return confirm("Accept the cancelation reason?");'
-                                       OnClick="btnApprove_Click">Approved Cancelation
-                                    </asp:LinkButton>
-                                    <asp:LinkButton ID="btnDisApprove" runat="server"
-                                        CssClass="btn btn-danger btn-lg btn-block"
-                                        OnClientClick='return confirm("Disapprove the cancelation reason?");'
-                                       OnClick="btnDisApprove_Click">Disapprove Cancelation
-                                    </asp:LinkButton>
-                                    <asp:LinkButton ID="btnRefund" runat="server"
-                                        CssClass="btn btn-success btn-lg btn-block"
-                                        OnClientClick='return confirm("Refund payment for this order?");'
-                                        OnClick="btnRefund_Click">COD Refund
-                                    </asp:LinkButton>
 
                                     <a href="OrdersAdmin.aspx" class="btn btn-default btn-block btn-lg">Back to Orders
                                     </a>

@@ -84,7 +84,7 @@
                             <div class="col-xs-12 table">
                                 <table id="dtannouncement" class="table table-striped">
                                     <thead>
-                                        <tr>
+                                        <tr style="text-align:center">
                                             <th>#</th>
                                             <th>Announcement Name</th>
                                             <th>Announcement Detail</th>
@@ -98,7 +98,7 @@
                                     <tbody>
                                         <asp:ListView ID="lvAnnouncements" runat="server">
                                             <ItemTemplate>
-                                                <tr class="bg-default">
+                                                <tr class="bg-default" style="text-align:center">
                                                     <td><%# Eval("AnnouncementID") %></td>
                                                     <td><%# Eval("AnnouncementName") %></td>
                                                     <td><%# Eval("AnnouncementDetail") %></td>

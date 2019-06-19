@@ -76,8 +76,8 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-12 table">
-                                <table class="table table-striped">
-                                    <thead>
+                                <table id="dtOrdersWA" class="table table-striped">
+                                    <thead style="text-align:center">
                                         <th>#</th>
                                         <th>Date Ordered</th>
                                         <th>Payment Method</th>
@@ -88,7 +88,7 @@
                                     <tbody>
                                         <asp:ListView ID="lvOrders" runat="server">
                                             <ItemTemplate>
-                                                <tr>
+                                                <tr style="text-align:center">
                                                     <td><%# Eval("OrderNo") %></td>
                                                     <td><%# Eval("DateOrdered", "{0:MMM dd, yyyy}") %></td>
                                                     <td><%# Eval("PaymentMethod") %></td>

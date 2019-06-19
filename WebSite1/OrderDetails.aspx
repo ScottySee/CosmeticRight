@@ -103,15 +103,15 @@
                             </tbody>
                         </table>
                     </div>
-                    <!-- Button trigger modal -->
-                    <% if (ltStatus.Text != "Cancelled, Pending for Approval" && ltStatus.Text != "Cancelled Approved" && ltStatus.Text != "Cancelled Disapproved" && ltStatus.Text != "Done"  && ltStatus.Text != "For Delivery")
+                    <!-- Button trigger cancellation modal -->
+                    <% if (ltStatus.Text != "Rejected" && ltStatus.Text != "For Delivery" && ltStatus.Text != "Done"  && ltStatus.Text != "Cancelled, Pending for Approval" && ltStatus.Text != "Cancelled Approved" && ltStatus.Text != "Cancelled Disapproved" &&  ltStatus.Text != "Refund Request Submitted, Pending for Verification" && ltStatus.Text != "Refund Request Received, Verified" && ltStatus.Text != "Cancelled Approve, Refund in Process")
                         { %>
                     <button id="cancel" class="btn btn-primary btn-block btn-lg" data-toggle="modal" data-target="#Cancelation">
                         Cancel
                     </button>
                     <%} %>
 
-                    <!-- Modal -->
+                    <!-- Cancellation Modal -->
                     <div class="modal fade" id="Cancelation" tabindex="-1" role="dialog">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -137,11 +137,7 @@
                             </div>
                         </div>
                     </div>
-                    <%--<asp:LinkButton ID="btnCancel" runat="server"
-                        CssClass="btn btn-danger btn-lg btn-block"
-                        OnClick="btnCancel_Click">
-                    <i class="fa fa-thumbs-down"></i> Cancel
-                    </asp:LinkButton>--%>
+
                     <a href="Orders.aspx" class="btn btn-default btn-block btn-lg">Back to Orders
                     </a>
                 </div>

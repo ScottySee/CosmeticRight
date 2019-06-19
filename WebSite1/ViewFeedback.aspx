@@ -24,7 +24,7 @@
 
                                 <table id="dtFeedback" class="table table-striped">
                                     <thead>
-                                        <tr>
+                                        <tr style="text-align:center">
                                             <th>Feedback ID</th>
                                             <th>Product</th>
                                             <th>User</th>
@@ -36,7 +36,7 @@
                                     <tbody>
                                         <asp:ListView ID="lvFeedback" runat="server">
                                             <ItemTemplate>
-                                                <tr class="bg-default">
+                                                <tr class="bg-default" style="text-align:center">
                                                     <td><%# Eval("FeedbackID") %></td>
                                                     <td><%# Eval("Product") %></td>
                                                     <td><%# Eval("CustomerName") %></td>

@@ -15,7 +15,7 @@ public partial class Reports : System.Web.UI.Page
         {
             GetInventoryLogRecord();
             GetInventoryReport();
-            GetSalesReport();
+            //GetSalesReport();
         }
     }
 
@@ -47,7 +47,7 @@ public partial class Reports : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"Select DISTINCT Datename(Month, il.LogTime) Month, p.ProductID, p.Product, p.Price AS UnitPrice,
+            string query = @"Select DISTINCT YEAR(LogTime), Datename(Month, il.LogTime) Month, p.ProductID, p.Product, p.Price AS UnitPrice,
                                 (Select Sum(Quantity) TotalAdded from InventoryLog where Activity LIKE '%added%' and ProductID = p.ProductID and (MONTH(LogTime) = MONTH(GETDATE()) and YEAR(LogTime) = Year(GETDATE())) GROUP BY ProductID) QuantityAdded,
                                 (SELECT Sum(Quantity) TotalDeducted from InventoryLog where Activity LIKE '%deducted%' and ProductID = p.ProductID and (MONTH(LogTime) = MONTH(GETDATE()) and YEAR(LogTime) = Year(GETDATE())) GROUP BY ProductID) QuantitySold,
                                 (Select Quantity From Inventory where ProductID=p.ProductID) RemainingQuantity
@@ -68,25 +68,25 @@ public partial class Reports : System.Web.UI.Page
         }
     }
 
-    void GetSalesReport()
-    {
-        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
-        {
-            con.Open();
-            string query = @"SELECT SUM(total) Total, DateOrdered  FROM (SELECT (SELECT Amount FROM OrderDetails WHERE OrderNo = o.OrderNo) Total, DATENAME                    (Month, DateOrdered) DateOrdered FROM Orders o WHERE o.Status='Done') SalesPerMonth GROUP BY DateOrdered";
+    //void GetSalesReport()
+    //{
+    //    using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+    //    {
+    //        con.Open();
+    //        string query = @"SELECT SUM(total) Total, DateOrdered  FROM (SELECT (SELECT Amount FROM OrderDetails WHERE OrderNo = o.OrderNo) Total, DATENAME                    (Month, DateOrdered) DateOrdered FROM Orders o WHERE o.Status='Done') SalesPerMonth GROUP BY DateOrdered";
 
-            //string query = @"SELECT SUM(total) Total, DateOrdered  FROM (SELECT (SELECT Amount FROM OrderDetails WHERE OrderNo = o.OrderNo) Total FROM Orders o WHERE o.Status='Done') OrderDetails";
+    //        //string query = @"SELECT SUM(total) Total, DateOrdered  FROM (SELECT (SELECT Amount FROM OrderDetails WHERE OrderNo = o.OrderNo) Total FROM Orders o WHERE o.Status='Done') OrderDetails";
 
-            using (SqlCommand cmd = new SqlCommand(query, con))
-            {
-                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-                {
-                    DataSet ds = new DataSet();
-                    da.Fill(ds, "SalesLog");
-                    lvSales.DataSource = ds;
-                    lvSales.DataBind();
-                }
-            }
-        }
-    }
+    //        using (SqlCommand cmd = new SqlCommand(query, con))
+    //        {
+    //            using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+    //            {
+    //                DataSet ds = new DataSet();
+    //                da.Fill(ds, "SalesLog");
+    //                lvSales.DataSource = ds;
+    //                lvSales.DataBind();
+    //            }
+    //        }
+    //    }
+    //}
 }

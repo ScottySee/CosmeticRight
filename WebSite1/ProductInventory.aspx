@@ -73,7 +73,7 @@
                         <div class="row">
                             <div class="col-xs-12 table">
                                 <table id="dtproductinventory" class="table table-striped">
-                                    <thead>
+                                    <thead style="text-align:center">
                                         <th>#</th>
                                         <th>Product</th>
                                         <th>Quantity</th>
@@ -82,11 +82,11 @@
                                         <th>Date Added</th>
                                         <th>Status</th>
                                         <th>Action</th>
-                                    </thead>
+                                    </thea>
                                     <tbody>
                                         <asp:ListView ID="lvProductInventory" runat="server">
                                             <ItemTemplate>
-                                                <tr class="bg-default">
+                                                <tr class="bg-default" style="text-align:center">
                                                     <td><%# Eval("InventoryID") %></td>
                                                     <td><%# Eval("Product") %></td>
                                                     <td><%# Eval("Quantity") %></td>
@@ -126,7 +126,7 @@
                         <div class="row">
                             <div class="col-xs-12 table">
                                 <table id="dtinventory" class="table table-striped">
-                                    <thead>
+                                    <thead style="text-align:center">
                                         <th>#</th>
                                         <th>Product</th>
                                         <th>Quantity</th>
@@ -134,7 +134,7 @@
                                     <tbody>
                                         <asp:ListView ID="lvInventory" runat="server">
                                             <ItemTemplate>
-                                                <tr class="bg-default">
+                                                <tr class="bg-default" style="text-align:center">
                                                     <td><%# Eval("ID") %></td>
                                                     <td><%# Eval("Product") %></td>
                                                     <td><%# Eval("Quantity") %></td>

@@ -23,7 +23,7 @@
                             <div class="col-xs-12 table">
                                 <table id="dtInventory" class="table table-striped">
                                     <thead>
-                                        <tr>
+                                        <tr style="text-align:center">
                                             <th>#</th>
                                             <th>User</th>
                                             <th>Product</th>
@@ -35,7 +35,7 @@
                                     <tbody>
                                         <asp:ListView ID="lvInventory" runat="server">
                                             <ItemTemplate>
-                                                <tr class="bg-default">
+                                                <tr class="bg-default" style="text-align:center">
                                                     <td><%# Eval("LogID") %></td>
                                                     <td><%# Eval("CustomerName") %></td>
                                                     <td><%# Eval("Product") %></td>
@@ -71,7 +71,8 @@
                             <div class="col-xs-12 table">
                                 <table id="dtInventoryReport" class="table table-striped">
                                     <thead>
-                                        <tr>
+                                        <tr style="text-align:center">
+                                            <%--<th>Year</th>--%>
                                             <th>Month</th>
                                             <th>ID</th>
                                             <th>Product Name</th>
@@ -85,7 +86,8 @@
                                     <tbody>
                                         <asp:ListView ID="lvInventoryReport" runat="server">
                                             <ItemTemplate>
-                                                <tr class="bg-default">
+                                                <tr class="bg-default" style="text-align:center">
+                                                    <%--<td><%# Eval("Year") %></td>--%>
                                                     <td><%# Eval("Month") %></td>
                                                     <td><%# Eval("ProductID") %></td>
                                                     <td><%# Eval("Product") %></td>
@@ -118,7 +120,7 @@
                 </div>
             </div>
             <!-- Table row -->
-            <div class="card mt-5">
+            <%--<div class="card mt-5">
                 <div class="card-body">
                     <div class="container">
                         <div class="text-white">
@@ -129,8 +131,8 @@
                                 <table id="dtSales" class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <%--<th>Order #</th>
-                                            <th>User</th>--%>
+                                            <th>Order #</th>
+                                            <th>User</th>
                                             <th>Month</th>
                                             <th>Amount</th>
                                         </tr>
@@ -140,7 +142,7 @@
                                             <ItemTemplate>
                                                 <tr class="bg-default">
                                                     <%--<td><%# Eval("OrderNo") %></td>
-                                                    <td><%# Eval("Username") %></td>--%>
+                                                    <td><%# Eval("Username") %></td>
                                                     <td><%# Eval("DateOrdered") %></td>
                                                     <td>Php<%# Eval("Total", "{0: #,##0.00}") %></td>
                                                 </tr>
@@ -160,7 +162,7 @@
                     </div>
                     <br />
                 </div>
-            </div>
+            </div>--%>
         </form>
     </div>
     <br />
@@ -187,7 +189,7 @@
             });
         });
     </script>
-    <script>
+    <%--<script>
         $(document).ready(function () {
             $('#dtSales').DataTable({
                 dom: 'Bfrtip',
@@ -196,6 +198,6 @@
                 ]
             });
         });
-    </script>
+    </script>--%>
 </asp:Content>
 

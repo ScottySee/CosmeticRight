@@ -26,7 +26,7 @@
                     <div class="col-lg-12">
                         <center><h1>Orders</h1></center>
                         <table id="dtOrders" class="table table-hover">
-                            <thead>
+                            <thead style="text-align:center">
                                 <th>#</th>
                                 <th>Order Date</th>
                                 <th>Payment Method</th>
@@ -38,7 +38,7 @@
                             <tbody>
                                 <asp:ListView ID="lvOrders" runat="server">
                                     <ItemTemplate>
-                                        <tr class="bg-default">
+                                        <tr class="bg-default" style="text-align:center">
                                             <td><%# Eval("OrderNo") %></td>
                                             <td><%# Eval("DateOrdered", "{0:MMM dd, yyyy}") %></td>
                                             <td><%# Eval("PaymentMethod") %></td>

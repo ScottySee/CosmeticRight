@@ -29,7 +29,14 @@ public partial class OrderDetails : System.Web.UI.Page
                     GetOrderInfo(orderNo);
                     GetCustomerInfo(orderNo);
                     GetCity();
-                    if (ltStatus.Text == "Cancelled" || ltStatus.Text == "For Delivery" || ltStatus.Text == "Done")
+                    //for cancellation
+                    if (ltStatus.Text == "Cancelled, Pending for Approval" || ltStatus.Text == "For Delivery" || ltStatus.Text == "Done")
+                    {
+                        btnCancel.Visible = false;
+                    }
+
+                    //for refunds
+                    if (ltStatus.Text == "Refund Request Submitted, Pending for Verification" || ltStatus.Text == "Refund Completed")
                     {
                         btnCancel.Visible = false;
                     }
@@ -83,11 +90,10 @@ public partial class OrderDetails : System.Web.UI.Page
                             ltOrderNo.Text = data["OrderNo"].ToString();
                             ltStatus.Text = data["Status"].ToString();
 
-                            //btnAccept.Visible = ltStatus.Text == "Pending" ? true : false;
-                            //btnReject.Visible = ltStatus.Text == "Pending" ? true : false;
-
                             ltDateOrdered.Text = data["DateOrdered"].ToString();
                             ltPaymentMethod.Text = data["PaymentMethod"].ToString();
+
+                            btnCancel.Visible = ltStatus.Text == "Refund Completed" ? false : true;
                         }
                     }
                     else
@@ -191,46 +197,6 @@ public partial class OrderDetails : System.Web.UI.Page
         }
     }
 
-    //protected void btnAccept_Click(object sender, EventArgs e)
-    //{
-    //    using (SqlConnection con = new SqlConnection(Util.GetConnection()))
-    //    {
-    //        con.Open();
-    //        string query = @"UPDATE Orders SET Status =@Status
-    //                        WHERE OrderNo=@OrderNo;
-    //                          UPDATE OrderDetails SET Status=@Status2
-    //                            WHERE OrderNo=@OrderNo;";
-    //        using (SqlCommand cmd = new SqlCommand(query, con))
-    //        {
-    //            cmd.Parameters.AddWithValue("@Status", "Accepted");
-    //            cmd.Parameters.AddWithValue("OrderNo", ltOrderNo.Text);
-    //            //cmd.Parameters.AddWithValue("@Status2", "For Delivery");
-    //            cmd.ExecuteNonQuery();
-    //            Response.Redirect("Orders.aspx");
-    //        }
-    //    }
-    //}
-
-    //protected void btnReject_Click(object sender, EventArgs e)
-    //{
-    //    using (SqlConnection con = new SqlConnection(Util.GetConnection()))
-    //    {
-    //        con.Open();
-    //        string query = @"UPDATE Orders SET Status =@Status
-    //                        WHERE OrderNo=@OrderNo;
-    //                          UPDATE OrderDetails SET Status=@Status2
-    //                            WHERE OrderNo=@OrderNo";
-    //        using (SqlCommand cmd = new SqlCommand(query, con))
-    //        {
-    //            cmd.Parameters.AddWithValue("@Status", "Rejected");
-    //            cmd.Parameters.AddWithValue("OrderNo", ltOrderNo.Text);
-    //            //cmd.Parameters.AddWithValue("@Status2", "Cancelled");
-    //            cmd.ExecuteNonQuery();
-    //            Response.Redirect("Orders.aspx");
-    //        }
-    //    }
-    //}
-
     protected void btnCancel_Click(object sender, EventArgs e)
     {
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
@@ -249,45 +215,5 @@ public partial class OrderDetails : System.Web.UI.Page
                 Response.Redirect("OrderDetails.aspx");
             }
         }
-
-        //using (SqlConnection con = new SqlConnection(Util.GetConnection()))
-        //{
-        //    con.Open();
-        //    string query = @"UPDATE Orders SET Status=@Status
-        //                    WHERE OrderNo=@OrderNo";
-        //    using (SqlCommand cmd = new SqlCommand(query, con))
-        //    {
-        //        cmd.Parameters.AddWithValue("@Status", "Cancelled");
-        //        cmd.Parameters.AddWithValue("OrderNo", ltOrderNo.Text);
-        //        cmd.ExecuteNonQuery();
-        //    }
-        //}
-
-        //// for updating inventory
-        //using (SqlConnection con = new SqlConnection(Util.GetConnection()))
-        //{
-        //    int count = 0;
-        //    foreach (var item in quantity)
-        //    {
-        //        if (item != null)
-        //        {
-        //            con.Close();
-        //            con.Open();
-        //            string query = @"UPDATE Inventory SET Quantity = Quantity + @Quantity WHERE ProductID = @ProductID AND Inventory.Quantity > (Select Criticallevel from Products where ProductID = @ProductID)";
-        //            using (SqlCommand cmd = new SqlCommand(query, con))
-        //            {
-        //                cmd.Parameters.AddWithValue("@Quantity", item);
-        //                cmd.Parameters.AddWithValue("@ProductID", ProductID[count]);
-        //                cmd.ExecuteNonQuery();
-
-        //                //start of Auditlog 
-        //                Util.InventoryRecord(ProductID[count], item, "The member cancels order, inventory added.");
-        //                //end of auditlog
-        //                count++;
-        //            }
-        //        }
-        //    }
-        //}
-        //Response.Redirect("Orders.aspx");
     }
 }

@@ -119,7 +119,7 @@
                             <div class="col-xs-12 table">
                                 <table id="dtproducts" class="table table-striped">
                                     <thead>
-                                        <tr>
+                                        <tr style="text-align:center">
                                             <th>#</th>
                                             <th>Product Name</th>
                                             <th>Category</th>
@@ -134,7 +134,7 @@
                                         <%--OnPagePropertiesChanging="lvRates_PagePropertiesChanging"--%>
                                         <asp:ListView ID="lvProducts" runat="server">
                                             <ItemTemplate>
-                                                <tr class="bg-default">
+                                                <tr class="bg-default" style="text-align:center">
                                                     <td><%# Eval("ProductID") %></td>
                                                     <td><%# Eval("Product") %></td>
                                                     <td><%# Eval("CatID") %></td>

@@ -61,7 +61,7 @@
                             <div class="col-xs-12 table">
                                 <table id="dtcategories" class="table table-striped">
                                     <thead>
-                                        <tr>
+                                        <tr style="text-align:center">
                                             <th>#</th>
                                             <th>Category</th>
                                             <th>User</th>
@@ -72,7 +72,7 @@
                                     <tbody>
                                         <asp:ListView ID="lvCategories" runat="server">
                                             <ItemTemplate>
-                                                <tr class="bg-default">
+                                                <tr class="bg-default" style="text-align:center">
                                                     <td><%# Eval("CatID") %></td>
                                                     <td><%# Eval("Category") %></td>
                                                     <td><%# Eval("Username") %></td>
