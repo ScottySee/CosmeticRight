@@ -72,13 +72,13 @@
                                 <table id="dtInventoryReport" class="table table-striped">
                                     <thead>
                                         <tr style="text-align:center">
-                                            <%--<th>Year</th>--%>
                                             <th>Month</th>
                                             <th>ID</th>
                                             <th>Product Name</th>
                                             <th>Unit Price</th>
                                             <th>Quantity Added</th>
                                             <th>Quantity Sold</th>
+                                            <th>Quantity Return</th>
                                             <th>Quantity Ending Balance</th>
                                             
                                         </tr>
@@ -87,20 +87,14 @@
                                         <asp:ListView ID="lvInventoryReport" runat="server">
                                             <ItemTemplate>
                                                 <tr class="bg-default" style="text-align:center">
-                                                    <%--<td><%# Eval("Year") %></td>--%>
                                                     <td><%# Eval("Month") %></td>
                                                     <td><%# Eval("ProductID") %></td>
                                                     <td><%# Eval("Product") %></td>
                                                     <td><%# Eval("UnitPrice") %></td>
                                                     <td><%# (Eval("QuantityAdded").ToString() == "" ? "0" : Eval("QuantityAdded"))%></td>
                                                     <td><%# (Eval("QuantitySold").ToString() == "" ? "0" : Eval("QuantitySold"))%></td>
+                                                    <td><%# (Eval("QuantityReturned").ToString() == "" ? "0" : Eval("QuantityReturned"))%></td>
                                                     <td><%# (Eval("RemainingQuantity").ToString() == "" ? "0" : Eval("RemainingQuantity"))%></td>
-                                                    
-                                                    <%--<td><%# (Eval("TotalReturned").ToString() == "" ? "0" : Eval("TotalReturned"))%></td>--%>
-                                                    
-                                                    <%--<td><%# Eval("Gender").ToString() == "1" ? "Male" : "Female" %></td>--%>
-                                                    <%--(Eval("totaladded") == null ? "0" : Eval("totaladded"))--%>
-                                                    <%--<td><%# Convert.ToDateTime(Eval("DateExpired", "{0:MMM dd, yyyy}")) < DateTime.Now ? "Expired" : Eval("Status") %></td>--%>
                                                 </tr>
                                             </ItemTemplate>
                                             <EmptyDataTemplate>

@@ -33,7 +33,7 @@
                                 <th>Customer</th>
                                 <th>Total Amount</th>
                                 <th>Status</th>
-                                <th></th>
+                                <th>Action</th>
                             </thead>
                             <tbody>
                                 <asp:ListView ID="lvOrders" runat="server">

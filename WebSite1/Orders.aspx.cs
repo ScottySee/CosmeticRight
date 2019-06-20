@@ -9,6 +9,7 @@ using System.Web.UI.WebControls;
 
 public partial class Orders : System.Web.UI.Page
 {
+    public static string status;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -31,6 +32,7 @@ public partial class Orders : System.Web.UI.Page
                                 ORDER BY o.DateOrdered DESC";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
+                //cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
                 using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                 {
                     DataSet ds = new DataSet();
@@ -38,6 +40,20 @@ public partial class Orders : System.Web.UI.Page
                     lvOrders.DataSource = ds;
                     lvOrders.DataBind();
                 }
+
+                //using (SqlDataReader dr = cmd.ExecuteReader())
+                //{
+                //    if (dr.HasRows)
+                //    {
+                //        while (dr.Read())
+                //        {
+                //            Session["Status"] = dr["Status"].ToString();
+                //        }
+
+                //    }
+                //    else
+                //        Response.Redirect("Orders.aspx");
+                //}
             }
         }
     }
@@ -90,6 +106,12 @@ public partial class Orders : System.Web.UI.Page
         {
             // use default
             GetOrders();
+            
         }
+    }
+
+    protected void BtnRefund_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Refund.aspx");
     }
 }

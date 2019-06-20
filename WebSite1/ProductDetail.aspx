@@ -42,52 +42,6 @@
                     <br />
                 </div>
             </div>
-            <%--<div class="col-lg-3">
-                <div class="card-body">
-                    <div class="container">
-                        <div class="text-white">
-                            <center><h1>Feedback</h1></center>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12 table">
-
-                                <table id="dtFeedback" class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Feedback ID</th>
-                                            <th>Product</th>
-                                            <th>User</th>
-                                            <th>Comment</th>
-                                            <th>Rating</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <asp:ListView ID="lvFeedback" runat="server">
-                                            <ItemTemplate>
-                                                <tr class="bg-default">
-                                                    <td><%# Eval("FeedbackID") %></td>
-                                                    <td><%# Eval("Product") %></td>
-                                                    <td><%# Eval("CustomerName") %></td>
-                                                    <td><%# Eval("Comment") %></td>
-                                                    <td><%# Eval("Rating") %> out of 5</td>
-                                                </tr>
-                                            </ItemTemplate>
-                                            <EmptyDataTemplate>
-                                                <tr>
-                                                    <td colspan="10">
-                                                        <h2 class="text-center">No records found.</h2>
-                                                    </td>
-                                                </tr>
-                                            </EmptyDataTemplate>
-                                        </asp:ListView>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <br />
-                </div>
-            </div>--%>
         </div>
     </form>
 </asp:Content>

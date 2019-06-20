@@ -10,6 +10,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
     <form runat="server" class="form-horizontal">
+        <asp:ScriptManager runat="server" />
         <div class="container">
             <div class="text-white">
                 <i class="fa fa-money"></i>Order #<asp:literal id="ltOrderNo" runat="server" />
@@ -28,6 +29,8 @@
                             <asp:listview id="lvCart" runat="server">
                                 <ItemTemplate>
                                     <tr>
+                                        <%--<td><%# Eval("OrderNo") %></td>--%>
+
                                         <td>
                                             <img runat="server" src='<%# string.Concat("~/Images/Products/", Eval("Image")) %>' width="120" alt='<%# Eval("Product") %>' />
                                         </td>
@@ -79,7 +82,7 @@
                                 </tr>
                                 <tr>
                                     <td>Gross Amount</td>
-                                    <td align="right">Php<asp:literal id="ltGross" runat="server" />
+                                    <td align="right">Php <asp:literal id="ltGross" runat="server" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -97,14 +100,15 @@
                                 <tr>
                                     <td>Total Amount</td>
                                     <td align="right">
-                                        <h3>Php<asp:literal id="ltTotal" runat="server" /></h3>
+                                        <h3>Php <asp:literal id="ltTotal" runat="server" /></h3>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
+                    
                     <!-- Button trigger cancellation modal -->
-                    <% if (ltStatus.Text != "Rejected" && ltStatus.Text != "For Delivery" && ltStatus.Text != "Done"  && ltStatus.Text != "Cancelled, Pending for Approval" && ltStatus.Text != "Cancelled Approved" && ltStatus.Text != "Cancelled Disapproved" &&  ltStatus.Text != "Refund Request Submitted, Pending for Verification" && ltStatus.Text != "Refund Request Received, Verified" && ltStatus.Text != "Cancelled Approve, Refund in Process")
+                    <% if (ltStatus.Text != "Rejected" && ltStatus.Text != "For Delivery" && ltStatus.Text != "Done" && ltStatus.Text != "Cancelled, Pending for Approval" && ltStatus.Text != "Cancelled Approved" && ltStatus.Text != "Cancelled Disapproved" && ltStatus.Text != "Cancelled Approve, Refund in Process" && ltStatus.Text != "Refund Request Submitted, Pending for Approval" && ltStatus.Text != "Refund Request Received, Verified"  && ltStatus.Text != "Refund Completed")
                         { %>
                     <button id="cancel" class="btn btn-primary btn-block btn-lg" data-toggle="modal" data-target="#Cancelation">
                         Cancel
@@ -137,9 +141,8 @@
                             </div>
                         </div>
                     </div>
-
-                    <a href="Orders.aspx" class="btn btn-default btn-block btn-lg">Back to Orders
-                    </a>
+                    <%--<a href="Refund.aspx" class="btn btn-danger btn-block btn-lg">Refund</a>--%>
+                    <a href="Orders.aspx" class="btn btn-default btn-block btn-lg">Back to Orders</a>
                 </div>
             </div>
             <h3>Billing and Delivery Details</h3>

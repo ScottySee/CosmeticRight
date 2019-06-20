@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -63,7 +65,7 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
-            string query = @"SELECT OrderNo, DateOrdered, PaymentMethod, Status, CancelReason, CancelDate
+            string query = @"SELECT OrderNo, DateOrdered, PaymentMethod, Status, CancelReason, CancelDate, RefundReason, RefundDate
                             FROM Orders WHERE OrderNo=@OrderNo";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
@@ -78,6 +80,8 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
                             ltStatus.Text = data["Status"].ToString();
                             ltReason.Text = data["CancelReason"].ToString();
                             ltDate.Text = data["CancelDate"].ToString();
+                            ltRefund.Text = data["RefundReason"].ToString();
+                            ltRefundDate.Text = data["RefundDate"].ToString();
 
                             //for accepting order
                             btnAccept.Visible = ltStatus.Text == "Pending" ? true : false;
@@ -86,7 +90,7 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
                             ltDateOrdered.Text = data["DateOrdered"].ToString();
                             ltPaymentMethod.Text = data["PaymentMethod"].ToString();
 
-                            
+
 
                             btnApprove.Visible = ltStatus.Text == "Cancelled, Pending for Approval" ? true : false;
                             btnDisApprove.Visible = ltStatus.Text == "Cancelled, Pending for Approval" ? true : false;
@@ -115,7 +119,7 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
                             //    btnRefund.Visible = false;
                             //}
 
-                            //btnVerify.Visible = ltStatus.Text == "Refund in Progress, Pending for Approval" ? true : false;
+                            btnVerify.Visible = ltStatus.Text == "Refund Request Submitted, Pending for Verification" ? true : false;
 
                             //if (!(ltStatus.Text == "Refund in Progress, Pending for Approval"))
                             //{
@@ -205,7 +209,7 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
                         Response.Redirect("OrdersAdmin.aspx");
                 }
             }
-            
+
         }
     }
     void GetOrderSummary(int ID)
@@ -292,46 +296,91 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
 
     protected void btnApprove_Click(object sender, EventArgs e)
     {
-        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        if (ltPaymentMethod.Text == "Cash on Delivery")
         {
-            con.Open();
-            string query = @"UPDATE Orders SET Status=@Status
+            using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+            {
+                con.Open();
+                string query = @"UPDATE Orders SET Status=@Status
                 WHERE OrderNo=@OrderNo";
-            using (SqlCommand cmd = new SqlCommand(query, con))
-            {
-                cmd.Parameters.AddWithValue("Status", "Cancelled Approved");
-                cmd.Parameters.AddWithValue("OrderNo", ltOrderNo.Text);
-                cmd.ExecuteNonQuery();
-
-
-            }
-        }
-
-        // for updating inventory
-        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
-        {
-            int count = 0;
-            foreach (var item in quantity)
-            {
-                if (item != null)
+                using (SqlCommand cmd = new SqlCommand(query, con))
                 {
-                    con.Close();
-                    con.Open();
-                    string query = @"UPDATE Inventory SET Quantity = Quantity + @Quantity WHERE ProductID = @ProductID AND Inventory.Quantity > (Select Criticallevel from Products where ProductID = @ProductID)";
-                    using (SqlCommand cmd = new SqlCommand(query, con))
-                    {
-                        cmd.Parameters.AddWithValue("@Quantity", item);
-                        cmd.Parameters.AddWithValue("@ProductID", ProductID[count]);
-                        cmd.ExecuteNonQuery();
+                    cmd.Parameters.AddWithValue("@Status", "Cancelled Approved");
+                    cmd.Parameters.AddWithValue("@OrderNo", ltOrderNo.Text);
+                    cmd.ExecuteNonQuery();
+                }
+            }
 
-                        //start of Auditlog 
-                        Util.InventoryRecord(ProductID[count], item, "The member cancels order, inventory returned.");
-                        //end of auditlog
-                        count++;
+            // for updating inventory
+            using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+            {
+                int count = 0;
+                foreach (var item in quantity)
+                {
+                    if (item != null)
+                    {
+                        con.Close();
+                        con.Open();
+                        string query = @"UPDATE Inventory SET Quantity = Quantity + @Quantity WHERE ProductID = @ProductID AND Inventory.Quantity > (Select Criticallevel from Products where ProductID = @ProductID)";
+                        using (SqlCommand cmd = new SqlCommand(query, con))
+                        {
+                            cmd.Parameters.AddWithValue("@Quantity", item);
+                            cmd.Parameters.AddWithValue("@ProductID", ProductID[count]);
+                            cmd.ExecuteNonQuery();
+
+                            //start of Auditlog 
+                            Util.InventoryRecord(ProductID[count], item, "The member cancels order, inventory returned.");
+                            //end of auditlog
+                            count++;
+                        }
                     }
                 }
             }
         }
+        else
+        {
+            using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+            {
+                con.Open();
+                string query = @"UPDATE Orders SET Status=@Status
+                WHERE OrderNo=@OrderNo";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@Status", "Cancelled Approved, Refund in Process");
+                    cmd.Parameters.AddWithValue("@OrderNo", ltOrderNo.Text);
+                    cmd.ExecuteNonQuery();
+
+
+                }
+            }
+
+            // for updating inventory
+            using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+            {
+                int count = 0;
+                foreach (var item in quantity)
+                {
+                    if (item != null)
+                    {
+                        con.Close();
+                        con.Open();
+                        string query = @"UPDATE Inventory SET Quantity = Quantity + @Quantity WHERE ProductID = @ProductID AND Inventory.Quantity > (Select Criticallevel from Products where ProductID = @ProductID)";
+                        using (SqlCommand cmd = new SqlCommand(query, con))
+                        {
+                            cmd.Parameters.AddWithValue("@Quantity", item);
+                            cmd.Parameters.AddWithValue("@ProductID", ProductID[count]);
+                            cmd.ExecuteNonQuery();
+
+                            //start of Auditlog 
+                            Util.InventoryRecord(ProductID[count], item, "The member cancels order, inventory returned.");
+                            //end of auditlog
+                            count++;
+                        }
+                    }
+                }
+            }
+        }
+
     }
 
     protected void btnDisApprove_Click(object sender, EventArgs e)
@@ -343,29 +392,12 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
                 WHERE OrderNo=@OrderNo";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
-                cmd.Parameters.AddWithValue("Status", "Cancelled Disapproved");
-                cmd.Parameters.AddWithValue("OrderNo", ltOrderNo.Text);
+                cmd.Parameters.AddWithValue("@Status", "Cancelled Disapproved");
+                cmd.Parameters.AddWithValue("@OrderNo", ltOrderNo.Text);
                 cmd.ExecuteNonQuery();
             }
         }
     }
-
-    //protected void btnRefund_Click(object sender, EventArgs e)
-    //{
-    //    using (SqlConnection con = new SqlConnection(Util.GetConnection()))
-    //    {
-    //        con.Open();
-    //        string query = @"UPDATE Orders SET Status=@Status
-    //            WHERE OrderNo=@OrderNo";
-    //        using (SqlCommand cmd = new SqlCommand(query, con))
-    //        {
-    //            cmd.Parameters.AddWithValue("Status", "Refund");
-    //            cmd.Parameters.AddWithValue("OrderNo", ltOrderNo.Text);
-    //            cmd.ExecuteNonQuery();
-    //            Response.Redirect("OrderDetailsAdmin.aspx");
-    //        }
-    //    }
-    //}
 
     //protected void btnPayNow_Click(object sender, EventArgs e)
     //{
@@ -382,4 +414,59 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
     //        }
     //    }
     //}
+
+    protected void btnVerify_Click(object sender, EventArgs e)
+    {
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        {
+            con.Open();
+            string query = @"UPDATE Orders SET Status=@Status
+                WHERE OrderNo=@OrderNo";
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("@Status", "Refund Request Received, Verified. Check your email");
+                cmd.Parameters.AddWithValue("@OrderNo", ltOrderNo.Text);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        //using (SqlCommand cmd = new SqlCommand(SQL2, con))
+        //{
+        //    cmd.Parameters.AddWithValue("@Email", Server.HtmlEncode(txtEmail.Text.Trim()));
+        //    using (SqlDataReader data = cmd.ExecuteReader())
+        //    {
+        //        if (data.HasRows) //credentials are correct
+        //        {
+        //            while (data.Read())
+        //            {
+        //                ID = data["UserID"].ToString();
+        //            }
+
+        //            //send email di pa tapos
+        //            using (MailMessage mm = new MailMessage("scottysee98@gmail.com", txtEmail.Text))
+        //            {
+        //                mm.Subject = "Email Confirmation";
+        //                mm.Body = "Hi, " + txtFN.Text + "<br/>" + "You have requested for a refund of your order.<br/>" + "<br/>" + "Prior to that, we would like to asked for the transaction ID from your order in Paypal to process the refunds.<br/>" + "<br/>" + "If you have any question, please email us at scottysee98@gmail.com" + "<br/>" + "Thank You!";
+
+        //                mm.IsBodyHtml = true;
+        //                SmtpClient smtp = new SmtpClient();
+        //                smtp.Host = "smtp.gmail.com";
+        //                smtp.EnableSsl = true;
+        //                NetworkCredential NetworkCred = new NetworkCredential("scottysee98@gmail.com", "POOHPOOH98"); //email and password of the sender.
+        //                smtp.UseDefaultCredentials = true;
+        //                smtp.Credentials = NetworkCred;
+        //                smtp.Port = 587;
+        //                smtp.Send(mm);
+        //                ClientScript.RegisterStartupScript(GetType(), "alert", "alert('Email sent.');", true);
+        //            }
+        //        }
+        //        else //did not match
+        //        {
+
+        //        }
+        //    }
+        //}
+
+
+    }
 }

@@ -25,7 +25,6 @@ public partial class ProductDetail : System.Web.UI.Page
                 if (!IsPostBack)
                 {
                     GetData(productID);
-                    //GetFeedback();
                 }
             }
             else
@@ -35,37 +34,15 @@ public partial class ProductDetail : System.Web.UI.Page
         }
     }
 
-    //void GetFeedback()
-    //{
-    //    using (SqlConnection con = new SqlConnection(Util.GetConnection()))
-    //    {
-    //        con.Open();
-    //        string query = @"SELECT FeedbackID , Product, u.Lastname + ' ' + u.Firstname AS CustomerName,
-    //                           f.Comment, f.Rating FROM Feedback f
-    //                           INNER JOIN Users u ON f.UserID = u.UserID";
-
-    //        using (SqlCommand cmd = new SqlCommand(query, con))
-    //        {
-    //            using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-    //            {
-    //                DataSet ds = new DataSet();
-    //                da.Fill(ds, "Feedback");
-    //                lvFeedback.DataSource = ds;
-    //                lvFeedback.DataBind();
-    //            }
-    //        }
-    //    }
-    //}
-
     void GetData(int ID)
     {
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
         {
             con.Open();
             string query = @"SELECT p.Product, p.Code, p.Image, p.Description, p.CatID,
-                            c.Category, p.Price, pi.Quantity FROM Products p
+                            c.Category, p.Price, i.Quantity FROM Products p
                             INNER JOIN Categories c ON p.CatID = c.CatID
-                            INNER JOIN ProductInventory pi ON p.Product = pi.Product
+                            INNER JOIN Inventory i ON p.ProductID = i.ProductID
                             WHERE p.ProductID=@ProductID";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {

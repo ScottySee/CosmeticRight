@@ -36,7 +36,7 @@ public partial class OrderDetails : System.Web.UI.Page
                     }
 
                     //for refunds
-                    if (ltStatus.Text == "Refund Request Submitted, Pending for Verification" || ltStatus.Text == "Refund Completed")
+                    if (ltStatus.Text == "Refund Request Submitted, Pending for Approval" || ltStatus.Text == "Refund Request Received, Verified" || ltStatus.Text == "Refund Completed")
                     {
                         btnCancel.Visible = false;
                     }
@@ -169,7 +169,7 @@ public partial class OrderDetails : System.Web.UI.Page
 
                     }
                     else
-                        Response.Redirect("OrdersAdmin.aspx");
+                        Response.Redirect("Orders.aspx");
                 }
             }
         }

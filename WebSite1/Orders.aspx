@@ -7,21 +7,27 @@
             </div>
         </div>
     </div>
+    <%--<script>
+        function myFunction() {
+            var x = document.getElementById("refund").disabled;
+            document.getElementById("demo").innerHTML = x;
+        }
+    </script>--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
     <div class="container mt--7">
         <form runat="server" class="form-horizontal">
-            <asp:ScriptManager runat="server" />
+            <asp:scriptmanager runat="server" />
             <div class="card shadow-lg">
                 <div class="card-body">
                     <div class="col-lg-offset-6 col-lg-3 text-white">
-                        START<asp:TextBox ID="txtStart" runat="server" CssClass="form-control"
-                            type="date" AutoPostBack="true" OnTextChanged="SearchByDate" />
+                        START<asp:textbox id="txtStart" runat="server" cssclass="form-control"
+                            type="date" autopostback="true" ontextchanged="SearchByDate" />
                     </div>
                     <br />
                     <div class="col-lg-3 text-white">
-                        END<asp:TextBox ID="txtEnd" runat="server" CssClass="form-control"
-                            type="date" AutoPostBack="true" OnTextChanged="SearchByDate" />
+                        END<asp:textbox id="txtEnd" runat="server" cssclass="form-control"
+                            type="date" autopostback="true" ontextchanged="SearchByDate" />
                     </div>
                     <%--<div>
                         <table class="table" visible="false">
@@ -47,13 +53,13 @@
                             </tbody>
                         </table>
                     </div>--%>
-                        <!-- Button trigger refund modal -->
-                        <%--<button id="refund" class="btn btn-primary btn-block btn-lg" data-toggle="modal" data-target="#Refund">
+                    <%--                        <!-- Button trigger refund modal -->
+                        <button id="refund" class="btn btn-primary btn-block btn-lg" data-toggle="modal" data-target="#Refund">
                             Refund
-                        </button>--%>
+                        </button>
 
                         <!-- Refund Modal -->
-                        <%--<div class="modal fade" id="Refund" tabindex="-1" role="dialog">
+                        <div class="modal fade" id="Refund" tabindex="-1" role="dialog">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -80,20 +86,20 @@
 
                     <div class="col-lg-12">
                         <center><h1>Orders</h1></center>
-                        <table class="table table-hover">
-                            <thead style="text-align: center">
+                        <table id="dtOrders" class="table table-hover">
+                            <thead style="text-align:center">
                                 <th>#</th>
                                 <th>Order Date</th>
                                 <th>Payment Method</th>
                                 <th>Customer</th>
                                 <th>Total Amount</th>
                                 <th>Status</th>
-                                <th></th>
+                                <th>Action</th>
                             </thead>
                             <tbody>
                                 <asp:ListView ID="lvOrders" runat="server">
                                     <ItemTemplate>
-                                        <tr class="bg-default" style="text-align: center">
+                                        <tr class="bg-default" style="text-align:center">
                                             <td><%# Eval("OrderNo") %></td>
                                             <td><%# Eval("DateOrdered", "{0:MMM dd, yyyy}") %></td>
                                             <td><%# Eval("PaymentMethod") %></td>
@@ -101,9 +107,13 @@
                                             <td>Php<%# Eval("TotalAmount", "{0: #,##0.00}") %></td>
                                             <td><%# Eval("Status") %></td>
                                             <td>
-                                                <a href='OrderDetails.aspx?ID=<%# Eval("OrderNo") %>' class="btn btn-xs btn-info"
+                                                <a href='OrderDetails.aspx?ID=<%# Eval("OrderNo") %>' class="btn btn-sm btn-info"
                                                     title="View Details">
                                                     <i class="fa fa-list"></i>
+                                                </a>
+
+                                                <a href='Refund.aspx?ID=<%# Eval("OrderNo") %>' class="btn btn-sm btn-danger" title="Refund">
+                                                    Refund
                                                 </a>
                                             </td>
                                         </tr>
@@ -119,14 +129,20 @@
                             </tbody>
                         </table>
                     </div>
-
                 </div>
             </div>
         </form>
     </div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scripts" runat="Server">
+    <script>
+        $(document).ready(function () {
+            $('#dtOrders').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'pdf'
+                ]
+            });
+        });
+    </script>
 </asp:Content>
-
-
-

@@ -169,11 +169,11 @@
                                     </asp:LinkButton>
 
 
-                                    <%--<asp:LinkButton ID="btnVerify" runat="server"
+                                    <asp:LinkButton ID="btnVerify" runat="server"
                                         CssClass="btn btn-success btn-lg btn-block"
                                         OnClientClick='return confirm("Accept the reason for refund?");'
-                                       OnClick="btnApprove_Click">Approve Refund
-                                    </asp:LinkButton>--%>
+                                       OnClick="btnVerify_Click">Approve Refund
+                                    </asp:LinkButton>
 
                                     <%--PAYPAL--%>
 
@@ -250,6 +250,12 @@
                                     <label class="control-label col-lg-4">Mobile</label>
                                     <div class="col-lg-8">
                                         <asp:Label ID="txtMobile" runat="server" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4">Email</label>
+                                    <div class="col-lg-8">
+                                        <asp:Label ID="txtEmail" runat="server" class="form-control" />
                                     </div>
                                 </div>
                             </div>
