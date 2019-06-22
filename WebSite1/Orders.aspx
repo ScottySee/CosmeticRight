@@ -112,9 +112,9 @@
                                                     <i class="fa fa-list"></i>
                                                 </a>
 
-                                                <a href='Refund.aspx?ID=<%# Eval("OrderNo") %>' class="btn btn-sm btn-danger" title="Refund">
+                                                <%--<a href='Refund.aspx?ID=<%# Eval("OrderNo") %>' class="btn btn-sm btn-danger" title="Refund">
                                                     Refund
-                                                </a>
+                                                </a>--%>
                                             </td>
                                         </tr>
                                     </ItemTemplate>

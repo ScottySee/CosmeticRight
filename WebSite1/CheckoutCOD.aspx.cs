@@ -212,34 +212,34 @@ public partial class CheckoutCOD : System.Web.UI.Page
         }
         #endregion
 
-        #region Step #4: Minus Inventory Record 
-        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
-        {
-            int count = 0;
-            foreach (var item in quantity)
-            {
-                if (item != null)
-                {
-                    con.Close();
-                    con.Open();
-                    string query = @"UPDATE Inventory SET Quantity = Quantity - @Quantity WHERE ProductID = @ProductID AND Inventory.Quantity > (Select Criticallevel from Products where ProductID = @ProductID)";
-                    //string query2 = @"INSERT INTO InventoryLog VALUES (@UserID, @ProductID, @Quantity, @LogTime, @Activity)";
-                    using (SqlCommand cmd = new SqlCommand(query, con))
-                    {
-                        cmd.Parameters.AddWithValue("@Quantity", item);
-                        cmd.Parameters.AddWithValue("@ProductID", ProductID[count]);
-                        cmd.ExecuteNonQuery();
+        //#region Step #4: Minus Inventory Record 
+        //using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        //{
+        //    int count = 0;
+        //    foreach (var item in quantity)
+        //    {
+        //        if (item != null)
+        //        {
+        //            con.Close();
+        //            con.Open();
+        //            string query = @"UPDATE Inventory SET Quantity = Quantity - @Quantity WHERE ProductID = @ProductID AND Inventory.Quantity > (Select Criticallevel from Products where ProductID = @ProductID)";
+        //            //string query2 = @"INSERT INTO InventoryLog VALUES (@UserID, @ProductID, @Quantity, @LogTime, @Activity)";
+        //            using (SqlCommand cmd = new SqlCommand(query, con))
+        //            {
+        //                cmd.Parameters.AddWithValue("@Quantity", item);
+        //                cmd.Parameters.AddWithValue("@ProductID", ProductID[count]);
+        //                cmd.ExecuteNonQuery();
                         
 
-                        //start of Auditlog 
-                        Util.InventoryRecord(ProductID[count], item, "The member has created an order, inventory deducted.");
-                        //end of auditlog
-                        count++;
-                    }
-                }
-            }
-        }
-        #endregion
+        //                //start of Auditlog 
+        //                Util.InventoryRecord(ProductID[count], item, "The member has created an order, inventory deducted.");
+        //                //end of auditlog
+        //                count++;
+        //            }
+        //        }
+        //    }
+        //}
+        //#endregion
 
         Response.Redirect("Orders.aspx");
     }

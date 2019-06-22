@@ -245,9 +245,36 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("Status", "Accepted");
                 cmd.Parameters.AddWithValue("OrderNo", ltOrderNo.Text);
                 cmd.ExecuteNonQuery();
-                Response.Redirect("OrderDetailsAdmin.aspx");
+
             }
         }
+
+        // for updating inventory
+        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        {
+            int count = 0;
+            foreach (var item in quantity)
+            {
+                if (item != null)
+                {
+                    con.Close();
+                    con.Open();
+                    string query = @"UPDATE Inventory SET Quantity = Quantity - @Quantity WHERE ProductID = @ProductID AND Inventory.Quantity > (Select Criticallevel from Products where ProductID = @ProductID)";
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@Quantity", item);
+                        cmd.Parameters.AddWithValue("@ProductID", ProductID[count]);
+                        cmd.ExecuteNonQuery();
+
+                        //start of Auditlog 
+                        Util.InventoryRecord(ProductID[count], item, "The office admin has accepted an order, inventory deducted");
+                        //end of auditlog
+                        count++;
+                    }
+                }
+            }
+        }
+        Response.Redirect("OrderDetailsAdmin.aspx");
     }
 
     protected void btnReject_Click(object sender, EventArgs e)
@@ -267,31 +294,31 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
             }
         }
 
-        // for updating inventory
-        using (SqlConnection con = new SqlConnection(Util.GetConnection()))
-        {
-            int count = 0;
-            foreach (var item in quantity)
-            {
-                if (item != null)
-                {
-                    con.Close();
-                    con.Open();
-                    string query = @"UPDATE Inventory SET Quantity = Quantity + @Quantity WHERE ProductID = @ProductID AND Inventory.Quantity > (Select Criticallevel from Products where ProductID = @ProductID)";
-                    using (SqlCommand cmd = new SqlCommand(query, con))
-                    {
-                        cmd.Parameters.AddWithValue("@Quantity", item);
-                        cmd.Parameters.AddWithValue("@ProductID", ProductID[count]);
-                        cmd.ExecuteNonQuery();
+        //// for updating inventory
+        //using (SqlConnection con = new SqlConnection(Util.GetConnection()))
+        //{
+        //    int count = 0;
+        //    foreach (var item in quantity)
+        //    {
+        //        if (item != null)
+        //        {
+        //            con.Close();
+        //            con.Open();
+        //            string query = @"UPDATE Inventory SET Quantity = Quantity + @Quantity WHERE ProductID = @ProductID AND Inventory.Quantity > (Select Criticallevel from Products where ProductID = @ProductID)";
+        //            using (SqlCommand cmd = new SqlCommand(query, con))
+        //            {
+        //                cmd.Parameters.AddWithValue("@Quantity", item);
+        //                cmd.Parameters.AddWithValue("@ProductID", ProductID[count]);
+        //                cmd.ExecuteNonQuery();
 
-                        //start of Auditlog 
-                        Util.InventoryRecord(ProductID[count], item, "The office admin has rejected an order, inventory added");
-                        //end of auditlog
-                        count++;
-                    }
-                }
-            }
-        }
+        //                //start of Auditlog 
+        //                Util.InventoryRecord(ProductID[count], item, "The office admin has rejected an order, inventory added");
+        //                //end of auditlog
+        //                count++;
+        //            }
+        //        }
+        //    }
+        //}
     }
 
     protected void btnApprove_Click(object sender, EventArgs e)
@@ -343,7 +370,7 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
             {
                 con.Open();
                 string query = @"UPDATE Orders SET Status=@Status
-                WHERE OrderNo=@OrderNo";
+            WHERE OrderNo=@OrderNo";
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
                     cmd.Parameters.AddWithValue("@Status", "Cancelled Approved, Refund in Process");
@@ -380,8 +407,9 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
                 }
             }
         }
-
     }
+
+
 
     protected void btnDisApprove_Click(object sender, EventArgs e)
     {
@@ -415,6 +443,7 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
     //    }
     //}
 
+
     protected void btnVerify_Click(object sender, EventArgs e)
     {
         using (SqlConnection con = new SqlConnection(Util.GetConnection()))
@@ -429,44 +458,44 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
                 cmd.ExecuteNonQuery();
             }
         }
-
-        //using (SqlCommand cmd = new SqlCommand(SQL2, con))
-        //{
-        //    cmd.Parameters.AddWithValue("@Email", Server.HtmlEncode(txtEmail.Text.Trim()));
-        //    using (SqlDataReader data = cmd.ExecuteReader())
-        //    {
-        //        if (data.HasRows) //credentials are correct
-        //        {
-        //            while (data.Read())
-        //            {
-        //                ID = data["UserID"].ToString();
-        //            }
-
-        //            //send email di pa tapos
-        //            using (MailMessage mm = new MailMessage("scottysee98@gmail.com", txtEmail.Text))
-        //            {
-        //                mm.Subject = "Email Confirmation";
-        //                mm.Body = "Hi, " + txtFN.Text + "<br/>" + "You have requested for a refund of your order.<br/>" + "<br/>" + "Prior to that, we would like to asked for the transaction ID from your order in Paypal to process the refunds.<br/>" + "<br/>" + "If you have any question, please email us at scottysee98@gmail.com" + "<br/>" + "Thank You!";
-
-        //                mm.IsBodyHtml = true;
-        //                SmtpClient smtp = new SmtpClient();
-        //                smtp.Host = "smtp.gmail.com";
-        //                smtp.EnableSsl = true;
-        //                NetworkCredential NetworkCred = new NetworkCredential("scottysee98@gmail.com", "POOHPOOH98"); //email and password of the sender.
-        //                smtp.UseDefaultCredentials = true;
-        //                smtp.Credentials = NetworkCred;
-        //                smtp.Port = 587;
-        //                smtp.Send(mm);
-        //                ClientScript.RegisterStartupScript(GetType(), "alert", "alert('Email sent.');", true);
-        //            }
-        //        }
-        //        else //did not match
-        //        {
-
-        //        }
-        //    }
-        //}
-
-
     }
 }
+
+//using (SqlCommand cmd = new SqlCommand(SQL2, con))
+//{
+//    cmd.Parameters.AddWithValue("@Email", Server.HtmlEncode(txtEmail.Text.Trim()));
+//    using (SqlDataReader data = cmd.ExecuteReader())
+//    {
+//        if (data.HasRows) //credentials are correct
+//        {
+//            while (data.Read())
+//            {
+//                ID = data["UserID"].ToString();
+//            }
+
+//            //send email di pa tapos
+//            using (MailMessage mm = new MailMessage("scottysee98@gmail.com", txtEmail.Text))
+//            {
+//                mm.Subject = "Email Confirmation";
+//                mm.Body = "Hi, " + txtFN.Text + "<br/>" + "You have requested for a refund of your order.<br/>" + "<br/>" + "Prior to that, we would like to asked for the transaction ID from your order in Paypal to process the refunds.<br/>" + "<br/>" + "If you have any question, please email us at scottysee98@gmail.com" + "<br/>" + "Thank You!";
+
+//                mm.IsBodyHtml = true;
+//                SmtpClient smtp = new SmtpClient();
+//                smtp.Host = "smtp.gmail.com";
+//                smtp.EnableSsl = true;
+//                NetworkCredential NetworkCred = new NetworkCredential("scottysee98@gmail.com", "POOHPOOH98"); //email and password of the sender.
+//                smtp.UseDefaultCredentials = true;
+//                smtp.Credentials = NetworkCred;
+//                smtp.Port = 587;
+//                smtp.Send(mm);
+//                ClientScript.RegisterStartupScript(GetType(), "alert", "alert('Email sent.');", true);
+//            }
+//        }
+//        else //did not match
+//        {
+
+//        }
+//    }
+//}
+
+

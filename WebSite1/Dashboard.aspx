@@ -14,69 +14,23 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
     <!-- Main content -->
     <%--<div class="main-content">--%>
-    <div class="container mt--7">
-        <div class="header bg-gradient-gray-dark pb-5 pt-5 pt-md-8">
+    <div class="container mt--7" id="printpage">
+        <div class="header bg-info pb-5 pt-5 pt-md-8">
+           <div class="text-uppercase mb-0 text-muted">
+                <center><h1><b>DASHBOARD</b></h1></center>
+           </div>
+            
             <!-- Top navbar -->
             <%--<nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">--%>
-            <div class="container-fluid">
+            <%--<div class="container-fluid">--%>
                 <!-- Brand -->
-                <a class="h2 mb-0 text-white text-uppercase d-none d-lg-inline-flex" href="Dashboard.aspx">Dashboard</a>
+                
                 <!-- Form -->
-                <%--<form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
-          <div class="form-group mb-0">
-            <div class="input-group input-group-alternative">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-search"></i></span>
-              </div>
-              <input class="form-control" placeholder="Search" type="text">
-            </div>
-          </div>
-        </form>--%>
-                <!-- User -->
-                <%--<ul class="navbar-nav align-items-center d-none d-md-flex">
-          <li class="nav-item dropdown">
-            <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <div class="media align-items-center">
-                <div class="media-body ml-2 d-none d-lg-block">
-                  <span class="mb-0 text-sm  font-weight-bold">Jessica Jones</span>
-                </div>
-              </div>
-            </a>
-            <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
-              <div class=" dropdown-header noti-title">
-                <h6 class="text-overflow m-0">Welcome!</h6>
-              </div>
-              <a href="./examples/profile.html" class="dropdown-item">
-                <i class="ni ni-single-02"></i>
-                <span>My profile</span>
-              </a>
-              <a href="./examples/profile.html" class="dropdown-item">
-                <i class="ni ni-settings-gear-65"></i>
-                <span>Settings</span>
-              </a>
-              <a href="./examples/profile.html" class="dropdown-item">
-                <i class="ni ni-calendar-grid-58"></i>
-                <span>Activity</span>
-              </a>
-              <a href="./examples/profile.html" class="dropdown-item">
-                <i class="ni ni-support-16"></i>
-                <span>Support</span>
-              </a>
-              <div class="dropdown-divider"></div>
-              <a href="#!" class="dropdown-item">
-                <i class="ni ni-user-run"></i>
-                <span>Logout</span>
-              </a>
-            </div>
-          </li>
-        </ul>--%>
-            </div>
+            <%--</div>--%>
         </div>
-        <%--</nav>--%>
         <!-- Header -->
-        <%--<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">--%>
         <div class="container-fluid">
-            <div class="header-body">
+            <div class="header-body" >
                 <!-- Card stats -->
                 <div class="row">
                     <div class="col-xl-3 col-lg-6">
@@ -84,12 +38,12 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
-                                        <h3 class="card-title text-uppercase mb-0 text-white">Total Visits</h3>
-                                        <asp:Label ID="count" runat="server" class="h1 font-weight-bold mb-0 text-black form-control" />
+                                        <h3 class="card-title text-uppercase mb-0 text-muted">Total Visits</h3>
+                                        <asp:Label ID="count" runat="server" class="h1 font-weight-bold mb-0 text-muted form-control" />
                                         <%--<span class="h2 font-weight-bold mb-0 text-white">350,897</span>--%>
                                     </div>
                                     <div class="col-auto">
-                                        <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                                        <div class="icon icon-shape bg-danger text-black rounded-circle shadow">
                                             <i class="fas fa-chart-bar"></i>
                                         </div>
                                     </div>
@@ -106,11 +60,11 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
-                                        <h3 class="card-title text-uppercase mb-0 text-white">Orders</h3>
-                                        <asp:Label ID="count1" runat="server" class="h1 font-weight-bold mb-0 text-black form-control" />
+                                        <h3 class="card-title text-uppercase mb-0 text-muted">Orders</h3>
+                                        <asp:Label ID="count1" runat="server" class="h1 font-weight-bold mb-0 text-muted form-control" />
                                     </div>
                                     <div class="col-auto">
-                                        <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
+                                        <div class="icon icon-shape bg-warning text-black rounded-circle shadow">
                                             <i class="fas fa-chart-pie"></i>
                                         </div>
                                     </div>
@@ -127,8 +81,8 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
-                                        <h3 class="card-title text-uppercase text-white mb-0">Users</h3>
-                                        <asp:Label ID="count2" runat="server" class="h1 font-weight-bold mb-0 text-black form-control" />
+                                        <h3 class="card-title text-uppercase text-muted mb-0">Users</h3>
+                                        <asp:Label ID="count2" runat="server" class="h1 font-weight-bold mb-0 text-muted form-control" />
                                     </div>
                                     <div class="col-auto">
                                         <div class="icon icon-shape bg-info text-black rounded-circle shadow">
@@ -149,8 +103,8 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
-                                        <h3 class="card-title text-uppercase text-white mb-0">Sales</h3>
-                                        <asp:Label ID="sales" runat="server" class="h1 font-weight-bold mb-0 text-black form-control"></asp:Label>
+                                        <h3 class="card-title text-uppercase text-muted mb-0">Sales</h3>
+                                        <asp:Label ID="sales" runat="server" class="h1 font-weight-bold mb-0 text-muted form-control"></asp:Label>
                                     </div>
                                     <div class="col-auto">
                                         <div class="icon icon-shape bg-success text-black rounded-circle shadow">
@@ -170,7 +124,6 @@
         </div>
         <%--</div>--%>
         <br />
-        <br />
         <!-- Page content -->
         <div class="container-fluid mt--7">
             <div class="row">
@@ -179,8 +132,8 @@
                         <div class="card-header bg-transparent">
                             <div class="row align-items-center">
                                 <div class="col">
-                                    <h6 class="text-uppercase text-light ls-1 mb-1">Overview</h6>
-                                    <h2 class="text-white mb-0">Sales value</h2>
+                                    <h6 class="text-uppercase text-muted ls-1 mb-1">Overview</h6>
+                                    <h2 class="text-muted mb-0">Sales value</h2>
                                 </div>
                             </div>
                         </div>
@@ -217,7 +170,7 @@
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>
-                                    <h2 class="mb-0">Total orders</h2>
+                                    <h2 class=" text-muted mb-0">Total orders</h2>
                                 </div>
                             </div>
                         </div>
@@ -254,8 +207,24 @@
                     </div>
                 </div>
             </div>
+            
         </div>
+        <input name="b_print" type="button" class="ipt btn btn-danger" onclick="printdiv('printpage');" value="Print" />
     </div>
+    
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scripts" runat="Server">
+    <script>
+        function printdiv(printpage) {
+            var headstr = "<html><head><title>Sales Report</title></head><body>";
+            var footstr = "</body>"
+            var newstr = document.getElementById(printpage).innerHTML;
+            document.body.innerHTML = headstr + newstr + footstr;
+            //var printButton = document.getElementById("printpage");
+            //printButton.style.visibility = 'hidden';
+            //var oldstr = document.body.innerHTML
+            window.print();
+            //document.body.innerHTML = oldstr;
+        }
+    </script>
 </asp:Content>

@@ -78,11 +78,6 @@
                         </a>
                     </li>
                     <li class="nav-item p-0">
-                        <a class="nav-link" href="Dashboard.aspx">
-                            <i class="fa fa-clipboard"></i>Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item p-0">
                         <a class="nav-link" href="Logs.aspx">
                             <i class="fa fa-clipboard"></i>Audit Logs
                         </a>
@@ -90,6 +85,11 @@
                     <li class="nav-item p-0">
                         <a class="nav-link" href="Reports.aspx">
                             <i class="fa fa-clipboard"></i>Reports
+                        </a>
+                    </li>
+                    <li class="nav-item p-0">
+                        <a class="nav-link" href="Dashboard.aspx">
+                            <i class="fa fa-clipboard"></i>Dashboard
                         </a>
                     </li>
                     <li class="nav-item p-0">

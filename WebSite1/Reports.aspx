@@ -79,7 +79,7 @@
                                             <th>Quantity Added</th>
                                             <th>Quantity Sold</th>
                                             <th>Quantity Return</th>
-                                            <th>Quantity Ending Balance</th>
+                                            <th>Quantity Remaining</th>
                                             
                                         </tr>
                                     </thead>
@@ -114,7 +114,7 @@
                 </div>
             </div>
             <!-- Table row -->
-            <%--<div class="card mt-5">
+            <div class="card mt-5">
                 <div class="card-body">
                     <div class="container">
                         <div class="text-white">
@@ -124,20 +124,22 @@
                             <div class="col-xs-12 table">
                                 <table id="dtSales" class="table table-striped">
                                     <thead>
-                                        <tr>
-                                            <th>Order #</th>
-                                            <th>User</th>
+                                        <tr style="text-align:center">
+                                            <%--<th>Order #</th>
+                                            <th>User</th>--%>
                                             <th>Month</th>
+                                            <%--<th># of Order</th>--%>
                                             <th>Amount</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <asp:ListView ID="lvSales" runat="server">
                                             <ItemTemplate>
-                                                <tr class="bg-default">
+                                                <tr class="bg-default" style="text-align:center">
                                                     <%--<td><%# Eval("OrderNo") %></td>
-                                                    <td><%# Eval("Username") %></td>
+                                                    <td><%# Eval("Username") %></td>--%>
                                                     <td><%# Eval("DateOrdered") %></td>
+                                                   <%--<td><%# Eval("Orders") %></td>--%>
                                                     <td>Php<%# Eval("Total", "{0: #,##0.00}") %></td>
                                                 </tr>
                                             </ItemTemplate>
@@ -156,7 +158,7 @@
                     </div>
                     <br />
                 </div>
-            </div>--%>
+            </div>
         </form>
     </div>
     <br />
@@ -183,7 +185,7 @@
             });
         });
     </script>
-    <%--<script>
+    <script>
         $(document).ready(function () {
             $('#dtSales').DataTable({
                 dom: 'Bfrtip',
@@ -192,6 +194,6 @@
                 ]
             });
         });
-    </script>--%>
+    </script>
 </asp:Content>
 

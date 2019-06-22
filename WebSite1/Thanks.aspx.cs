@@ -10,13 +10,13 @@ public partial class Thanks : System.Web.UI.Page
 {
     SqlConnection con = new SqlConnection(Util.GetConnection());
     SqlCommand cmd;
-    public static string[] quantity = new string[100];
-    public static string[] ProductID = new string[100];
+    //public static string[] quantity = new string[100];
+    //public static string[] ProductID = new string[100];
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        quantity = Session["Quantity"] as string[];
-        ProductID = Session["ProductID"] as string[];
+        //quantity = Session["Quantity"] as string[];
+        //ProductID = Session["ProductID"] as string[];
         if (Session["Code"] != null & Request.QueryString["code"] != null)
         {
             if (Session["Code"].ToString() == Request.QueryString["code"].ToString())
@@ -51,29 +51,29 @@ public partial class Thanks : System.Web.UI.Page
                 }
 
                 //dagdag ng isa pa para sa minus ng inventory?
-                int count = 0;
-                foreach (var item in quantity)
-                {
-                    if (item != null)
-                    {
-                        con.Close();
-                        con.Open();
-                        string query3 = @"UPDATE Inventory SET Quantity = Quantity - @Quantity WHERE ProductID = @ProductID AND Inventory.Quantity > (Select Criticallevel from Products where ProductID = @ProductID)";
+                //int count = 0;
+                //foreach (var item in quantity)
+                //{
+                //    if (item != null)
+                //    {
+                //        con.Close();
+                //        con.Open();
+                //        string query3 = @"UPDATE Inventory SET Quantity = Quantity - @Quantity WHERE ProductID = @ProductID AND Inventory.Quantity > (Select Criticallevel from Products where ProductID = @ProductID)";
                         
-                        using (SqlCommand cmd = new SqlCommand(query3, con))
-                        {
-                            cmd.Parameters.AddWithValue("@Quantity", item);
-                            cmd.Parameters.AddWithValue("@ProductID", ProductID[count]);
-                            cmd.ExecuteNonQuery();
+                //        using (SqlCommand cmd = new SqlCommand(query3, con))
+                //        {
+                //            cmd.Parameters.AddWithValue("@Quantity", item);
+                //            cmd.Parameters.AddWithValue("@ProductID", ProductID[count]);
+                //            cmd.ExecuteNonQuery();
                             
 
-                            //start of Auditlog 
-                            Util.InventoryRecord(ProductID[count], item, "The member has created an order, inventory deducted.");
-                            //end of auditlog
-                            count++;
-                        }
-                    }
-                }
+                //            //start of Auditlog 
+                //            Util.InventoryRecord(ProductID[count], item, "The member has created an order, inventory deducted.");
+                //            //end of auditlog
+                //            count++;
+                //        }
+                //    }
+                //}
             }
             else
             {

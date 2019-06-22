@@ -29,7 +29,7 @@ public partial class Orders : System.Web.UI.Page
                                 FROM Orders o
                                 INNER JOIN OrderDetails od ON o.OrderNo= od.OrderNo
                                 INNER JOIN Users u ON od.UserID = u.UserID
-                                ORDER BY o.DateOrdered DESC";
+                                ORDER BY o.DateOrdered ASC";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 //cmd.Parameters.AddWithValue("@UserID", Session["UserID"].ToString());
@@ -71,7 +71,7 @@ public partial class Orders : System.Web.UI.Page
                                     INNER JOIN OrderDetails od ON o.OrderNo= od.OrderNo
                                     INNER JOIN Users u ON od.UserID = u.UserID
                                         WHERE o.DateOrdered BETWEEN @start AND @end
-                                        ORDER BY o.DateOrdered DESC";
+                                        ORDER BY o.DateOrdered ASC";
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@start", start);
