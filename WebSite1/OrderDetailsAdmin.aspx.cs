@@ -427,22 +427,6 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
         }
     }
 
-    //protected void btnPayNow_Click(object sender, EventArgs e)
-    //{
-    //    using (SqlConnection con = new SqlConnection(Util.GetConnection()))
-    //    {
-    //        con.Open();
-    //        string query = @"UPDATE Orders SET Status=@Status
-    //            WHERE OrderNo=@OrderNo";
-    //        using (SqlCommand cmd = new SqlCommand(query, con))
-    //        {
-    //            cmd.Parameters.AddWithValue("Status", "Refund");
-    //            cmd.Parameters.AddWithValue("OrderNo", ltOrderNo.Text);
-    //            cmd.ExecuteNonQuery();
-    //        }
-    //    }
-    //}
-
 
     protected void btnVerify_Click(object sender, EventArgs e)
     {
@@ -460,42 +444,3 @@ public partial class OrderDetailsAdmin : System.Web.UI.Page
         }
     }
 }
-
-//using (SqlCommand cmd = new SqlCommand(SQL2, con))
-//{
-//    cmd.Parameters.AddWithValue("@Email", Server.HtmlEncode(txtEmail.Text.Trim()));
-//    using (SqlDataReader data = cmd.ExecuteReader())
-//    {
-//        if (data.HasRows) //credentials are correct
-//        {
-//            while (data.Read())
-//            {
-//                ID = data["UserID"].ToString();
-//            }
-
-//            //send email di pa tapos
-//            using (MailMessage mm = new MailMessage("scottysee98@gmail.com", txtEmail.Text))
-//            {
-//                mm.Subject = "Email Confirmation";
-//                mm.Body = "Hi, " + txtFN.Text + "<br/>" + "You have requested for a refund of your order.<br/>" + "<br/>" + "Prior to that, we would like to asked for the transaction ID from your order in Paypal to process the refunds.<br/>" + "<br/>" + "If you have any question, please email us at scottysee98@gmail.com" + "<br/>" + "Thank You!";
-
-//                mm.IsBodyHtml = true;
-//                SmtpClient smtp = new SmtpClient();
-//                smtp.Host = "smtp.gmail.com";
-//                smtp.EnableSsl = true;
-//                NetworkCredential NetworkCred = new NetworkCredential("scottysee98@gmail.com", "POOHPOOH98"); //email and password of the sender.
-//                smtp.UseDefaultCredentials = true;
-//                smtp.Credentials = NetworkCred;
-//                smtp.Port = 587;
-//                smtp.Send(mm);
-//                ClientScript.RegisterStartupScript(GetType(), "alert", "alert('Email sent.');", true);
-//            }
-//        }
-//        else //did not match
-//        {
-
-//        }
-//    }
-//}
-
-
