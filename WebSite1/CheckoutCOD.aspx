@@ -183,7 +183,7 @@
 
                         <input type="hidden" name="item_name" value="My Cart" />
                         <input type="hidden" name="amount" value="<%= Session["total"].ToString() %>" />
-                        <input type="hidden" name="return" value="http://localhost:58759/Thanks.aspx?code=<%=code%>" />
+                        <input type="hidden" name="return" value="http://https://isproj2a.benilde.edu.ph/CosmeticRight/Thanks.aspx?code=<%=code%>" />
                         <%--<input type="submit" class="btn btn-lg btn-success btn-block" value="Paypal" />--%>
 
                         <asp:ImageButton ID="btnPayNow" runat="server" target="_blank" ImageUrl="~/Images/Logo/paypal.png"

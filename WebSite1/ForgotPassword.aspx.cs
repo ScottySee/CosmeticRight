@@ -47,7 +47,7 @@ public partial class ForgotPassword : System.Web.UI.Page
                         using (MailMessage mm = new MailMessage("scottysee98@gmail.com", email.Text))
                         {
                             mm.Subject = "Password Reset";
-                            mm.Body = "Hello! <a href='http://localhost:58759/ChangePassword.aspx?UserID=" + ID + "'>Click here</a> ";
+                            mm.Body = "Hello! <a href='https://isproj2a.benilde.edu.ph/CosmeticRight/ChangePassword.aspx?UserID=" + ID + "'>Click here</a> ";
 
                             mm.IsBodyHtml = true;
                             SmtpClient smtp = new SmtpClient();
